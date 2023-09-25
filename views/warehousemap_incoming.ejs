@@ -3,7 +3,7 @@
 
 <head>
     <%- include('./partials/head'); -%>
-    <style>
+    <!-- <style>
         /* .cv-tbl tr,td,th{
             border: 1px solid;
             width: 200%;
@@ -28,7 +28,135 @@
             writing-mode: vertical-lr;
             text-orientation: sideways;
         }
-    </style>
+    </style> -->
+
+
+    <style>
+   
+      .cv-tbl td{
+            border: 1px solid;
+            /* width: 100%; */
+        }
+        
+        .center {
+          text-align: center;
+        }
+        
+        
+        .table-responsive {
+            overflow-x: scroll;
+            /* max-width: 100%; */
+        }
+
+      table, th, td {
+          border: 1px solid black;
+      }
+
+
+
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 9999999999999; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+      
+        
+      }
+      
+      /* Modal Content */
+      .modal-content {
+        position: relative;
+        background-color: #fefefe;
+        margin: auto;
+        padding: 0;
+        border: 1px solid #888;
+        width: 50%;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+        -webkit-animation-name: animatetop;
+        -webkit-animation-duration: 0.4s;
+        animation-name: animatetop;
+        animation-duration: 0.4s
+      }
+      
+      /* Add Animation */
+      @-webkit-keyframes animatetop {
+        from {top:-300px; opacity:0} 
+        to {top:0; opacity:1}
+      }
+      
+      @keyframes animatetop {
+        from {top:-300px; opacity:0}
+        to {top:0; opacity:1}
+      }
+      
+      /* The Close Button */
+      .close {
+        color: white;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+      
+      .close:hover,
+      .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      
+      .modal-header {
+        padding: 2px 16px;
+        background-color: rgba(34, 34, 51, 0.705);
+        color: white;
+      }
+      
+      .modal-body {padding: 2px 16px;}
+      
+      .modal-footer {
+        padding: 2px 16px;
+        background-color: rgba(34, 34, 51, 0.705);
+        color: white;
+        display: flex;
+        justify-content: center;
+        display: grid;
+          place-items: center;
+      }
+
+
+      .emailcontainer {
+          display: none;
+          position: absolute;
+          /* top: 40px;
+          left: 20px; */
+          background-color: rgb(255, 255, 255);
+          color:#000000;
+          border:solid 1px #000000;
+          padding:10px;
+          /* padding-left:50px; */
+          /* padding-right:200px; */
+          overflow-x: auto; 
+          z-index: 9999999999999;
+      }
+      table td {
+          word-wrap: break-word;
+          white-space: nowrap;
+          /* overflow: hidden; */
+          text-overflow: ellipsis;
+      }
+
+      /* .button-text { */
+          /* padding:0 25px; */
+          /* line-height:56px; */
+          /* letter-spacing:3px */
+      /* } */
+      .button-text.contactme {
+          position: relative;
+          /* font-weight:50px; */
+}
+
+  </style>
 </head>
 
 <body>
@@ -189,16 +317,51 @@
     <script>
       function jsonToArray(jsonData) {
         var data = [];
-
+        
         jsonData.forEach((item) => {
-          var isle = item._id.isle;
-          var pallet = parseInt(item._id.pallet);
-          var count = item.count;
+          
+          var isle = item.isle;
+          var pallet = parseInt(item.pallet);
+          var count = item.totalQuantity;
         if (!data[isle]) {
             data[isle] = {};
           }
           data[isle][pallet] = count;
           data[isle]['pallet'] = pallet;
+
+          item.products.forEach((items) => {
+            console.log(items)
+            if (!data["prd_data_name"]) {
+                data["prd_data_name"] = [];
+            }
+
+            if (!data["prd_data_qty"]) {
+                data["prd_data_qty"] = [];
+            }
+
+
+            if (!data["prd_data_name"][isle]) {
+                data["prd_data_name"][isle] = [];
+            }
+
+            if (!data["prd_data_qty"][isle]) {
+                data["prd_data_qty"][isle] = [];
+            }
+
+
+            if (!data["prd_data_name"][isle][pallet]) {
+                data["prd_data_name"][isle][pallet] = [];
+            }
+
+            if (!data["prd_data_qty"][isle][pallet]) {
+                data["prd_data_qty"][isle][pallet] = [];
+            }
+
+
+            data["prd_data_name"][isle][pallet].push(items.product_name);
+            data["prd_data_qty"][isle][pallet].push(items.product_quantity);
+          })
+
           
         });
 
@@ -246,46 +409,90 @@
                         
                         let j = 1;
                         let k = 54;
-                        
+                        var datahoverItem = [];
                         dataIsle.forEach(function(isleItem) {
                           var dataItems = '';
                           const IsleData = isleItem;
                         
-                          dataItems = '<tr><td rowspan="4"><strong>' + isleItem + '</strong></td></tr>';
+                          dataItems = '<tr><td rowspan="3"><strong><h1>' + isleItem + '</h1></strong></td></tr>';
                         
                           let columnCount = (isleItem >= 'G' && isleItem <= 'J') ? 38 : 54;
                         
                           for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td>' + i + '</td>';
+                            dataItems += '<td><h4>' + i + '</h4></td>';
                           }
                         
                           dataItems += '</tr><tr>';
-                        
+
                           for (let i = j; i < j + columnCount; i++) {
                             if (DataRes[IsleData] && DataRes[IsleData][i]) {
 
                               if(DataRes[IsleData][i] >= 500){
-                                dataItems += '<td class="center vertical-text" bgcolor="Tomato"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                                color = "Tomato";
                               }else if(DataRes[IsleData][i] >= 250){
-                                dataItems += '<td class="center vertical-text" bgcolor="yellow"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                                color = "yellow";
                               }else{
-                                dataItems += '<td class="center vertical-text" bgcolor="white"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                               color = "white";
                               }
+
+                        
+                              const numberOfProducts = DataRes.prd_data_name[IsleData][i].length;
+
+                              if (!datahoverItem[IsleData]) {
+                                datahoverItem[IsleData] = {};
+                              }
+
+                              datahoverItem[IsleData][i] = '';
+
+                              for (var x = 0; x <= numberOfProducts - 1; x++) {
+
+                               
+                                if(DataRes && DataRes.prd_data_name &&  DataRes.prd_data_name[IsleData] && DataRes.prd_data_name[IsleData][i] && DataRes.prd_data_qty &&  DataRes.prd_data_qty[IsleData] && DataRes.prd_data_qty[IsleData][i]){
+                                  
+                                  console.log(datahoverItem[IsleData][i])
+                                  datahoverItem[IsleData][i] += '<tr>';
+                                  datahoverItem[IsleData][i]  += '<td>';
+                                  datahoverItem[IsleData][i]  += DataRes.prd_data_name[IsleData][i];
+                                  datahoverItem[IsleData][i] += '</td>';
+
+                                  datahoverItem[IsleData][i] += '<td>';
+                                  datahoverItem[IsleData][i]  += DataRes.prd_data_qty[IsleData][i];
+                                  datahoverItem[IsleData][i]  += '</td>';
+                                  datahoverItem[IsleData][i]  += '</tr>';
+
+                                }
+                              }
+
+                              
+
+                              dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + DataRes[IsleData][i] + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
                              
                             } else {
                               dataItems += '<td>&nbsp;</td>';
                             }
                           }
+                          dataItems += '</tr>';
                         
-                          dataItems += '</tr><tr style="height: 5px;">';
+                          // dataItems += '</tr><tr style="height: 5px;">';
                         
-                          for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td>&nbsp;</td>';
-                          }
+                          // for (let i = j; i < j + columnCount; i++) {
+                          //   dataItems += '<td>&nbsp;</td>';
+                          // }
                         
                           j += columnCount; // Update j based on the range
                         
-                          dataItems += "</tr>";
+                          // dataItems += "</tr>";
+
+                          $(document).ready(function () {
+                          $(".button-text.contactme").hover(function () {
+                                // alert($(this).data("has-data"))
+                                  if ($(this).data("has-data") === true) {
+                                      $(this).find('.emailcontainer').show('slow');
+                                  }
+                              }, function () {
+                                  $(this).find('.emailcontainer').hide('slow');
+                              });
+                          });
                         
                           dataBody.append(dataItems);
                         });
@@ -295,45 +502,91 @@
                     if(level_value == "2"){
                         let j = 477;
                         let k = 531;
-                        
+                        var datahoverItem = [];
                         dataIsle.forEach(function(isleItem) {
                           var dataItems = '';
                           const IsleData = isleItem;
                         
-                          dataItems = '<tr><td rowspan="4"><strong>' + isleItem + '</strong></td></tr>';
+                          dataItems = '<tr><td rowspan="3"><strong><h1>' + isleItem + '</h1></strong></td></tr>';
                         
                           let columnCount = (isleItem >= 'G' && isleItem <= 'J') ? 38 : 54;
                         
                           for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td>' + i + '</td>';
+                            dataItems += '<td><h4>' + i + '</h4></td>';
                           }
                         
                           dataItems += '</tr><tr>';
                         
                           for (let i = j; i < j + columnCount; i++) {
                             if (DataRes[IsleData] && DataRes[IsleData][i]) {
-                              // dataItems += '<td class="center vertical-text"><b>' + DataRes[IsleData][i] + '</b></td>';
+                     
                               if(DataRes[IsleData][i] >= 500){
-                                dataItems += '<td class="center vertical-text" bgcolor="Tomato"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                                color = "Tomato";
                               }else if(DataRes[IsleData][i] >= 250){
-                                dataItems += '<td class="center vertical-text" bgcolor="yellow"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                                color = "yellow";
                               }else{
-                                dataItems += '<td class="center vertical-text" bgcolor="white"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                               color = "white";
                               }
+
+
+                              const numberOfProducts = DataRes.prd_data_name[IsleData][i].length;
+
+                              if (!datahoverItem[IsleData]) {
+                                datahoverItem[IsleData] = {};
+                              }
+
+                              if (!datahoverItem[IsleData][i]) {
+                                datahoverItem[IsleData][i] = {};
+                              }
+
+                              datahoverItem[IsleData][i] = '';
+
+                              for (var x = 0; x <= numberOfProducts - 1; x++) {
+
+                              
+                                if(DataRes && DataRes.prd_data_name &&  DataRes.prd_data_name[IsleData] && DataRes.prd_data_name[IsleData][i] && DataRes.prd_data_qty &&  DataRes.prd_data_qty[IsleData] && DataRes.prd_data_qty[IsleData][i]){
+                                  
+                                  console.log(datahoverItem[IsleData][i])
+                                  datahoverItem[IsleData][i] += '<tr>';
+                                  datahoverItem[IsleData][i]  += '<td>';
+                                  datahoverItem[IsleData][i]  += DataRes.prd_data_name[IsleData][i];
+                                  datahoverItem[IsleData][i] += '</td>';
+
+                                  datahoverItem[IsleData][i] += '<td>';
+                                  datahoverItem[IsleData][i]  += DataRes.prd_data_qty[IsleData][i];
+                                  datahoverItem[IsleData][i]  += '</td>';
+                                  datahoverItem[IsleData][i]  += '</tr>';
+
+                                }
+                              }
+
+
+                              dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + DataRes[IsleData][i] + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
                             } else {
                               dataItems += '<td>&nbsp;</td>';
                             }
                           }
+                          dataItems += '</tr>';
+                          // dataItems += '</tr><tr style="height: 5px;">';
                         
-                          dataItems += '</tr><tr style="height: 5px;">';
-                        
-                          for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td>&nbsp;</td>';
-                          }
+                          // for (let i = j; i < j + columnCount; i++) {
+                          //   dataItems += '<td>&nbsp;</td>';
+                          // }
                         
                           j += columnCount; // Update j based on the range
                         
-                          dataItems += "</tr>";
+                          // dataItems += "</tr>";
+
+                          $(document).ready(function () {
+                          $(".button-text.contactme").hover(function () {
+                                // alert($(this).data("has-data"))
+                                  if ($(this).data("has-data") === true) {
+                                      $(this).find('.emailcontainer').show('slow');
+                                  }
+                              }, function () {
+                                  $(this).find('.emailcontainer').hide('slow');
+                              });
+                          });
                         
                           dataBody.append(dataItems);
                         });
@@ -344,45 +597,90 @@
                         
                         let j = 953;
                         let k = 1007;
-                        
+                        var datahoverItem = [];
                         dataIsle.forEach(function(isleItem) {
                           var dataItems = '';
                           const IsleData = isleItem;
                         
-                          dataItems = '<tr><td rowspan="4"><strong>' + isleItem + '</strong></td></tr>';
+                          dataItems = '<tr><td rowspan="3"><strong><h1>' + isleItem + '</h1></strong></td></tr>';
                         
                           let columnCount = (isleItem >= 'G' && isleItem <= 'J') ? 38 : 54;
                         
                           for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td>' + i + '</td>';
+                            dataItems += '<td><h4>' + i + '</h4></td>';
                           }
                         
                           dataItems += '</tr><tr>';
                         
                           for (let i = j; i < j + columnCount; i++) {
                             if (DataRes[IsleData] && DataRes[IsleData][i]) {
-                              // dataItems += '<td class="center vertical-text"><b>' + DataRes[IsleData][i] + '</b></td>';
                               if(DataRes[IsleData][i] >= 500){
-                                dataItems += '<td class="center vertical-text" bgcolor="Tomato"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                                color = "Tomato";
                               }else if(DataRes[IsleData][i] >= 250){
-                                dataItems += '<td class="center vertical-text" bgcolor="yellow"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                                color = "yellow";
                               }else{
-                                dataItems += '<td class="center vertical-text" bgcolor="white"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                               color = "white";
                               }
+
+
+                              const numberOfProducts = DataRes.prd_data_name[IsleData][i].length;
+
+                              if (!datahoverItem[IsleData]) {
+                                datahoverItem[IsleData] = {};
+                              }
+
+                              if (!datahoverItem[IsleData][i]) {
+                                datahoverItem[IsleData][i] = {};
+                              }
+
+                              datahoverItem[IsleData][i] = '';
+
+                              for (var x = 0; x <= numberOfProducts - 1; x++) {
+
+                              
+                                if(DataRes && DataRes.prd_data_name &&  DataRes.prd_data_name[IsleData] && DataRes.prd_data_name[IsleData][i] && DataRes.prd_data_qty &&  DataRes.prd_data_qty[IsleData] && DataRes.prd_data_qty[IsleData][i]){
+                                  
+                                  console.log(datahoverItem[IsleData][i])
+                                  datahoverItem[IsleData][i] += '<tr>';
+                                  datahoverItem[IsleData][i]  += '<td>';
+                                  datahoverItem[IsleData][i]  += DataRes.prd_data_name[IsleData][i];
+                                  datahoverItem[IsleData][i] += '</td>';
+
+                                  datahoverItem[IsleData][i] += '<td>';
+                                  datahoverItem[IsleData][i]  += DataRes.prd_data_qty[IsleData][i];
+                                  datahoverItem[IsleData][i]  += '</td>';
+                                  datahoverItem[IsleData][i]  += '</tr>';
+
+                                }
+                              }
+
+
+                              dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + DataRes[IsleData][i] + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
                             } else {
                               dataItems += '<td>&nbsp;</td>';
                             }
                           }
+                          dataItems += "</tr>";
+                          // dataItems += '</tr><tr style="height: 5px;">';
                         
-                          dataItems += '</tr><tr style="height: 5px;">';
-                        
-                          for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td>&nbsp;</td>';
-                          }
+                          // for (let i = j; i < j + columnCount; i++) {
+                          //   dataItems += '<td>&nbsp;</td>';
+                          // }
                         
                           j += columnCount; // Update j based on the range
                         
-                          dataItems += "</tr>";
+                          // dataItems += "</tr>";
+
+                          $(document).ready(function () {
+                          $(".button-text.contactme").hover(function () {
+                                // alert($(this).data("has-data"))
+                                  if ($(this).data("has-data") === true) {
+                                      $(this).find('.emailcontainer').show('slow');
+                                  }
+                              }, function () {
+                                  $(this).find('.emailcontainer').hide('slow');
+                              });
+                          });
                         
                           dataBody.append(dataItems);
                         });
@@ -391,46 +689,91 @@
                     if(level_value == "4"){
                             let j = 1429;
                             let k = 1483;
-                            
+                            var datahoverItem = [];
                             
                             dataIsle.forEach(function(isleItem) {
                               var dataItems = '';
                               const IsleData = isleItem;
                             
-                              dataItems = '<tr><td rowspan="4"><strong>' + isleItem + '</strong></td></tr>';
+                              dataItems = '<tr><td rowspan="3"><strong><h1>' + isleItem + '</h1></strong></td></tr>';
                             
                               let columnCount = (isleItem >= 'G' && isleItem <= 'J') ? 38 : 54;
                             
                               for (let i = j; i < j + columnCount; i++) {
-                                dataItems += '<td>' + i + '</td>';
+                                dataItems += '<td><h4>' + i + '</h4></td>';
                               }
                             
                               dataItems += '</tr><tr>';
                             
                               for (let i = j; i < j + columnCount; i++) {
                                 if (DataRes[IsleData] && DataRes[IsleData][i]) {
-                                  // dataItems += '<td class="center vertical-text"><b>' + DataRes[IsleData][i] + '</b></td>';
                                   if(DataRes[IsleData][i] >= 500){
-                                    dataItems += '<td class="center vertical-text" bgcolor="Tomato"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
-                                  }else if(DataRes[IsleData][i] >= 250){
-                                    dataItems += '<td class="center vertical-text" bgcolor="yellow"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
-                                  }else{
-                                    dataItems += '<td class="center vertical-text" bgcolor="white"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
-                                  }
+                                color = "Tomato";
+                              }else if(DataRes[IsleData][i] >= 250){
+                                color = "yellow";
+                              }else{
+                               color = "white";
+                              }
+
+
+                              const numberOfProducts = DataRes.prd_data_name[IsleData][i].length;
+
+                              if (!datahoverItem[IsleData]) {
+                                datahoverItem[IsleData] = {};
+                              }
+
+                              if (!datahoverItem[IsleData][i]) {
+                                datahoverItem[IsleData][i] = {};
+                              }
+
+                              datahoverItem[IsleData][i] = '';
+
+                              for (var x = 0; x <= numberOfProducts - 1; x++) {
+
+                              
+                                if(DataRes && DataRes.prd_data_name &&  DataRes.prd_data_name[IsleData] && DataRes.prd_data_name[IsleData][i] && DataRes.prd_data_qty &&  DataRes.prd_data_qty[IsleData] && DataRes.prd_data_qty[IsleData][i]){
+                                  
+                                  console.log(datahoverItem[IsleData][i])
+                                  datahoverItem[IsleData][i] += '<tr>';
+                                  datahoverItem[IsleData][i]  += '<td>';
+                                  datahoverItem[IsleData][i]  += DataRes.prd_data_name[IsleData][i];
+                                  datahoverItem[IsleData][i] += '</td>';
+
+                                  datahoverItem[IsleData][i] += '<td>';
+                                  datahoverItem[IsleData][i]  += DataRes.prd_data_qty[IsleData][i];
+                                  datahoverItem[IsleData][i]  += '</td>';
+                                  datahoverItem[IsleData][i]  += '</tr>';
+
+                                }
+                              }
+
+
+                              dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + DataRes[IsleData][i] + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
                                 } else {
                                   dataItems += '<td>&nbsp;</td>';
                                 }
                               }
+                              dataItems += "</tr>";
+                              // dataItems += '</tr><tr style="height: 5px;">';
                             
-                              dataItems += '</tr><tr style="height: 5px;">';
-                            
-                              for (let i = j; i < j + columnCount; i++) {
-                                dataItems += '<td>&nbsp;</td>';
-                              }
+                              // for (let i = j; i < j + columnCount; i++) {
+                              //   dataItems += '<td>&nbsp;</td>';
+                              // }
                             
                               j += columnCount; // Update j based on the range
                             
-                              dataItems += "</tr>";
+                              // dataItems += "</tr>";
+
+                              $(document).ready(function () {
+                              $(".button-text.contactme").hover(function () {
+                                    // alert($(this).data("has-data"))
+                                      if ($(this).data("has-data") === true) {
+                                          $(this).find('.emailcontainer').show('slow');
+                                      }
+                                  }, function () {
+                                      $(this).find('.emailcontainer').hide('slow');
+                                  });
+                              });
                             
                               dataBody.append(dataItems);
                             });
@@ -440,44 +783,91 @@
                         
                         let j = 1;
                         let k = 13;
+                        var datahoverItem = [];
                         dataIsleHalf.forEach(function(isleItem) {
                           var dataItems = '';
                           const IsleData = isleItem;
                         
-                          dataItems = '<tr><td rowspan="4"><strong>' + isleItem + '</strong></td></tr>';
+                          dataItems = '<tr><td rowspan="3"><strong><h1>' + isleItem + '</h1></strong></td></tr>';
                         
                           let columnCount = (isleItem >= 'H' && isleItem <= 'J') ? 14 : 13;
                         
                           for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td>' + i + '</td>';
+                            dataItems += '<td><h4>' + i + '</h4></td>';
                           }
                         
                           dataItems += '</tr><tr>';
                         
                           for (let i = j; i < j + columnCount; i++) {
                             if (DataRes[IsleData] && DataRes[IsleData][i]) {
-                              // dataItems += '<td class="center vertical-text"><b>' + DataRes[IsleData][i] + '</b></td>';
                               if(DataRes[IsleData][i] >= 500){
-                                dataItems += '<td class="center vertical-text" bgcolor="Tomato"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                                color = "Tomato";
                               }else if(DataRes[IsleData][i] >= 250){
-                                dataItems += '<td class="center vertical-text" bgcolor="yellow"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                                color = "yellow";
                               }else{
-                                dataItems += '<td class="center vertical-text" bgcolor="white"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                               color = "white";
                               }
+
+
+                              const numberOfProducts = DataRes.prd_data_name[IsleData][i].length;
+
+                              if (!datahoverItem[IsleData]) {
+                                datahoverItem[IsleData] = {};
+                              }
+
+                              if (!datahoverItem[IsleData][i]) {
+                                datahoverItem[IsleData][i] = {};
+                              }
+
+                              datahoverItem[IsleData][i] = '';
+
+                              for (var x = 0; x <= numberOfProducts - 1; x++) {
+
+                              
+                                if(DataRes && DataRes.prd_data_name &&  DataRes.prd_data_name[IsleData] && DataRes.prd_data_name[IsleData][i] && DataRes.prd_data_qty &&  DataRes.prd_data_qty[IsleData] && DataRes.prd_data_qty[IsleData][i]){
+                                  
+                                  console.log(datahoverItem[IsleData][i])
+                                  datahoverItem[IsleData][i] += '<tr>';
+                                  datahoverItem[IsleData][i]  += '<td>';
+                                  datahoverItem[IsleData][i]  += DataRes.prd_data_name[IsleData][i];
+                                  datahoverItem[IsleData][i] += '</td>';
+
+                                  datahoverItem[IsleData][i] += '<td>';
+                                  datahoverItem[IsleData][i]  += DataRes.prd_data_qty[IsleData][i];
+                                  datahoverItem[IsleData][i]  += '</td>';
+                                  datahoverItem[IsleData][i]  += '</tr>';
+
+                                }
+                              }
+
+
+                              dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + DataRes[IsleData][i] + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
                             } else {
                               dataItems += '<td>&nbsp;</td>';
                             }
                           }
+                          dataItems += "</tr>";
                         
-                          dataItems += '</tr><tr style="height: 5px;">';
+                          // dataItems += '</tr><tr style="height: 5px;">';
                         
-                          for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td>&nbsp;</td>';
-                          }
+                          // for (let i = j; i < j + columnCount; i++) {
+                          //   dataItems += '<td>&nbsp;</td>';
+                          // }
                         
                           j += columnCount; // Update j based on the range
                         
-                          dataItems += "</tr>";
+                          // dataItems += "</tr>";
+
+                          $(document).ready(function () {
+                          $(".button-text.contactme").hover(function () {
+                                // alert($(this).data("has-data"))
+                                  if ($(this).data("has-data") === true) {
+                                      $(this).find('.emailcontainer').show('slow');
+                                  }
+                              }, function () {
+                                  $(this).find('.emailcontainer').hide('slow');
+                              });
+                          });
                         
                           dataBody.append(dataItems);
                         });
@@ -488,44 +878,90 @@
                         
                         let j = 56;
                         let k = 68;
+                        var datahoverItem = [];
                         dataIsleHalf.forEach(function(isleItem) {
                           var dataItems = '';
                           const IsleData = isleItem;
                         
-                          dataItems = '<tr><td rowspan="4"><strong>' + isleItem + '</strong></td></tr>';
+                          dataItems = '<tr><td rowspan="3"><strong><h1>' + isleItem + '</h1></strong></td></tr>';
                         
                           let columnCount = (isleItem >= 'H' && isleItem <= 'J') ? 14 : 13;
                         
                           for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td>' + i + '</td>';
+                            dataItems += '<td><h4>' + i + '</h4></td>';
                           }
                         
                           dataItems += '</tr><tr>';
                         
                           for (let i = j; i < j + columnCount; i++) {
                             if (DataRes[IsleData] && DataRes[IsleData][i]) {
-                              // dataItems += '<td class="center vertical-text"><b>' + DataRes[IsleData][i] + '</b></td>';
                               if(DataRes[IsleData][i] >= 500){
-                                dataItems += '<td class="center vertical-text" bgcolor="Tomato"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                                color = "Tomato";
                               }else if(DataRes[IsleData][i] >= 250){
-                                dataItems += '<td class="center vertical-text" bgcolor="yellow"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                                color = "yellow";
                               }else{
-                                dataItems += '<td class="center vertical-text" bgcolor="white"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                               color = "white";
                               }
+
+
+                              const numberOfProducts = DataRes.prd_data_name[IsleData][i].length;
+
+                              if (!datahoverItem[IsleData]) {
+                                datahoverItem[IsleData] = {};
+                              }
+
+                              if (!datahoverItem[IsleData][i]) {
+                                datahoverItem[IsleData][i] = {};
+                              }
+
+                              datahoverItem[IsleData][i] = '';
+
+                              for (var x = 0; x <= numberOfProducts - 1; x++) {
+
+                              
+                                if(DataRes && DataRes.prd_data_name &&  DataRes.prd_data_name[IsleData] && DataRes.prd_data_name[IsleData][i] && DataRes.prd_data_qty &&  DataRes.prd_data_qty[IsleData] && DataRes.prd_data_qty[IsleData][i]){
+                                  
+                                  console.log(datahoverItem[IsleData][i])
+                                  datahoverItem[IsleData][i] += '<tr>';
+                                  datahoverItem[IsleData][i]  += '<td>';
+                                  datahoverItem[IsleData][i]  += DataRes.prd_data_name[IsleData][i];
+                                  datahoverItem[IsleData][i] += '</td>';
+
+                                  datahoverItem[IsleData][i] += '<td>';
+                                  datahoverItem[IsleData][i]  += DataRes.prd_data_qty[IsleData][i];
+                                  datahoverItem[IsleData][i]  += '</td>';
+                                  datahoverItem[IsleData][i]  += '</tr>';
+
+                                }
+                              }
+
+
+                              dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + DataRes[IsleData][i] + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
                             } else {
                               dataItems += '<td>&nbsp;</td>';
                             }
                           }
-                        
-                          dataItems += '</tr><tr style="height: 5px;">';
-                        
-                          for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td>&nbsp;</td>';
-                          }
-                        
-                          j += columnCount; // Update j based on the range
-                        
                           dataItems += "</tr>";
+                          // dataItems += '</tr><tr style="height: 5px;">';
+                        
+                          // for (let i = j; i < j + columnCount; i++) {
+                          //   dataItems += '<td>&nbsp;</td>';
+                          // }
+                        
+                          // j += columnCount; // Update j based on the range
+                        
+                          // dataItems += "</tr>";
+
+                          $(document).ready(function () {
+                          $(".button-text.contactme").hover(function () {
+                                // alert($(this).data("has-data"))
+                                  if ($(this).data("has-data") === true) {
+                                      $(this).find('.emailcontainer').show('slow');
+                                  }
+                              }, function () {
+                                  $(this).find('.emailcontainer').hide('slow');
+                              });
+                          });
                         
                           dataBody.append(dataItems);
                         });
@@ -536,45 +972,89 @@
                         
                         let j = 111;
                         let k = 123;
+                        var datahoverItem = [];
                         dataIsleHalf.forEach(function(isleItem) {
                           var dataItems = '';
                           const IsleData = isleItem;
                         
-                          dataItems = '<tr><td rowspan="4"><strong>' + isleItem + '</strong></td></tr>';
+                          dataItems = '<tr><td rowspan="3"><strong><h1>' + isleItem + '</h1></strong></td></tr>';
                         
                           let columnCount = (isleItem >= 'H' && isleItem <= 'J') ? 14 : 13;
                         
                           for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td>' + i + '</td>';
+                            dataItems += '<td><h4>' + i + '</h4></td>';
                           }
                         
                           dataItems += '</tr><tr>';
                         
                           for (let i = j; i < j + columnCount; i++) {
                             if (DataRes[IsleData] && DataRes[IsleData][i]) {
-                              // dataItems += '<td class="center vertical-text"><b>' + DataRes[IsleData][i] + '</b></td>';
                               if(DataRes[IsleData][i] >= 500){
-                                dataItems += '<td class="center vertical-text" bgcolor="Tomato"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                                color = "Tomato";
                               }else if(DataRes[IsleData][i] >= 250){
-                                dataItems += '<td class="center vertical-text" bgcolor="yellow"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                                color = "yellow";
                               }else{
-                                dataItems += '<td class="center vertical-text" bgcolor="white"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                               color = "white";
                               }
+
+
+                              const numberOfProducts = DataRes.prd_data_name[IsleData][i].length;
+
+                              if (!datahoverItem[IsleData]) {
+                                datahoverItem[IsleData] = {};
+                              }
+
+                              if (!datahoverItem[IsleData][i]) {
+                                datahoverItem[IsleData][i] = {};
+                              }
+
+                              datahoverItem[IsleData][i] = '';
+
+                              for (var x = 0; x <= numberOfProducts - 1; x++) {
+
+                              
+                                if(DataRes && DataRes.prd_data_name &&  DataRes.prd_data_name[IsleData] && DataRes.prd_data_name[IsleData][i] && DataRes.prd_data_qty &&  DataRes.prd_data_qty[IsleData] && DataRes.prd_data_qty[IsleData][i]){
+                                  
+                                  console.log(datahoverItem[IsleData][i])
+                                  datahoverItem[IsleData][i] += '<tr>';
+                                  datahoverItem[IsleData][i]  += '<td>';
+                                  datahoverItem[IsleData][i]  += DataRes.prd_data_name[IsleData][i];
+                                  datahoverItem[IsleData][i] += '</td>';
+
+                                  datahoverItem[IsleData][i] += '<td>';
+                                  datahoverItem[IsleData][i]  += DataRes.prd_data_qty[IsleData][i];
+                                  datahoverItem[IsleData][i]  += '</td>';
+                                  datahoverItem[IsleData][i]  += '</tr>';
+
+                                }
+                              }
+
+
+                              dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + DataRes[IsleData][i] + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
                             } else {
                               dataItems += '<td>&nbsp;</td>';
                             }
                           }
+                          dataItems += "</tr>";
+                          // dataItems += '</tr><tr style="height: 5px;">';
                         
-                          dataItems += '</tr><tr style="height: 5px;">';
-                        
-                          for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td>&nbsp;</td>';
-                          }
+                          // for (let i = j; i < j + columnCount; i++) {
+                          //   dataItems += '<td>&nbsp;</td>';
+                          // }
                         
                           j += columnCount; // Update j based on the range
                         
-                          dataItems += "</tr>";
-                        
+                          // dataItems += "</tr>";
+                          $(document).ready(function () {
+                          $(".button-text.contactme").hover(function () {
+                                // alert($(this).data("has-data"))
+                                  if ($(this).data("has-data") === true) {
+                                      $(this).find('.emailcontainer').show('slow');
+                                  }
+                              }, function () {
+                                  $(this).find('.emailcontainer').hide('slow');
+                              });
+                          });
                           dataBody.append(dataItems);
                         });
             
@@ -584,44 +1064,90 @@
                         
                         let j = 166;
                         let k = 178;
+                        var datahoverItem = [];
                         dataIsleHalf.forEach(function(isleItem) {
                           var dataItems = '';
                           const IsleData = isleItem;
                         
-                          dataItems = '<tr><td rowspan="4"><strong>' + isleItem + '</strong></td></tr>';
+                          dataItems = '<tr><td rowspan="3"><strong><h1>' + isleItem + '</h1></strong></td></tr>';
                         
                           let columnCount = (isleItem >= 'H' && isleItem <= 'J') ? 14 : 13;
                         
                           for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td>' + i + '</td>';
+                            dataItems += '<td><h4>' + i + '</h4></td>';
                           }
                         
                           dataItems += '</tr><tr>';
                         
                           for (let i = j; i < j + columnCount; i++) {
                             if (DataRes[IsleData] && DataRes[IsleData][i]) {
-                              // dataItems += '<td class="center vertical-text"><b>' + DataRes[IsleData][i] + '</b></td>';
                               if(DataRes[IsleData][i] >= 500){
-                                dataItems += '<td class="center vertical-text" bgcolor="Tomato"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                                color = "Tomato";
                               }else if(DataRes[IsleData][i] >= 250){
-                                dataItems += '<td class="center vertical-text" bgcolor="yellow"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                                color = "yellow";
                               }else{
-                                dataItems += '<td class="center vertical-text" bgcolor="white"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                               color = "white";
                               }
+
+
+                              const numberOfProducts = DataRes.prd_data_name[IsleData][i].length;
+
+                              if (!datahoverItem[IsleData]) {
+                                datahoverItem[IsleData] = {};
+                              }
+
+                              if (!datahoverItem[IsleData][i]) {
+                                datahoverItem[IsleData][i] = {};
+                              }
+
+                              datahoverItem[IsleData][i] = '';
+
+                              for (var x = 0; x <= numberOfProducts - 1; x++) {
+
+                              
+                                if(DataRes && DataRes.prd_data_name &&  DataRes.prd_data_name[IsleData] && DataRes.prd_data_name[IsleData][i] && DataRes.prd_data_qty &&  DataRes.prd_data_qty[IsleData] && DataRes.prd_data_qty[IsleData][i]){
+                                  
+                                  console.log(datahoverItem[IsleData][i])
+                                  datahoverItem[IsleData][i] += '<tr>';
+                                  datahoverItem[IsleData][i]  += '<td>';
+                                  datahoverItem[IsleData][i]  += DataRes.prd_data_name[IsleData][i];
+                                  datahoverItem[IsleData][i] += '</td>';
+
+                                  datahoverItem[IsleData][i] += '<td>';
+                                  datahoverItem[IsleData][i]  += DataRes.prd_data_qty[IsleData][i];
+                                  datahoverItem[IsleData][i]  += '</td>';
+                                  datahoverItem[IsleData][i]  += '</tr>';
+
+                                }
+                              }
+
+
+                              dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + DataRes[IsleData][i] + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
                             } else {
                               dataItems += '<td>&nbsp;</td>';
                             }
                           }
+                          dataItems += "</tr>";
+                          // dataItems += '</tr><tr style="height: 5px;">';
                         
-                          dataItems += '</tr><tr style="height: 5px;">';
-                        
-                          for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td>&nbsp;</td>';
-                          }
+                          // for (let i = j; i < j + columnCount; i++) {
+                          //   dataItems += '<td>&nbsp;</td>';
+                          // }
                         
                           j += columnCount; // Update j based on the range
                         
-                          dataItems += "</tr>";
+                          // dataItems += "</tr>";
+
+                          $(document).ready(function () {
+                          $(".button-text.contactme").hover(function () {
+                                // alert($(this).data("has-data"))
+                                  if ($(this).data("has-data") === true) {
+                                      $(this).find('.emailcontainer').show('slow');
+                                  }
+                              }, function () {
+                                  $(this).find('.emailcontainer').hide('slow');
+                              });
+                          });
                         
                           dataBody.append(dataItems);
                         });
@@ -636,12 +1162,12 @@
                         
                         let j = 1;
                         let k = 54;
-                        
+                        var datahoverItem = [];
                         dataIsle.forEach(function(isleItem) {
                           var dataItems = '';
                           const IsleData = isleItem;
                         
-                          dataItems = '<tr><td rowspan="4"><strong>' + isleItem + '</strong></td></tr>';
+                          dataItems = '<tr><td rowspan="3"><strong><h1>' + isleItem + '</h1></strong></td></tr>';
                         
                           let columnCount = (isleItem >= 'G' && isleItem <= 'J') ? 38 : 54;
                           columnCount = Math.min(columnCount, 145 - j + 1); // Limit columnCount to remaining pallets
@@ -651,35 +1177,80 @@
                           }
                         
                           for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td>' + i + '</td>';
+                            dataItems += '<td><h4>' + i + '</h4></td>';
                           }
                         
                           dataItems += '</tr><tr>';
                         
                           for (let i = j; i < j + columnCount; i++) {
                             if (DataRes[IsleData] && DataRes[IsleData][i]) {
-                              // dataItems += '<td class="center vertical-text"><b>' + DataRes[IsleData][i] + '</b></td>';
                               if(DataRes[IsleData][i] >= 500){
-                                dataItems += '<td class="center vertical-text" bgcolor="Tomato"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                                color = "Tomato";
                               }else if(DataRes[IsleData][i] >= 250){
-                                dataItems += '<td class="center vertical-text" bgcolor="yellow"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                                color = "yellow";
                               }else{
-                                dataItems += '<td class="center vertical-text" bgcolor="white"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                               color = "white";
                               }
+
+
+                              const numberOfProducts = DataRes.prd_data_name[IsleData][i].length;
+
+                              if (!datahoverItem[IsleData]) {
+                                datahoverItem[IsleData] = {};
+                              }
+
+                              if (!datahoverItem[IsleData][i]) {
+                                datahoverItem[IsleData][i] = {};
+                              }
+
+                              datahoverItem[IsleData][i] = '';
+
+                              for (var x = 0; x <= numberOfProducts - 1; x++) {
+
+                              
+                                if(DataRes && DataRes.prd_data_name &&  DataRes.prd_data_name[IsleData] && DataRes.prd_data_name[IsleData][i] && DataRes.prd_data_qty &&  DataRes.prd_data_qty[IsleData] && DataRes.prd_data_qty[IsleData][i]){
+                                  
+                                  console.log(datahoverItem[IsleData][i])
+                                  datahoverItem[IsleData][i] += '<tr>';
+                                  datahoverItem[IsleData][i]  += '<td>';
+                                  datahoverItem[IsleData][i]  += DataRes.prd_data_name[IsleData][i];
+                                  datahoverItem[IsleData][i] += '</td>';
+
+                                  datahoverItem[IsleData][i] += '<td>';
+                                  datahoverItem[IsleData][i]  += DataRes.prd_data_qty[IsleData][i];
+                                  datahoverItem[IsleData][i]  += '</td>';
+                                  datahoverItem[IsleData][i]  += '</tr>';
+
+                                }
+                              }
+
+
+                              dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + DataRes[IsleData][i] + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
                             } else {
                               dataItems += '<td>&nbsp;</td>';
                             }
                           }
+                          dataItems += "</tr>";
+                          // dataItems += '</tr><tr style="height: 5px;">';
                         
-                          dataItems += '</tr><tr style="height: 5px;">';
-                        
-                          for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td>&nbsp;</td>';
-                          }
+                          // for (let i = j; i < j + columnCount; i++) {
+                          //   dataItems += '<td>&nbsp;</td>';
+                          // }
                         
                           j += columnCount; // Update j based on the range
                         
-                          dataItems += "</tr>";
+                          // dataItems += "</tr>";
+
+                          $(document).ready(function () {
+                          $(".button-text.contactme").hover(function () {
+                                // alert($(this).data("has-data"))
+                                  if ($(this).data("has-data") === true) {
+                                      $(this).find('.emailcontainer').show('slow');
+                                  }
+                              }, function () {
+                                  $(this).find('.emailcontainer').hide('slow');
+                              });
+                          });
                         
                           dataBody.append(dataItems);
                         });
@@ -696,12 +1267,12 @@
                         
                         let j = 1;
                         let k = 54;
-                        
+                        var datahoverItem = [];
                         dataIsle.forEach(function(isleItem) {
                           var dataItems = '';
                           const IsleData = isleItem;
                         
-                          dataItems = '<tr><td rowspan="4"><strong>' + isleItem + '</strong></td></tr>';
+                          dataItems = '<tr><td rowspan="3"><strong><h2>' + isleItem + '</h2></strong></td></tr>';
                         
                           let columnCount = (isleItem >= 'G' && isleItem <= 'J') ? 38 : 54;
                           columnCount = Math.min(columnCount, 60 - j + 1); // Limit columnCount to remaining pallets
@@ -711,35 +1282,80 @@
                           }
                         
                           for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td>' + i + '</td>';
+                            dataItems += '<td><h4>' + i + '</h4></td>';
                           }
                         
                           dataItems += '</tr><tr>';
                         
                           for (let i = j; i < j + columnCount; i++) {
                             if (DataRes[IsleData] && DataRes[IsleData][i]) {
-                              // dataItems += '<td class="center vertical-text"><b>' + DataRes[IsleData][i] + '</b></td>';
                               if(DataRes[IsleData][i] >= 500){
-                                dataItems += '<td class="center vertical-text" bgcolor="Tomato"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                                color = "Tomato";
                               }else if(DataRes[IsleData][i] >= 250){
-                                dataItems += '<td class="center vertical-text" bgcolor="yellow"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                                color = "yellow";
                               }else{
-                                dataItems += '<td class="center vertical-text" bgcolor="white"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                               color = "white";
                               }
+
+
+                              const numberOfProducts = DataRes.prd_data_name[IsleData][i].length;
+
+                              if (!datahoverItem[IsleData]) {
+                                datahoverItem[IsleData] = {};
+                              }
+
+                              if (!datahoverItem[IsleData][i]) {
+                                datahoverItem[IsleData][i] = {};
+                              }
+
+                              datahoverItem[IsleData][i] = '';
+
+                              for (var x = 0; x <= numberOfProducts - 1; x++) {
+
+                              
+                                if(DataRes && DataRes.prd_data_name &&  DataRes.prd_data_name[IsleData] && DataRes.prd_data_name[IsleData][i] && DataRes.prd_data_qty &&  DataRes.prd_data_qty[IsleData] && DataRes.prd_data_qty[IsleData][i]){
+                                  
+                                  console.log(datahoverItem[IsleData][i])
+                                  datahoverItem[IsleData][i] += '<tr>';
+                                  datahoverItem[IsleData][i]  += '<td>';
+                                  datahoverItem[IsleData][i]  += DataRes.prd_data_name[IsleData][i];
+                                  datahoverItem[IsleData][i] += '</td>';
+
+                                  datahoverItem[IsleData][i] += '<td>';
+                                  datahoverItem[IsleData][i]  += DataRes.prd_data_qty[IsleData][i];
+                                  datahoverItem[IsleData][i]  += '</td>';
+                                  datahoverItem[IsleData][i]  += '</tr>';
+
+                                }
+                              }
+
+
+                              dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + DataRes[IsleData][i] + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
                             } else {
                               dataItems += '<td>&nbsp;</td>';
                             }
                           }
+                          dataItems += "</tr>";
+                          // dataItems += '</tr><tr style="height: 5px;">';
                         
-                          dataItems += '</tr><tr style="height: 5px;">';
-                        
-                          for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td>&nbsp;</td>';
-                          }
+                          // for (let i = j; i < j + columnCount; i++) {
+                          //   dataItems += '<td>&nbsp;</td>';
+                          // }
                         
                           j += columnCount; // Update j based on the range
                         
-                          dataItems += "</tr>";
+                          // dataItems += "</tr>";
+
+                          $(document).ready(function () {
+                          $(".button-text.contactme").hover(function () {
+                                // alert($(this).data("has-data"))
+                                  if ($(this).data("has-data") === true) {
+                                      $(this).find('.emailcontainer').show('slow');
+                                  }
+                              }, function () {
+                                  $(this).find('.emailcontainer').hide('slow');
+                              });
+                          });
                         
                           dataBody.append(dataItems);
                         });
@@ -756,12 +1372,12 @@
                         
                         let j = 1;
                         let k = 54;
-                        
+                        var datahoverItem = [];
                         dataIsle.forEach(function(isleItem) {
                           var dataItems = '';
                           const IsleData = isleItem;
                         
-                          dataItems = '<tr><td rowspan="4"><strong>' + isleItem + '</strong></td></tr>';
+                          dataItems = '<tr><td rowspan="3"><strong><h2>' + isleItem + '</h2></strong></td></tr>';
                         
                           let columnCount = (isleItem >= 'G' && isleItem <= 'J') ? 38 : 54;
                           columnCount = Math.min(columnCount, 150 - j + 1); // Limit columnCount to remaining pallets
@@ -771,35 +1387,80 @@
                           }
                         
                           for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td>' + i + '</td>';
+                            dataItems += '<td><h4>' + i + '</h4></td>';
                           }
                         
                           dataItems += '</tr><tr>';
                         
                           for (let i = j; i < j + columnCount; i++) {
                             if (DataRes[IsleData] && DataRes[IsleData][i]) {
-                              // dataItems += '<td class="center vertical-text"><b>' + DataRes[IsleData][i] + '</b></td>';
                               if(DataRes[IsleData][i] >= 500){
-                                dataItems += '<td class="center vertical-text" bgcolor="Tomato"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                                color = "Tomato";
                               }else if(DataRes[IsleData][i] >= 250){
-                                dataItems += '<td class="center vertical-text" bgcolor="yellow"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                                color = "yellow";
                               }else{
-                                dataItems += '<td class="center vertical-text" bgcolor="white"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                               color = "white";
                               }
+
+
+                              const numberOfProducts = DataRes.prd_data_name[IsleData][i].length;
+
+                              if (!datahoverItem[IsleData]) {
+                                datahoverItem[IsleData] = {};
+                              }
+
+                              if (!datahoverItem[IsleData][i]) {
+                                datahoverItem[IsleData][i] = {};
+                              }
+
+                              datahoverItem[IsleData][i] = '';
+
+                              for (var x = 0; x <= numberOfProducts - 1; x++) {
+
+                              
+                                if(DataRes && DataRes.prd_data_name &&  DataRes.prd_data_name[IsleData] && DataRes.prd_data_name[IsleData][i] && DataRes.prd_data_qty &&  DataRes.prd_data_qty[IsleData] && DataRes.prd_data_qty[IsleData][i]){
+                                  
+                                  console.log(datahoverItem[IsleData][i])
+                                  datahoverItem[IsleData][i] += '<tr>';
+                                  datahoverItem[IsleData][i]  += '<td>';
+                                  datahoverItem[IsleData][i]  += DataRes.prd_data_name[IsleData][i];
+                                  datahoverItem[IsleData][i] += '</td>';
+
+                                  datahoverItem[IsleData][i] += '<td>';
+                                  datahoverItem[IsleData][i]  += DataRes.prd_data_qty[IsleData][i];
+                                  datahoverItem[IsleData][i]  += '</td>';
+                                  datahoverItem[IsleData][i]  += '</tr>';
+
+                                }
+                              }
+
+
+                              dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + DataRes[IsleData][i] + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
                             } else {
                               dataItems += '<td>&nbsp;</td>';
                             }
                           }
+                          dataItems += "</tr>";
+                          // dataItems += '</tr><tr style="height: 5px;">';
                         
-                          dataItems += '</tr><tr style="height: 5px;">';
-                        
-                          for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td>&nbsp;</td>';
-                          }
+                          // for (let i = j; i < j + columnCount; i++) {
+                          //   dataItems += '<td>&nbsp;</td>';
+                          // }
                         
                           j += columnCount; // Update j based on the range
                         
-                          dataItems += "</tr>";
+                          // dataItems += "</tr>";
+
+                          $(document).ready(function () {
+                          $(".button-text.contactme").hover(function () {
+                                // alert($(this).data("has-data"))
+                                  if ($(this).data("has-data") === true) {
+                                      $(this).find('.emailcontainer').show('slow');
+                                  }
+                              }, function () {
+                                  $(this).find('.emailcontainer').hide('slow');
+                              });
+                          });
                         
                           dataBody.append(dataItems);
                         });
@@ -818,12 +1479,12 @@
                         
                         let j = 1;
                         let k = 54;
-                        
+                        var datahoverItem = [];
                         dataIsle.forEach(function(isleItem) {
                           var dataItems = '';
                           const IsleData = isleItem;
                         
-                          dataItems = '<tr><td rowspan="4"><strong>' + isleItem + '</strong></td></tr>';
+                          dataItems = '<tr><td rowspan="3"><strong><h2>' + isleItem + '</h2></strong></td></tr>';
                         
                           let columnCount = (isleItem >= 'G' && isleItem <= 'J') ? 38 : 54;
                           columnCount = Math.min(columnCount, 94 - j + 1); // Limit columnCount to remaining pallets
@@ -833,35 +1494,81 @@
                           }
                         
                           for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td>' + i + '</td>';
+                            dataItems += '<td><h4>' + i + '</h4></td>';
                           }
                         
                           dataItems += '</tr><tr>';
                         
                           for (let i = j; i < j + columnCount; i++) {
                             if (DataRes[IsleData] && DataRes[IsleData][i]) {
-                              // dataItems += '<td class="center vertical-text"><b>' + DataRes[IsleData][i] + '</b></td>';
                               if(DataRes[IsleData][i] >= 500){
-                                dataItems += '<td class="center vertical-text" bgcolor="Tomato"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                                color = "Tomato";
                               }else if(DataRes[IsleData][i] >= 250){
-                                dataItems += '<td class="center vertical-text" bgcolor="yellow"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                                color = "yellow";
                               }else{
-                                dataItems += '<td class="center vertical-text" bgcolor="white"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                               color = "white";
                               }
+
+
+                              const numberOfProducts = DataRes.prd_data_name[IsleData][i].length;
+
+                              if (!datahoverItem[IsleData]) {
+                                datahoverItem[IsleData] = {};
+                              }
+
+                              if (!datahoverItem[IsleData][i]) {
+                                datahoverItem[IsleData][i] = {};
+                              }
+
+                              datahoverItem[IsleData][i] = '';
+
+                              for (var x = 0; x <= numberOfProducts - 1; x++) {
+
+                              
+                                if(DataRes && DataRes.prd_data_name &&  DataRes.prd_data_name[IsleData] && DataRes.prd_data_name[IsleData][i] && DataRes.prd_data_qty &&  DataRes.prd_data_qty[IsleData] && DataRes.prd_data_qty[IsleData][i]){
+                                  
+                                  console.log(datahoverItem[IsleData][i])
+                                  datahoverItem[IsleData][i] += '<tr>';
+                                  datahoverItem[IsleData][i]  += '<td>';
+                                  datahoverItem[IsleData][i]  += DataRes.prd_data_name[IsleData][i];
+                                  datahoverItem[IsleData][i] += '</td>';
+
+                                  datahoverItem[IsleData][i] += '<td>';
+                                  datahoverItem[IsleData][i]  += DataRes.prd_data_qty[IsleData][i];
+                                  datahoverItem[IsleData][i]  += '</td>';
+                                  datahoverItem[IsleData][i]  += '</tr>';
+
+                                }
+                              }
+
+
+                              dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + DataRes[IsleData][i] + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
                             } else {
                               dataItems += '<td>&nbsp;</td>';
                             }
                           }
+                          dataItems += "</tr>";
+                          // dataItems += '</tr><tr style="height: 5px;">';
                         
-                          dataItems += '</tr><tr style="height: 5px;">';
-                        
-                          for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td>&nbsp;</td>';
-                          }
+                          // for (let i = j; i < j + columnCount; i++) {
+                          //   dataItems += '<td>&nbsp;</td>';
+                          // }
                         
                           j += columnCount; // Update j based on the range
                         
-                          dataItems += "</tr>";
+                          // dataItems += "</tr>";
+
+                          $(document).ready(function () {
+                          $(".button-text.contactme").hover(function () {
+                                // alert($(this).data("has-data"))
+                                  if ($(this).data("has-data") === true) {
+                                      $(this).find('.emailcontainer').show('slow');
+                                  }
+                              }, function () {
+                                  $(this).find('.emailcontainer').hide('slow');
+                              });
+                          });
+                       
                         
                           dataBody.append(dataItems);
                         });
@@ -879,12 +1586,12 @@
                         
                         let j = 1;
                         let k = 54;
-                        
+                        var datahoverItem = [];
                         dataIsle.forEach(function(isleItem) {
                           var dataItems = '';
                           const IsleData = isleItem;
                         
-                          dataItems = '<tr><td rowspan="4"><strong>' + isleItem + '</strong></td></tr>';
+                          dataItems = '<tr><td rowspan="3"><strong><h2>' + isleItem + '</h2></strong></td></tr>';
                         
                           let columnCount = (isleItem >= 'G' && isleItem <= 'J') ? 38 : 54;
                           columnCount = Math.min(columnCount, 150 - j + 1); // Limit columnCount to remaining pallets
@@ -894,35 +1601,80 @@
                           }
                         
                           for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td>' + i + '</td>';
+                            dataItems += '<td><h4>' + i + '</h4></td>';
                           }
                         
                           dataItems += '</tr><tr>';
                         
                           for (let i = j; i < j + columnCount; i++) {
                             if (DataRes[IsleData] && DataRes[IsleData][i]) {
-                              // dataItems += '<td class="center vertical-text"><b>' + DataRes[IsleData][i] + '</b></td>';
                               if(DataRes[IsleData][i] >= 500){
-                                dataItems += '<td class="center vertical-text" bgcolor="Tomato"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                                color = "Tomato";
                               }else if(DataRes[IsleData][i] >= 250){
-                                dataItems += '<td class="center vertical-text" bgcolor="yellow"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                                color = "yellow";
                               }else{
-                                dataItems += '<td class="center vertical-text" bgcolor="white"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                               color = "white";
                               }
+
+
+                              const numberOfProducts = DataRes.prd_data_name[IsleData][i].length;
+
+                              if (!datahoverItem[IsleData]) {
+                                datahoverItem[IsleData] = {};
+                              }
+
+                              if (!datahoverItem[IsleData][i]) {
+                                datahoverItem[IsleData][i] = {};
+                              }
+
+                              datahoverItem[IsleData][i] = '';
+
+                              for (var x = 0; x <= numberOfProducts - 1; x++) {
+
+                              
+                                if(DataRes && DataRes.prd_data_name &&  DataRes.prd_data_name[IsleData] && DataRes.prd_data_name[IsleData][i] && DataRes.prd_data_qty &&  DataRes.prd_data_qty[IsleData] && DataRes.prd_data_qty[IsleData][i]){
+                                  
+                                  console.log(datahoverItem[IsleData][i])
+                                  datahoverItem[IsleData][i] += '<tr>';
+                                  datahoverItem[IsleData][i]  += '<td>';
+                                  datahoverItem[IsleData][i]  += DataRes.prd_data_name[IsleData][i];
+                                  datahoverItem[IsleData][i] += '</td>';
+
+                                  datahoverItem[IsleData][i] += '<td>';
+                                  datahoverItem[IsleData][i]  += DataRes.prd_data_qty[IsleData][i];
+                                  datahoverItem[IsleData][i]  += '</td>';
+                                  datahoverItem[IsleData][i]  += '</tr>';
+
+                                }
+                              }
+
+
+                              dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + DataRes[IsleData][i] + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
                             } else {
                               dataItems += '<td>&nbsp;</td>';
                             }
                           }
                         
-                          dataItems += '</tr><tr style="height: 5px;">';
+                          // dataItems += '</tr><tr style="height: 5px;">';
                         
-                          for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td>&nbsp;</td>';
-                          }
+                          // for (let i = j; i < j + columnCount; i++) {
+                          //   dataItems += '<td>&nbsp;</td>';
+                          // }
                         
                           j += columnCount; // Update j based on the range
                         
                           dataItems += "</tr>";
+
+                          $(document).ready(function () {
+                          $(".button-text.contactme").hover(function () {
+                                // alert($(this).data("has-data"))
+                                  if ($(this).data("has-data") === true) {
+                                      $(this).find('.emailcontainer').show('slow');
+                                  }
+                              }, function () {
+                                  $(this).find('.emailcontainer').hide('slow');
+                              });
+                          });
                         
                           dataBody.append(dataItems);
                         });
@@ -940,12 +1692,12 @@
                         
                         let j = 1;
                         let k = 54;
-                        
+                        var datahoverItem = [];
                         dataIsle.forEach(function(isleItem) {
                           var dataItems = '';
                           const IsleData = isleItem;
                         
-                          dataItems = '<tr><td rowspan="4"><strong>' + isleItem + '</strong></td></tr>';
+                          dataItems = '<tr><td rowspan="3"><strong><h2>' + isleItem + '</h2></strong></td></tr>';
                         
                           let columnCount = (isleItem >= 'G' && isleItem <= 'J') ? 38 : 54;
                           columnCount = Math.min(columnCount, 200 - j + 1); // Limit columnCount to remaining pallets
@@ -955,35 +1707,80 @@
                           }
                         
                           for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td>' + i + '</td>';
+                            dataItems += '<td><h4>' + i + '</h4></td>';
                           }
                         
                           dataItems += '</tr><tr>';
                         
                           for (let i = j; i < j + columnCount; i++) {
                             if (DataRes[IsleData] && DataRes[IsleData][i]) {
-                              // dataItems += '<td class="center vertical-text"><b>' + DataRes[IsleData][i] + '</b></td>';
                               if(DataRes[IsleData][i] >= 500){
-                                dataItems += '<td class="center vertical-text" bgcolor="Tomato"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                                color = "Tomato";
                               }else if(DataRes[IsleData][i] >= 250){
-                                dataItems += '<td class="center vertical-text" bgcolor="yellow"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                                color = "yellow";
                               }else{
-                                dataItems += '<td class="center vertical-text" bgcolor="white"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                               color = "white";
                               }
+
+
+                              const numberOfProducts = DataRes.prd_data_name[IsleData][i].length;
+
+                              if (!datahoverItem[IsleData]) {
+                                datahoverItem[IsleData] = {};
+                              }
+
+                              if (!datahoverItem[IsleData][i]) {
+                                datahoverItem[IsleData][i] = {};
+                              }
+
+                              datahoverItem[IsleData][i] = '';
+
+                              for (var x = 0; x <= numberOfProducts - 1; x++) {
+
+                              
+                                if(DataRes && DataRes.prd_data_name &&  DataRes.prd_data_name[IsleData] && DataRes.prd_data_name[IsleData][i] && DataRes.prd_data_qty &&  DataRes.prd_data_qty[IsleData] && DataRes.prd_data_qty[IsleData][i]){
+                                  
+                                  console.log(datahoverItem[IsleData][i])
+                                  datahoverItem[IsleData][i] += '<tr>';
+                                  datahoverItem[IsleData][i]  += '<td>';
+                                  datahoverItem[IsleData][i]  += DataRes.prd_data_name[IsleData][i];
+                                  datahoverItem[IsleData][i] += '</td>';
+
+                                  datahoverItem[IsleData][i] += '<td>';
+                                  datahoverItem[IsleData][i]  += DataRes.prd_data_qty[IsleData][i];
+                                  datahoverItem[IsleData][i]  += '</td>';
+                                  datahoverItem[IsleData][i]  += '</tr>';
+
+                                }
+                              }
+
+
+                              dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + DataRes[IsleData][i] + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
                             } else {
                               dataItems += '<td>&nbsp;</td>';
                             }
                           }
                         
-                          dataItems += '</tr><tr style="height: 5px;">';
+                          // dataItems += '</tr><tr style="height: 5px;">';
                         
-                          for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td>&nbsp;</td>';
-                          }
+                          // for (let i = j; i < j + columnCount; i++) {
+                          //   dataItems += '<td>&nbsp;</td>';
+                          // }
                         
                           j += columnCount; // Update j based on the range
                         
                           dataItems += "</tr>";
+
+                          $(document).ready(function () {
+                          $(".button-text.contactme").hover(function () {
+                                // alert($(this).data("has-data"))
+                                  if ($(this).data("has-data") === true) {
+                                      $(this).find('.emailcontainer').show('slow');
+                                  }
+                              }, function () {
+                                  $(this).find('.emailcontainer').hide('slow');
+                              });
+                          });
                         
                           dataBody.append(dataItems);
                         });
@@ -999,12 +1796,12 @@
                         
                         let j = 1;
                         let k = 54;
-                        
+                        var datahoverItem = [];
                         dataIsle.forEach(function(isleItem) {
                           var dataItems = '';
                           const IsleData = isleItem;
                         
-                          dataItems = '<tr><td rowspan="4"><strong>' + isleItem + '</strong></td></tr>';
+                          dataItems = '<tr><td rowspan="3"><strong><h1>' + isleItem + '</h1></strong></td></tr>';
                         
                           let columnCount = (isleItem >= 'G' && isleItem <= 'J') ? 38 : 54;
                           columnCount = Math.min(columnCount, 50 - j + 1); // Limit columnCount to remaining pallets
@@ -1014,36 +1811,79 @@
                           }
                         
                           for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td>' + i + '</td>';
+                            dataItems += '<td><h4>' + i + '</h4></td>';
                           }
                         
                           dataItems += '</tr><tr>';
                         
                           for (let i = j; i < j + columnCount; i++) {
                             if (DataRes[IsleData] && DataRes[IsleData][i]) {
-                              // dataItems += '<td class="center vertical-text"><b>' + DataRes[IsleData][i] + '</b></td>';
                               if(DataRes[IsleData][i] >= 500){
-                                dataItems += '<td class="center vertical-text" bgcolor="Tomato"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                                color = "Tomato";
                               }else if(DataRes[IsleData][i] >= 250){
-                                dataItems += '<td class="center vertical-text" bgcolor="yellow"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                                color = "yellow";
                               }else{
-                                dataItems += '<td class="center vertical-text" bgcolor="white"><b style="color:black">' + DataRes[IsleData][i] + '</b></td>';
+                               color = "white";
                               }
+
+
+                              const numberOfProducts = DataRes.prd_data_name[IsleData][i].length;
+
+                              if (!datahoverItem[IsleData]) {
+                                datahoverItem[IsleData] = {};
+                              }
+
+                              if (!datahoverItem[IsleData][i]) {
+                                datahoverItem[IsleData][i] = {};
+                              }
+
+                              datahoverItem[IsleData][i] = '';
+
+                              for (var x = 0; x <= numberOfProducts - 1; x++) {
+
+                              
+                                if(DataRes && DataRes.prd_data_name &&  DataRes.prd_data_name[IsleData] && DataRes.prd_data_name[IsleData][i] && DataRes.prd_data_qty &&  DataRes.prd_data_qty[IsleData] && DataRes.prd_data_qty[IsleData][i]){
+                                  
+                                  console.log(datahoverItem[IsleData][i])
+                                  datahoverItem[IsleData][i] += '<tr>';
+                                  datahoverItem[IsleData][i]  += '<td>';
+                                  datahoverItem[IsleData][i]  += DataRes.prd_data_name[IsleData][i];
+                                  datahoverItem[IsleData][i] += '</td>';
+
+                                  datahoverItem[IsleData][i] += '<td>';
+                                  datahoverItem[IsleData][i]  += DataRes.prd_data_qty[IsleData][i];
+                                  datahoverItem[IsleData][i]  += '</td>';
+                                  datahoverItem[IsleData][i]  += '</tr>';
+
+                                }
+                              }
+
+
+                              dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + DataRes[IsleData][i] + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
                             } else {
                               dataItems += '<td>&nbsp;</td>';
                             }
                           }
                         
-                          dataItems += '</tr><tr style="height: 5px;">';
+                          // dataItems += '</tr><tr style="height: 5px;">';
                         
-                          for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td>&nbsp;</td>';
-                          }
+                          // for (let i = j; i < j + columnCount; i++) {
+                          //   dataItems += '<td>&nbsp;</td>';
+                          // }
                         
                           j += columnCount; // Update j based on the range
                         
                           dataItems += "</tr>";
-                        
+                          $(document).ready(function () {
+                          $(".button-text.contactme").hover(function () {
+                                // alert($(this).data("has-data"))
+                                  if ($(this).data("has-data") === true) {
+                                      $(this).find('.emailcontainer').show('slow');
+                                  }
+                              }, function () {
+                                  $(this).find('.emailcontainer').hide('slow');
+                              });
+                          });
                           dataBody.append(dataItems);
                         });
 

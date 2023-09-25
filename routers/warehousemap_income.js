@@ -106,171 +106,99 @@ router.get("/view", auth, async (req, res) => {
 })
 
 
-// router.post('/MapData', async (req, res) => {
-//   const { warehouseNew, rooms, Type } = req.body 
-//   console.log(req.body)
-  // const warehouse_data = await warehouse.aggregate([
-  //   {
-  //     $unwind: "$product_details"
-  //   },
-  //   {
-  //     $match: {
-  //       name: warehouseNew,
-  //       room: rooms,
-  //       "product_details.type": Type
-  //     }
-  //   },
-  //   {
-  //     $group: {
-  //       _id: {
-  //         bay: "$product_details.bay",
-  //         bin: "$product_details.bin",
-  //         type: "$product_details.type",
-  //         floorllevel: "$product_details.floorlevel"
-  //       },
-  //       count: { $sum: "$product_details.product_stock" }
-  //     }
-  //   }
-  // ]);
+router.post('/MapData', async (req, res) => {
+  const { warehouseNew, level, rooms } = req.body 
 
 
-  // const warehouse_data = await warehouse.aggregate([
-  //   {
-  //     $unwind: "$product_details"
-  //   },
-  //   {
-  //     $match: {
-  //       name: warehouseNew,
-  //       room: rooms,
-  //       "product_details.type": Type
-  //     }
-  //   },
-  //   {
-  //     $group: {
-  //       _id: {
-  //         bay: "$product_details.bay",
-  //         bin: "$product_details.bin",
-  //         type: "$product_details.type",
-  //         floorlevel: "$product_details.floorlevel"
-  //       },
-  //       products: {
-  //         $push: {
-  //           product_name: "$product_details.product_name",
-  //           product_quantity: "$product_details.product_stock"
-  //         }
-  //       },
-  //       totalQuantity: {
-  //         $sum: "$product_details.product_stock"
-  //       }
-  //     }
-  //   },
-  //   {
-  //     $project: {
-  //       _id: 0,
-  //       bay: "$_id.bay",
-  //       bin: "$_id.bin",
-  //       type: "$_id.type",
-  //       floorlevel: "$_id.floorlevel",
-  //       products: 1,
-  //       totalQuantity: 1
-  //     }
-  //   }
-  // ]);
+  
+    const warehouse_data =  await warehouse.aggregate([
+      {
+        $unwind: "$product_details" // Split the "product" array into separate documents
+      },
+      {
+        $match: {
+          name: warehouseNew,
+          "product_details.level": parseInt(level),
+          room: rooms
+        }
+      },
+      {
+        $group: {
+          _id: {
+                isle: "$product_details.isle",
+                pallet: "$product_details.pallet"
+          },
+          products: {
+            $push: {
+              product_name: "$product_details.product_name",
+              product_quantity: "$product_details.product_stock"
+            }
+          },
+          totalQuantity: {
+            $sum: {
+              $cond: {
+                if: { $gt: ["$product_details.product_stock", 0] },
+                then: "$product_details.product_stock",
+                else: 0
+              }
+            }
+          }
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          isle: "$_id.isle",
+          pallet: "$_id.pallet",
+          products: {
+            $filter: {
+              input: "$products",
+              as: "product",
+              cond: { $gt: ["$$product.product_quantity", 0] }
+            }
+          },
+          totalQuantity: 1
+        }
+      }
+    ]);
 
+    // console.log(warehouse_data)
+  res.json(warehouse_data);
+})
 
-  router.post('/MapData', async (req, res) => {
-    const { warehouseNew, level, rooms } = req.body 
+//Original
+//   router.post('/MapData', async (req, res) => {
+//     const { warehouseNew, level, rooms } = req.body 
 
   
     
-      const warehouse_data =  await warehouse.aggregate([
-        {
-          $unwind: "$product_details" // Split the "product" array into separate documents
-        },
-        {
-          $match: {
-            name: warehouseNew,
-            "product_details.level": parseInt(level),
-            room: rooms
-          }
-        },
-        {
-          $group: {
-            _id: {
-                  isle: "$product_details.isle",
-                  pallet: "$product_details.pallet"
-            },
-            count: { $sum: "$product_details.product_stock" } // Count the occurrences of each group
-          }
-        }
-      ]);
+//       const warehouse_data =  await warehouse.aggregate([
+//         {
+//           $unwind: "$product_details" // Split the "product" array into separate documents
+//         },
+//         {
+//           $match: {
+//             name: warehouseNew,
+//             "product_details.level": parseInt(level),
+//             room: rooms
+//           }
+//         },
+//         {
+//           $group: {
+//             _id: {
+//                   isle: "$product_details.isle",
+//                   pallet: "$product_details.pallet"
+//             },
+//             count: { $sum: "$product_details.product_stock" } // Count the occurrences of each group
+//           }
+//         }
+//       ]);
 
-      // console.log(warehouse_data)
-    res.json(warehouse_data);
-})
-
-
-  // const warehouse_data = await warehouse.aggregate([
-  //   {
-  //     $unwind: "$product_details"
-  //   },
-  //   {
-  //     $match: {
-  //       name: warehouseNew,
-  //       room: rooms,
-  //       "product_details.type": Type
-  //     }
-  //   },
-  //   {
-  //     $group: {
-  //       _id: {
-  //         bay: "$product_details.bay",
-  //         bin: "$product_details.bin",
-  //         type: "$product_details.type",
-  //         floorlevel: "$product_details.floorlevel"
-  //       },
-  //       products: {
-  //         $push: {
-  //           product_name: "$product_details.product_name",
-  //           product_quantity: "$product_details.product_stock"
-  //         }
-  //       },
-  //       totalQuantity: {
-  //         $sum: {
-  //           $cond: {
-  //             if: { $gt: ["$product_details.product_stock", 0] },
-  //             then: "$product_details.product_stock",
-  //             else: 0
-  //           }
-  //         }
-  //       }
-  //     }
-  //   },
-  //   {
-  //     $project: {
-  //       _id: 0,
-  //       bay: "$_id.bay",
-  //       bin: "$_id.bin",
-  //       type: "$_id.type",
-  //       floorlevel: "$_id.floorlevel",
-  //       products: {
-  //         $filter: {
-  //           input: "$products",
-  //           as: "product",
-  //           cond: { $gt: ["$$product.product_quantity", 0] }
-  //         }
-  //       },
-  //       totalQuantity: 1
-  //     }
-  //   }
-  // ]);
-  
-  
-  
-  
-
-// res.json(warehouse_data);
+//       // console.log(warehouse_data)
+//     res.json(warehouse_data);
 // })
+
+
 
 
 router.post('/MapData2', async (req, res) => {
@@ -279,68 +207,6 @@ router.post('/MapData2', async (req, res) => {
     let warehouse_data;
     if(room_cat == "All"){
 
-      // warehouse_data = await warehouse.aggregate([
-      //   {
-      //     $unwind: "$product_details"
-      //   },
-      //   {
-      //     $match: {
-      //       name: warehouseNew,
-      //     }
-      //   },
-      //   {
-      //     $group: {
-      //       _id: {
-      //         bay: "$product_details.bay"
-      //       },
-      //       count: { $sum: "$product_details.product_stock" },
-           
-      //     }
-      //   }
-      // ]);
-
-      // warehouse_data = await warehouse.aggregate([
-      //   {
-      //     $unwind: "$product_details"
-      //   },
-      //   {
-      //     $match: {
-      //       name: warehouseNew,
-      //     }
-      //   },
-      //   {
-      //     $group: {
-      //       _id: {
-      //         bay: "$product_details.bay",
-      //         product: "$product_details.product_name",
-      //         expiry: "$product_details.expiry_date"
-      //       },
-      //       count: { $sum: "$product_details.product_stock" },
-      //       production_date: { $first : "$product_details.production_date" },
-      //     }
-      //   },
-      //   {
-      //     $group: {
-      //       _id: "$_id.bay",
-      //       products: {
-      //         $push: {
-      //           product: "$_id.product",
-      //           quantity: "$count",
-      //           production_date: "$production_date"
-      //         }
-      //       },
-      //       totalQuantity: { $sum: "$count" }
-      //     }
-      //   },
-      //   {
-      //     $project: {
-      //       _id: 0,
-      //       bay: "$_id",
-      //       products: 1,
-      //       totalQuantity: 1
-      //     }
-      //   }
-      // ]);
       
       warehouse_data = await warehouse.aggregate([
         {
