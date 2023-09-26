@@ -591,6 +591,7 @@ router.post("/view/add_purchases", auth, async (req, res) => {
         var prod_unit_list = prod_unit_array
         var prod_secondunit_list = prod_secondunit_array
         var prod_level_list = prod_level_array
+        var level_array_list = level_array
         
         
 
@@ -604,18 +605,19 @@ router.post("/view/add_purchases", auth, async (req, res) => {
                                 '<td style="border: 1px solid black;">' + quantity_list[n] + '</td>' +
                                 '<td style="border: 1px solid black;">' + prod_unit_list[n] + '</td>' +
                                 '<td style="border: 1px solid black;">' + prod_secondunit_list[n] + '</td>' +
+                                '<td style="border: 1px solid black;">' + level_array_list[n] + '</td>' +
                                 '<td style="border: 1px solid black;">' + prod_level_list[n] + '</td>' +
                             '</tr>'
         }
         
         console.log("product_list", arrayItems);
-        
+        // res.json(email_data);
+        // return;
 
         let mailTransporter = nodemailer.createTransport({
-            // host: email_data.host,
-            // port: Number(email_data.port),
-            // secure: false,
-            service: 'gmail',
+            host: email_data.host,
+            port: Number(email_data.port),
+            secure: false,
             auth: {
                 user: email_data.email,
                 pass: email_data.password
@@ -624,7 +626,7 @@ router.post("/view/add_purchases", auth, async (req, res) => {
 
         let mailDetails = {
             from: email_data.email,
-            to: suppliers_data.email,
+            to: 'christian.villamer@jakagroup.com',
             subject:'Purchase Mail',
             attachments: [{
                 filename: 'Logo.png',
@@ -663,8 +665,7 @@ router.post("/view/add_purchases", auth, async (req, res) => {
                                     '<th style="border: 1px solid black;"> Unit </th>'+
                                     '<th style="border: 1px solid black;"> Secondary Unit </th>'+
                                     '<th style="border: 1px solid black;"> Level </th>'+
-                                    '<th style="border: 1px solid black;"> Isle </th>'+
-                                    '<th style="border: 1px solid black;"> Pallet </th>'+
+                                    '<th style="border: 1px solid black;"> Location </th>'+
                                 '</tr>'+
                             '</thead>'+
                             '<tbody style="text-align: center;">'+

@@ -577,82 +577,11 @@ router.post("/view/add_sales", auth, async (req, res) => {
                             '</tr>'
         }
         
-        console.log("product_list", arrayItems);
         
 
-        let mailTransporter = nodemailer.createTransport({
-            // host: email_data.host,
-            // port: Number(email_data.port),
-            // secure: false,
-            service: 'gmail',
-            auth: {
-                user: email_data.email,
-                pass: email_data.password
-            }
-        });
+       
 
-        let mailDetails = {
-            from: email_data.email,
-            to: customer_data.email,
-            subject:'Sale Product Mail',
-            attachments: [{
-                filename: 'Logo.png',
-                path: __dirname + '/../public' +'/upload/'+master[0].image,
-                cid: 'logo'
-           }],
-            html:'<!DOCTYPE html>'+
-                '<html><head><title></title>'+
-                '</head><body>'+
-                    '<div>'+
-                        '<div style="display: flex; align-items: center; justify-content: center;">'+
-                            '<div>'+
-                                '<img src="cid:logo" class="rounded" width="66.5px" height="66.5px"></img>'+
-                            '</div>'+
-                        
-                            '<div>'+
-                                '<h2> '+ master[0].site_title +' </h2>'+
-                            '</div>'+
-                        '</div>'+
-                        '<hr class="my-3">'+
-                        '<div>'+
-                            '<h5 style="text-align: left;">'+
-                                ' Order Number : '+ invoice +' '+
-                                '<span style="float: right;">'+
-                                    ' Order Date : '+ date +' '+
-                                '</span>'+
-                                
-                            '</h5>'+
-                        '</div>'+
-                        '<table style="width: 100% !important;">'+
-                            '<thead style="width: 100% !important;">'+
-                                '<tr>'+
-                                    '<th style="border: 1px solid black;"> Product Name </th>'+
-                                    '<th style="border: 1px solid black;"> Quantity </th>'+
-                                    
-                                '</tr>'+
-                            '</thead>'+
-                            '<tbody style="text-align: center;">'+
-                                ' '+ arrayItems +' '+
-                            '</tbody>'+
-                        '</table>'+
-                        
-                        
-                        '<div>'+
-                            '<strong> Regards </strong>'+
-                            '<h5>'+ master[0].site_title +'</h5>'+
-                        '</div>'+
-                    '</div>'+
-                '</body></html>'
-        };
         
-        mailTransporter.sendMail(mailDetails, function(err, data) {
-            if(err) {
-                console.log(err);
-                console.log('Error Occurs');
-            } else {
-                console.log('Email sent successfully');
-            }
-        });
 
         
         // ------------- email end ------------- //
@@ -883,12 +812,107 @@ router.post("/preview/:id", auth , async (req, res) => {
 
                     try {
                         
-                        for (const warehouseData of updatedWarehouseDataArray) {
-                            await warehouseData.save()
+                        // for (const warehouseData of updatedWarehouseDataArray) {
+                        //     await warehouseData.save()
+                        // }
+                        
+                        // new_sales.finalize = "True"
+                        // const sales_data = await new_sales.save();
+                        
+
+                        
+                        var product_list = new_sales.sale_product
+                        const master = await master_shop.find()
+                        const email_data = await email_settings.findOne()
+                        let mailTransporter = nodemailer.createTransport({
+                            host: email_data.host,
+                            port: Number(email_data.port),
+                            secure: false,
+                            auth: {
+                                user: email_data.email,
+                                pass: email_data.password
+                            }
+                        });
+
+                        var arrayItems = "";
+                        var n;
+                        for (n in product_list) {
+                            arrayItems +=  '<tr>'+
+                                                '<td style="border: 1px solid black;">' + product_list[n].product_name + '</td>' +
+                                                '<td style="border: 1px solid black;">' + product_list[n].quantity + '</td>' +
+                                                '<td style="border: 1px solid black;">' + product_list[n].room_name + '</td>' +
+                                                '<td style="border: 1px solid black;">' + product_list[n].level + '</td>' +
+                                                '<td style="border: 1px solid black;">' + product_list[n].isle+product_list[n].pallet + '</td>' +
+                                                
+                                            '</tr>'
                         }
                         
-                        new_sales.finalize = "True"
-                        const sales_data = await new_sales.save()
+                        let mailDetails = {
+                            from: email_data.email,
+                            to: 'christian.villamer@jakagroup.com',
+                            subject:'Sale Product Mail',
+                            attachments: [{
+                                filename: 'Logo.png',
+                                path: __dirname + '/../public' +'/upload/'+master[0].image,
+                                cid: 'logo'
+                           }],
+                            html:'<!DOCTYPE html>'+
+                                '<html><head><title></title>'+
+                                '</head><body>'+
+                                    '<div>'+
+                                        '<div style="display: flex; align-items: center; justify-content: center;">'+
+                                            '<div>'+
+                                                '<img src="cid:logo" class="rounded" width="66.5px" height="66.5px"></img>'+
+                                            '</div>'+
+                                        
+                                            '<div>'+
+                                                '<h2> '+ master[0].site_title +' </h2>'+
+                                            '</div>'+
+                                        '</div>'+
+                                        '<hr class="my-3">'+
+                                        '<div>'+
+                                            '<h5 style="text-align: left;">'+
+                                                ' Order Number : '+ new_sales.invoice +' '+
+                                                '<span style="float: right;">'+
+                                                    ' Order Date : '+ new_sales.date +' '+
+                                                '</span>'+
+                                                
+                                            '</h5>'+
+                                        '</div>'+
+                                        '<table style="width: 100% !important;">'+
+                                            '<thead style="width: 100% !important;">'+
+                                                '<tr>'+
+                                                    '<th style="border: 1px solid black;"> Product Name </th>'+
+                                                    '<th style="border: 1px solid black;"> Quantity </th>'+
+                                                    '<th style="border: 1px solid black;"> Room </th>'+
+                                                    '<th style="border: 1px solid black;"> Level </th>'+
+                                                    '<th style="border: 1px solid black;"> Location </th>'+
+                                                    
+                                                    
+                                                '</tr>'+
+                                            '</thead>'+
+                                            '<tbody style="text-align: center;">'+
+                                                ' '+ arrayItems +' '+
+                                            '</tbody>'+
+                                        '</table>'+
+                                        
+                                        
+                                        '<div>'+
+                                            '<strong> Regards </strong>'+
+                                            '<h5>'+ master[0].site_title +'</h5>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</body></html>'
+                        };
+                        
+                        mailTransporter.sendMail(mailDetails, function(err, data) {
+                            if(err) {
+                                console.log(err);
+                                console.log('Error Occurs');
+                            } else {
+                                console.log('Email sent successfully');
+                            }
+                        });
                             
                        
                         req.flash("success", `Sales Update successfully`)
