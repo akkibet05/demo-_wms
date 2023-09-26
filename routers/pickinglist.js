@@ -376,8 +376,8 @@ router.get("/PDF/:id", auth, async (req, res) => {
             table.datas.push(rowData);
           });
 
-
-          let number = 17-table.datas.length;
+         
+          let number = 14-table.datas.length;
 
           for(var x = 1; x <= number; x++){
 
@@ -428,9 +428,9 @@ router.get("/PDF/:id", auth, async (req, res) => {
             
            
           });
-          var lastTableY = doc.y -5
+          var lastTableY = doc.page.height -300
           var lastTableX = doc.x
-
+          console.log("x: " + doc.x + " <> " + "y: " + doc.y + " <> " + "doc page: " + doc.page.height);
 
           doc
           .fontSize(9)
@@ -582,8 +582,7 @@ router.get("/PDF/:id", auth, async (req, res) => {
           .text('Warehouse Supervisor', lastTableX, lastTableY+=35);
 
 
-          
-
+          // doc.addPage()
 
 
         // doc
