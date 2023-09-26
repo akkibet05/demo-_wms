@@ -38,7 +38,7 @@
             <!--**********************************
         Header start
     ***********************************-->
-            <%- include('./partials/header',{titel: "Outgoing for Finished Goods"}); -%>
+            <%- include('./partials/header',{titel: "Outgoing"}); -%>
 
                 <!--**********************************
         Header end ti-comment-alt
@@ -90,7 +90,9 @@
                                                         <th><%= language.customer %> </th>
                                                         <th><%= language.warehouse %> </th>
                                                         <th>Qty  </th>
-                                                        <th>Bay  </th>
+                                                        <th>Level  </th>
+                                                        <th>isle  </th>
+                                                        <th>Location  </th>
                                                         <!-- <th>Print Picking list  </th> -->
                                                         <th>Status </th>
                                                         <th>View </th>
@@ -239,6 +241,14 @@
 
                                                                 <td class="text-nowrap">
                                                                     <%= sales.level.toLocaleString() %>
+                                                                </td>
+
+                                                                <td class="text-nowrap">
+                                                                    <%= sales.isle.toLocaleString() %>
+                                                                </td>
+
+                                                                <td class="text-nowrap">
+                                                                    <%= sales.pallet.toLocaleString() %>
                                                                 </td>
 
                                                                 <td class="text-nowrap">

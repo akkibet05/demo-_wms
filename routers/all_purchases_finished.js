@@ -63,7 +63,7 @@ router.get("/view", auth, async (req, res) => {
                 expiry_date: { $first: "$expiry_date" },
                 suppliers_docs: { $first: "$suppliers_docs" },
                 total_product_quantity: { $sum: "$product.quantity" },
-                level: { $addToSet: "$product.bay" },
+                level: { $addToSet: "$product.level" },
                 isle: { $addToSet: "$product.bin" },
                 type: { $addToSet: "$product.type" },
                 floorlevel: { $addToSet: "$product.floorlevel" },
@@ -117,7 +117,7 @@ router.get("/view", auth, async (req, res) => {
                 suppliers: { $first: "$suppliers" },
                 date: { $first: "$date" },
                 warehouse_name: { $first: "$warehouse_name" },
-                room: { $first: "$room" },
+                room: { $addToSet: "$product.room_name" },
                 product: { $push: "$product" },
                 note: { $first: "$note" },
                 paid_amount: { $first: "$paid_amount" },
@@ -127,10 +127,9 @@ router.get("/view", auth, async (req, res) => {
                 expiry_date: { $first: "$expiry_date" },
                 suppliers_docs: { $first: "$suppliers_docs" },
                 total_product_quantity: { $sum: "$product.quantity" },
-                level: { $addToSet: "$product.bay" },
-                isle: { $addToSet: "$product.bin" },
-                type: { $addToSet: "$product.type" },
-                floorlevel: { $addToSet: "$product.floorlevel" },
+                level: { $addToSet: "$product.level" },
+                isle: { $addToSet: "$product.isle" },
+                pallet: { $addToSet: "$product.pallet" },
               }
               
             },
@@ -153,8 +152,7 @@ router.get("/view", auth, async (req, res) => {
                 total_product_quantity: 1,
                 level: 1,
                 isle: 1,
-                type: 1,
-                floorlevel:1
+                pallet: 1,
                 
               }
            }

@@ -39,7 +39,7 @@
             <!--**********************************
             Header start
         ***********************************-->
-            <%- include('./partials/header',{titel: "Tansfer for Finished Goods"}); -%>
+            <%- include('./partials/header',{titel: "Tansfer "}); -%>
 
                 <!--**********************************
             Header end ti-comment-alt
@@ -217,7 +217,7 @@
 
                                                                                     <td class="align-top">
                                                                                         <input type="text" name="from_prod_level"
-                                                                                            id="from_prod_level" value="<%= stocks.from_level %>"
+                                                                                            id="from_prod_level" value="<%= stocks.level %>"
                                                                                             class="form-control from_prod_level" style="width: 150px;" readonly>
                                                                                     </td>
                                                                                     
@@ -236,7 +236,7 @@
                                                                         
                                                                         
                                                                         <td class="align-top">
-                                                                            <input type="text" name="to_prod_qty" id="to_prod_qty<%= x %>" value="<%= transfer1.to_quantity %>" onkeyup="ValidationForMaxQTY('<%= x %>')"  class="form-control to_prod_qty" readonly>
+                                                                            <input type="text" name="to_prod_qty" id="to_prod_qty<%= x %>" value="<%= transfer1.to_quantity %>" style="width: 150px;" onkeyup="ValidationForMaxQTY('<%= x %>')"  class="form-control to_prod_qty" readonly>
                                                                         </td>
 
                                                                         <input type="hidden" name="secondary_unit" id="secondary_unit<%= x %>" value="<%= transfer1.secondary_unit %>"  class="form-control secondary_unit" >

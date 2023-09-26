@@ -38,7 +38,7 @@
             <!--**********************************
         Header start
     ***********************************-->
-            <%- include('./partials/header',{titel: "Incoming for Finished Goods"}); -%>
+            <%- include('./partials/header',{titel: "Incoming"}); -%>
 
                 <!--**********************************
         Header end ti-comment-alt
@@ -90,7 +90,9 @@
                                                         <th><%= language.warehouse %> </th>
                                                         <th>Room </th>
                                                         <th>Qty  </th>
-                                                        <th>Bay  </th>
+                                                        <th>Level  </th>
+                                                        <th>Isle  </th>
+                                                        <th>Location  </th>
                                                         <th>Print </th>
                                                         <!-- <th><%= language.edit %> </th> -->
                                                         <!-- <th><%= language.action %> </th> -->
@@ -241,6 +243,15 @@
 
                                                                 <td class="text-nowrap">
                                                                     <%= purchases.level.toLocaleString() %>
+                                                                </td>
+
+                                                                <td class="text-nowrap">
+                                                                    <%= purchases.isle.toLocaleString() %>
+                                                                </td>
+
+
+                                                                <td class="text-nowrap">
+                                                                    <%= purchases.pallet.toLocaleString() %>
                                                                 </td>
 
                                                               

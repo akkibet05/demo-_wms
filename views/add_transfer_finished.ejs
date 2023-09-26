@@ -385,7 +385,7 @@
             <!--**********************************
             Header start
         ***********************************-->
-            <%- include('./partials/header',{titel: "Transfer for Finished Goods"}); -%>
+            <%- include('./partials/header',{titel: "Transfer"}); -%>
 
                 <!--**********************************
             Header end ti-comment-alt
@@ -1009,7 +1009,7 @@
 
 
             function ValidationForMaxQTY(i){
-                var prod_qty = document.getElementById("to_prod_qty"+i).value;
+                var prod_qty = document.getElementById("New_Qty_Converted"+i).value;
                 var stocks_qty = document.getElementById("MaxStocks_data"+i).value;
                 // alert(prod_qty + " <> " + stocks_qty)
                 if(parseInt(prod_qty) >  parseInt(stocks_qty)){

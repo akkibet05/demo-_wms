@@ -47,10 +47,9 @@ router.get("/view", auth, async (req, res) => {
                     return_data: { $first: "$return_data" },
                     customers_docs: { $first: "$customers_docs" },
                     total_saleproduct_quantity: { $sum: "$sale_product.quantity" },
-                    level: { $addToSet: "$sale_product.bay" },
-                    isle: { $addToSet: "$sale_product.bin" },
-                    type: { $addToSet: "$sale_product.type" },
-                    pallet: { $addToSet: "$sale_product.floorlevel" },
+                    level: { $addToSet: "$sale_product.level" },
+                    isle: { $addToSet: "$sale_product.isle" },
+                    pallet: { $addToSet: "$sale_product.pallet" },
                     finalize: { $first: "$finalize" }
                   }
                   
@@ -107,10 +106,9 @@ router.get("/view", auth, async (req, res) => {
                     return_data: { $first: "$return_data" },
                     customers_docs: { $first: "$customers_docs" },
                     total_saleproduct_quantity: { $sum: "$sale_product.quantity" },
-                    level: { $addToSet: "$sale_product.bay" },
-                    isle: { $addToSet: "$sale_product.bin" },
-                    type: { $addToSet: "$sale_product.type" },
-                    pallet: { $addToSet: "$sale_product.floorlevel" },
+                    level: { $addToSet: "$sale_product.level" },
+                    isle: { $addToSet: "$sale_product.isle" },
+                    pallet: { $addToSet: "$sale_product.pallet" },
                     finalize: { $first: "$finalize" }
                   }
                   
