@@ -295,17 +295,14 @@ router.get("/view/product/:id", auth, async (req, res) => {
 
 
 router.post("/Reports", async (req, res)=> {
-    const { warehouseNew, rooms, Type, process_cat, room_cat } = req.body
+    const { warehouseNew, rooms, Type } = req.body
     let warehouse_data;
-    console.log(req.body)
-    // return
-    if(process_cat == "raw"){
+
         warehouse_data = await warehouse.aggregate([
             {
                 $match:{
                     name: warehouseNew,
                     room: rooms,
-                    warehouse_category: "Raw Materials"
                 }
             },
             {
@@ -325,100 +322,6 @@ router.post("/Reports", async (req, res)=> {
                 }
             }
         ]);
-    }else if(process_cat == "finish"){
-        if(rooms == "All"){
-            
-            warehouse_data = await warehouse.aggregate([
-                {
-                    $match:{
-                        name: warehouseNew,
-                        // room: rooms,
-                        warehouse_category: "Finished Goods"
-                    }
-                },
-                {
-                    $unwind: "$product_details"
-                },
-                {
-                    $match:{
-                      
-                        "product_details.product_stock": { $gt: 0 } 
-                    }
-                },
-                {
-                    $sort: { 
-                        "warehouse_category": 1,
-                        "product_details.bay": 1 
-                        
-                    }
-                }
-            ]); 
-
-            // warehouse_data.sort((a, b) => a.product_details.bay - b.product_details.bay);
-
-
-        }else{
-            
-            warehouse_data = await warehouse.aggregate([
-                {
-                    $match:{
-                        name: warehouseNew,
-                        room: rooms,
-                        warehouse_category: "Finished Goods"
-                    }
-                },
-                {
-                    $unwind: "$product_details"
-                },
-                {
-                    $match:{
-                      
-                        "product_details.product_stock": { $gt: 0 } 
-                    }
-                },
-                {
-                    $sort: { 
-                        "warehouse_category": 1,
-                        "product_details.bay": 1 
-                        
-                    }
-                }
-            ]); 
-
-            // warehouse_data.sort((a, b) => a.product_details.bay - b.product_details.bay);
-        }
-        
-    }else{
-
-
-
-        console.log("ssd")
-        Include = [
-            {
-                $unwind: "$product_details"
-            },
-            {
-                $match:{
-                    // "product_details.type": Type,
-                    "product_details.product_stock": { $gt: 0 } 
-                }
-            },
-            {
-                $sort: { 
-                    "warehouse_category": 1,
-                    "product_details.bay": 1 
-                    
-                }
-            }
-        ]
-      
-
-        
-        warehouse_data = await warehouse.aggregate(Include);
-        // warehouse_data.sort((a, b) => a.product_details.bay - b.product_details.bay);
-
-    }
-    
     res.json(warehouse_data)
 })
 

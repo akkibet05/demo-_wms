@@ -24,25 +24,14 @@ function SelectRoom(){
         
     var varibale = document.getElementById("warehouse").value;
     var selectRoom = $('#room');
-    var AVal = document.getElementById("A").value;
-    var BVal = document.getElementById("B").value;
-
     $.ajax({
         url: '/warehousemap_Income/Rooms_data', 
         method: 'POST',
-        data: { warehouse_name: varibale, A:AVal, B:BVal  }, 
+        data: { warehouse_name: varibale }, 
         success: function(response) {
 
         
             selectRoom.empty();
-            if(AVal == "finish"){
-              var defaultOption = $('<option>').text("All").val("All").attr('roomcode', "All");
-              selectRoom.append(defaultOption);
-            }else if(AVal == "All"){
-                var defaultOption = $('<option>').text("All").val("All").attr('roomcode', "All");
-                selectRoom.append(defaultOption);
-            }
-            
                 $.each(response, function(index, data) {
                     var roomName = data.room_name;
                     var roomCode = data.room_name
@@ -132,10 +121,7 @@ function LogicDropdown(){
 
   function printDiv() {
     var printContents = document.getElementById("stock_report_table").innerHTML;
-    // var originalContents = document.body.innerHTML;
-    // document.body.innerHTML = printContents;
-    // window.print();
-    // document.body.innerHTML = originalContents;
+  
 
     var printWindow = window.open('', '_blank');
   
@@ -219,7 +205,6 @@ function LogicDropdown(){
                 dataItem +='<table id="example" class="table  text-center">';
                 dataItem +='<thead>';
                 dataItem +='<tr class="table-dark">';
-                dataItem +='<th scope="col"><h5>Product Category </h5></th>';
                 dataItem +='<th scope="col"><h5>Name</h5></th>';
                 dataItem +='<th scope="col"><h5>Room</h5></th>';
                 dataItem +='<th scope="col"><h5>Item Code</h5></th>';
@@ -232,7 +217,8 @@ function LogicDropdown(){
                 dataItem +='<th><h5>Production Date</h5></th>';
                 dataItem +='<th><h5>Expiry Date</h5></th>';
                 dataItem +='<th><h5>Stock Quantity</h5></th>';
-                dataItem +='<th><h5>Bin Location</h5></th>';
+                dataItem +='<th><h5>Level</h5></th>';
+                dataItem +='<th><h5>Location</h5></th>';
                 dataItem +='</tr>';
                 dataItem +='</thead>';
                 dataItem +='<tbody>';
@@ -242,17 +228,9 @@ function LogicDropdown(){
                     console.log(element)
                     
 
-                    if(element.warehouse_category == "Raw Materials"){
-                        var binlocation = element.product_details.storage+element.product_details.rack+element.product_details.bay+element.product_details.bin+element.product_details.type[0]+element.product_details.floorlevel;
-                    }else{
-                        var cat;
-                        if(element.name == "DRY GOODS"){
-                            cat = "DG"
-                        }else{
-                            cat = "FG"
-                        }
-                        var binlocation = cat+element.product_details.bay;
-                    }
+                
+                    var binlocation = element.product_details.isle+element.product_details.pallet;
+                  
 
                     var warehouse_cat = element.warehouse_category !== undefined ? element.warehouse_category : 0;
                     var warehouse_name = element.name !== undefined ? element.name : "";
@@ -261,8 +239,8 @@ function LogicDropdown(){
                     var itemdesc = element.product_details.product_name !== undefined ? element.product_details.product_name :"";
                     var primarycode = element.product_details.primary_code !== undefined ? element.product_details.primary_code :"";
                     var secondarycode = element.product_details.secondary_code !== undefined ? element.product_details.secondary_code :"";
-                    var expirydate = element.product_details.expiry_date !== undefined ? element.product_details.expiry_date :"";
-                    var productiondate = element.product_details.production_date !== undefined ? element.product_details.production_date :"";
+                    var expirydate = element.product_details.expiry_date !== undefined ? element.product_details.expiry_date :"No Date";
+                    var productiondate = element.product_details.production_date !== undefined ? element.product_details.production_date :"No Date";
 
                     var UOM = element.product_details.unit !== undefined ? element.product_details.unit :"";
                     var SndUOM = element.product_details.secondary_unit !== undefined ? element.product_details.secondary_unit :"";
@@ -270,7 +248,7 @@ function LogicDropdown(){
 
                 
                     dataItem +='<tr>';
-                    dataItem +='<td class="text-nowrap" ><h5>'+ warehouse_cat+'</h5></td>';
+                    // dataItem +='<td class="text-nowrap" ><h5>'+ warehouse_cat+'</h5></td>';
                     dataItem +='<td class="text-nowrap" ><h5>'+ warehouse_name +'</h5></td>';
                     dataItem +='<td class="text-nowrap" ><h5>'+ warehouse_room +'</h5></td>';
                     dataItem +='<td class="text-nowrap" ><h5>'+ itemcode +'</h5></td>';
@@ -283,6 +261,7 @@ function LogicDropdown(){
                     dataItem +='<td class="text-nowrap"><h5>'+ productiondate +'</h5></td>';
                     dataItem +='<td class="text-nowrap"><h5>'+ expirydate +'</h5></td>';
                     dataItem +='<td class="text-nowrap"><h5>'+ element.product_details.product_stock +'</h5></td>';
+                    dataItem +='<td class="text-nowrap"><h5>'+ element.product_details.level +'</h5></td>';
                     dataItem +='<td class="text-nowrap"><h5>'+ binlocation +'</h5></td>';
                     dataItem +='</tr>';
                     
@@ -294,7 +273,7 @@ function LogicDropdown(){
 
                 dataItem +='</div>';
             }else{
-                console.log(response)
+        
                 dataItem +='<div class="card-body">';
                 dataItem +='<table id="example" class="table  text-center">';
                 dataItem +='<thead>';

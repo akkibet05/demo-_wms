@@ -1640,7 +1640,7 @@ router.get("/barcode/:id", auth, async (req, res) => {
 
 router.post("/barcode_scanner", async (req, res) => {
     const { product_code } = req.body
-
+    var checkData;
  
     const product_data1 = await product.aggregate([
         {
