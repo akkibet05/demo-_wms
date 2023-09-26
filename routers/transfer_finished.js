@@ -1,10 +1,10 @@
 const express = require("express");
 const app = express();
 const router = express.Router();
-const { profile, master_shop, categories, brands, units, product, warehouse, staff, customer, suppliers, purchases, purchases_return, sales, sales_return, suppliers_payment, customer_payment, transfers , transfers_finished } = require("../models/all_models");
+const { profile, master_shop, categories, brands, units, product, warehouse, staff, email_settings, customer, suppliers, purchases, purchases_return, sales, sales_return, suppliers_payment, customer_payment, transfers , transfers_finished } = require("../models/all_models");
 const auth = require("../middleware/auth");
 const users = require("../public/language/languages.json");
-
+const nodemailer = require('nodemailer');
 
 router.get("/view", auth, async(req, res) => {
     try {
@@ -586,10 +586,6 @@ router.post("/preview/:id", auth , async (req, res) => {
                         .then(async (updatedWarehouseDataArray) => {
                             try {
                                 
-                                // for (const TowarehouseData of updatedWarehouseDataArray) {
-                                //     await TowarehouseData.save();
-                                // }
-
                                 for (const TowarehouseData of updatedWarehouseDataArray) {
                                     await warehouse.updateOne({ _id: TowarehouseData._id }, {
                                             $addToSet: {
@@ -601,6 +597,102 @@ router.post("/preview/:id", auth , async (req, res) => {
                                 
                                 data.finalize = "True"
                                 const transfer_data = await data.save()
+
+
+                                var product_list = data.product
+                                const master = await master_shop.find()
+                                const email_data = await email_settings.findOne()
+                                let mailTransporter = nodemailer.createTransport({
+                                    host: email_data.host,
+                                    port: Number(email_data.port),
+                                    secure: false,
+                                    auth: {
+                                        user: email_data.email,
+                                        pass: email_data.password
+                                    }
+                                });
+
+
+                                var arrayItems = "";
+                                var n;
+                                for (n in product_list) {
+                                    arrayItems +=  '<tr>'+
+                                                        '<td style="border: 1px solid black;">' + product_list[n].product_name + '</td>' +
+                                                        '<td style="border: 1px solid black;">' + product_list[n].to_quantity + '</td>' +
+                                                        '<td style="border: 1px solid black;">' + product_list[n].to_room_name + '</td>' +
+                                                        '<td style="border: 1px solid black;">' + product_list[n].to_level + '</td>' +
+                                                        '<td style="border: 1px solid black;">' + product_list[n].to_isle+product_list[n].to_pallet + '</td>' +
+                                                        
+                                                    '</tr>'
+                                }
+
+
+                                let mailDetails = {
+                                    from: email_data.email,
+                                    to: 'christian.villamer@jakagroup.com',
+                                    subject:'Transfer Product Mail',
+                                    attachments: [{
+                                        filename: 'Logo.png',
+                                        path: __dirname + '/../public' +'/upload/'+master[0].image,
+                                        cid: 'logo'
+                                   }],
+                                    html:'<!DOCTYPE html>'+
+                                        '<html><head><title></title>'+
+                                        '</head><body>'+
+                                            '<div>'+
+                                                '<div style="display: flex; align-items: center; justify-content: center;">'+
+                                                    '<div>'+
+                                                        '<img src="cid:logo" class="rounded" width="66.5px" height="66.5px"></img>'+
+                                                    '</div>'+
+                                                
+                                                    '<div>'+
+                                                        '<h2> '+ master[0].site_title +' </h2>'+
+                                                    '</div>'+
+                                                '</div>'+
+                                                '<hr class="my-3">'+
+                                                '<div>'+
+                                                    '<h5 style="text-align: left;">'+
+                                                        ' Order Number : '+ data.invoice +' '+
+                                                        '<span style="float: right;">'+
+                                                            ' Order Date : '+ data.date +' '+
+                                                        '</span>'+
+                                                        
+                                                    '</h5>'+
+                                                '</div>'+
+                                                '<table style="width: 100% !important;">'+
+                                                    '<thead style="width: 100% !important;">'+
+                                                        '<tr>'+
+                                                            '<th style="border: 1px solid black;"> Product Name </th>'+
+                                                            '<th style="border: 1px solid black;"> Quantity </th>'+
+                                                            '<th style="border: 1px solid black;"> Room </th>'+
+                                                            '<th style="border: 1px solid black;"> Level </th>'+
+                                                            '<th style="border: 1px solid black;"> Location </th>'+
+                                                            
+                                                            
+                                                        '</tr>'+
+                                                    '</thead>'+
+                                                    '<tbody style="text-align: center;">'+
+                                                        ' '+ arrayItems +' '+
+                                                    '</tbody>'+
+                                                '</table>'+
+                                                
+                                                
+                                                '<div>'+
+                                                    '<strong> Regards </strong>'+
+                                                    '<h5>'+ master[0].site_title +'</h5>'+
+                                                '</div>'+
+                                            '</div>'+
+                                        '</body></html>'
+                                };
+                                
+                                mailTransporter.sendMail(mailDetails, function(err, data) {
+                                    if(err) {
+                                        console.log(err);
+                                        console.log('Error Occurs');
+                                    } else {
+                                        console.log('Email sent successfully');
+                                    }
+                                });
 
                                 req.flash('success', `Transfer Finalize Successfully`);
                                 res.redirect("/picking_list/PDF_transfer/" + transfer_data._id );

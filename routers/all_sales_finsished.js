@@ -812,12 +812,12 @@ router.post("/preview/:id", auth , async (req, res) => {
 
                     try {
                         
-                        // for (const warehouseData of updatedWarehouseDataArray) {
-                        //     await warehouseData.save()
-                        // }
+                        for (const warehouseData of updatedWarehouseDataArray) {
+                            await warehouseData.save()
+                        }
                         
-                        // new_sales.finalize = "True"
-                        // const sales_data = await new_sales.save();
+                        new_sales.finalize = "True"
+                        const sales_data = await new_sales.save();
                         
 
                         
