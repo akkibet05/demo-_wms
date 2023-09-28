@@ -70,16 +70,23 @@
                                         </div>
 
                                         <div class="card-body">
-                                            
+                                            <% if(adjustment.finalize == "False"){ %>
                                             <a href="/picking_list/PDF_adjustment/<%= adjustment._id %>" id="picklist" data-id="<%= adjustment._id %>"
                                                     class="btn btn-warning btn-sm" target="_blank">
                                                     <i class="feather icon-printer"></i>
-                                            <% if(adjustment.finalize == "False"){ %>
+                                            
                                                 Print Picking List
-                                            <% } else{ %>
-                                                Print Delivery Receipt
-                                            <% } %>
+                                            </a>
+                                        <% } else{ %>
+
+                                        <a href="/picking_list/PDF_adjustmentFinal/<%= adjustment._id %>" id="picklist" data-id="<%= adjustment._id %>"
+                                                class="btn btn-warning btn-sm" target="_blank">
+                                                <i class="feather icon-printer"></i>
+                                        
+                                            Print J.O Adjustment
                                         </a>
+
+                                        <% } %>
                                         </div>
 
                                         <div class="card-body">

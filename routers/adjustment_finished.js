@@ -174,7 +174,9 @@ router.get("/view/add_adjustment", auth, async (req, res) => {
 
 router.post("/view/add_adjustment", auth, async(req, res) => {
     try{
-        const {warehouse_name, date, prod_name, level, isle, pallet, stock, types, adjust_qty, new_adjust_qty, note, Room_name, invoice, JO_number, expiry_date } = req.body
+        const {warehouse_name, date, prod_name, level, isle, pallet, stock, types, adjust_qty, new_adjust_qty, note, Room_name, invoice, JO_number, expiry_date,PO_number, ReqBy, dateofreq,typeservices, destination, deliverydate, driver, plate, van, DRSI, typevehicle } = req.body
+        // res.json(req.body)
+        // return
         if(typeof prod_name == "string"){
             var product_name_array = [req.body.prod_name]
             var level_array = [req.body.level]
@@ -311,7 +313,7 @@ router.post("/view/add_adjustment", auth, async(req, res) => {
             return res.redirect("back")
         }
 
-        const data = new adjustment_finished({ warehouse_name, date, product:newFilter, note, room: Room_name, invoice, JO_number, expiry_date })
+        const data = new adjustment_finished({ warehouse_name, date, product:newFilter, note, room: Room_name, invoice, JO_number, expiry_date, PO_number , RequestedBy: ReqBy, DateofRequest: dateofreq, typeservices, destination, deliverydate, driver, plate, van, DRSI, typevehicle:typevehicle })
 
         const adjustment_data = await data.save() 
         
@@ -622,7 +624,7 @@ router.post("/preview/:id", auth , async (req, res) => {
                         });
 
                     req.flash('success', `Adjustment Finalize Successfully`)
-                    res.redirect("/picking_list/PDF_adjustment/" + adjustment_data._id )
+                    res.redirect("/picking_list/PDF_adjustmentFinal/" + adjustment_data._id )
                 } catch (error) {
                     console.error(error);
                     res.status(500).json({ error: 'An error occurred while saving data.' });
