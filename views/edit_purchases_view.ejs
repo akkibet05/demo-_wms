@@ -71,10 +71,28 @@
 
                                         <div class="card-body">
                                             
-                                            <a href="/picking_list/pdf_puchases/<%= user._id %>" id="picklist" data-id="<%= user._id %>"
+                                            <!-- <a href="/picking_list/PDFFinal/<%= user._id %>" id="picklist" data-id="<%= user._id %>"
                                                     class="btn btn-warning btn-sm" target="_blank">
                                                     <i class="feather icon-printer"></i>
-                                            Print Incoming</a>
+                                            Print Incoming</a> -->
+
+                                            <% if(user.finalize == "False"){ %>
+                                                <a href="/picking_list/PDF/<%= user._id %>" id="picklist" data-id="<%= user._id %>"
+                                                        class="btn btn-warning btn-sm" target="_blank">
+                                                        <i class="feather icon-printer"></i>
+                                                
+                                                    Print Picking List
+                                                </a>
+                                            <% } else{ %>
+    
+                                            <a href="/picking_list/PDFFinal/<%= user._id %>" id="picklist" data-id="<%= user._id %>"
+                                                    class="btn btn-warning btn-sm" target="_blank">
+                                                    <i class="feather icon-printer"></i>
+                                            
+                                                Print J.O Adjustment
+                                            </a>
+    
+                                            <% } %>
                                         </div>
 
 
