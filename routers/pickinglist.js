@@ -823,6 +823,598 @@ router.get("/PDF_transfer/:id", auth, async (req, res) => {
       res.status(500).send("An error occurred while generating the PDF.");
   }
 });
+router.get("/PDF_transferFinal/:id", auth, async (req, res) => {
+  try {
+      const { username, email, role } = req.user;
+      const role_data = req.user;
+
+      const profile_data = await profile.findOne({ email: role_data.email });
+
+      const master = await master_shop.find();
+
+      const _id = req.params.id;
+      const user_id = await transfers_finished.findById(_id);
+
+      const doc = new PDFDocument({ margin: 30, size: 'A4', bufferPages: true });
+      doc.undash();
+
+      res.setHeader('Content-disposition', 'inline; filename="'+user_id.invoice+'.pdf"');
+      res.setHeader('Content-type', 'application/pdf');
+      var x=0;
+      var y=0;
+      var x1 =10;
+      var y1 = 20;
+
+      doc.pipe(res);
+
+
+      doc.image('./public/upload/JDI Logo.jpg', 20, 0, {fit: [100, 100]})
+
+      doc
+      .fontSize(10)
+      .font('Helvetica-Bold')
+      .text('JOB ORDER - Transfer', x+=190, y+=10);
+      
+      doc
+      .fontSize(9)
+      .text('Name of Client', x+=80, y+=25);
+
+      doc
+      .fontSize(9)
+      .text(user_id.customer, x+150, y-3);
+
+      doc
+      .fontSize(9)
+      .text('J.O. #', x, y+=13);
+
+
+      doc
+      .fontSize(9)
+      .text(user_id.invoice, x+150, y-3);
+
+      
+
+      doc.moveTo(x+100, y+5); // Move to the starting point
+      doc.lineTo(x+310, y+5); // Draw a line to the ending point
+      doc.stroke();
+
+
+      
+
+      doc
+      .fontSize(9)
+      .text('J.O. Date', x, y+=13);
+
+      doc
+      .fontSize(9)
+      .text(user_id.date, x+150, y-3);
+
+      doc.moveTo(x+100, y+5); // Move to the starting point
+      doc.lineTo(x+310, y+5); // Draw a line to the ending point
+      doc.stroke();
+
+      doc
+      .fontSize(9)
+      .text('Requested By', x, y+=23);
+
+      doc.moveTo(x+100, y+5); // Move to the starting point
+      doc.lineTo(x+310, y+5); // Draw a line to the ending point
+      doc.stroke();
+
+      doc
+    .fontSize(9)
+    .text(user_id.RequestedBy, x+150, y-3);
+
+
+      doc
+      .fontSize(9)
+      .text('Date of Request', x, y+=13);
+
+      doc.moveTo(x+100, y+5); // Move to the starting point
+      doc.lineTo(x+310, y+5); // Draw a line to the ending point
+      doc.stroke();
+
+      doc
+    .fontSize(9)
+    .text(user_id.DateofRequest, x+150, y-3);
+
+
+      doc
+      .fontSize(9)
+      .text('PO Number', x, y+=13);
+
+      doc.moveTo(x+100, y+5); // Move to the starting point
+      doc.lineTo(x+310, y+5); // Draw a line to the ending point
+      doc.stroke();
+
+
+      doc
+    .fontSize(9)
+    .text(user_id.PO_number, x+150, y-3);
+
+      
+
+      doc.dash(4, { space: 1 }); // Adjust the numbers for the desired dash length and space
+
+      // Draw the horizontal line
+      doc.moveTo(x1, y1+=y); // Starting point
+      doc.lineTo(x1+570, y1); // Ending point
+      doc.stroke();
+
+
+      doc
+      .fontSize(9)
+      .text('JOB DETAILS', x, y1+=3);
+
+      doc.moveTo(x1, y1+=10); // Starting point
+      doc.lineTo(x1+570, y1); // Ending point
+      doc.stroke();
+
+      doc.undash();
+
+
+      doc
+      .fontSize(9)
+      .text('TYPE OF SERVICES', x1, y1+=13);
+
+
+      doc
+      .fontSize(9)
+      .text(':', x1+90, y1);
+
+      var x3, y3;
+      if (user_id.typeservices == "F") {
+        x3 = x1+104;
+        y3 = y1+3;
+      }else if(user_id.typeservices == "HI"){
+        x3 = x1+405; //164
+        y3 = y1+3;
+
+      }else if(user_id.typeservices == "S"){
+        x3 = x1+244;
+        y3 = y1+3;
+
+      }else if(user_id.typeservices == "PA"){
+        x3 = x1+325;
+        y3 = y1+3;
+
+      }else if(user_id.typeservices == "OTH"){
+        x3 = x1+115;
+        y3 = y1+3;
+
+      }
+      if(x3 > 0 && y3 > 0 ){
+        doc
+          .fontSize(9)
+          .text("X", x3, y3);
+      }
+
+      // // Define the outer rectangle
+      // doc.rect(50, 50, 300, 100).stroke(); // (x, y, width, height)
+
+      // Define the inner rectangle
+      doc.rect(x1+100, y1, 55, 12).stroke(); // (x, y, width, height)
+
+      const checkboxSize = 12;
+      doc.rect(x1+100, y1, checkboxSize, checkboxSize).stroke()
+
+
+      doc.fontSize(9);
+      doc.text('Freight', x1+115, y1+3, { width: 130 }); // (text, x, y, options)
+
+
+      // Define the inner rectangle
+      doc.rect(x1+160, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
+      doc.rect(x1+160, y1, checkboxSize, checkboxSize).stroke()
+      doc.fontSize(9);
+      doc.text('Handling In', x1+175, y1+3, { width: 130 }); // (text, x, y, options)
+
+
+      // Define the inner rectangle
+      doc.rect(x1+240, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
+      doc.rect(x1+240, y1, checkboxSize, checkboxSize).stroke()
+      doc.fontSize(9);
+      doc.text('Stripping', x1+260, y1+3, { width: 130 }); // (text, x, y, options)
+
+
+      doc.rect(x1+320, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
+      doc.rect(x1+320, y1, checkboxSize, checkboxSize).stroke()
+      doc.fontSize(9);
+      doc.text('PUT AWAY', x1+340, y1+3, { width: 130 }); // (text, x, y, options)
+
+      doc.rect(x1+400, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
+      doc.rect(x1+400, y1, checkboxSize, checkboxSize).stroke()
+      doc.fontSize(9);
+      doc.text('Others', x1+420, y1+3, { width: 130 }); // (text, x, y, options)
+      
+
+      doc
+      .fontSize(9)
+      .text('TYPE OF VEHICLE', x1, y1+=20);
+
+      doc.moveTo(x1+100, y1+10); // Move to the starting point
+      doc.lineTo(x1+200, y1+10); // Draw a line to the ending point
+      doc.stroke();
+
+      doc
+      .fontSize(9)
+      .text(':', x1+90, y1);
+      doc
+    .fontSize(9)
+    .text(user_id.typevehicle, x1+120, y1);
+
+
+      doc
+      .fontSize(9)
+      .text('DESTINATION', x1, y1+=15);
+
+      doc
+      .fontSize(9)
+      .text(':', x1+90, y1);
+
+      doc
+      .fontSize(9)
+      .text(user_id.destination, x1+120, y1);
+
+      doc.moveTo(x1+100, y1+10); // Move to the starting point
+      doc.lineTo(x1+200, y1+10); // Draw a line to the ending point
+      doc.stroke();
+
+
+      doc
+      .fontSize(9)
+      .text('PICK UP/DELIVERY DATE', x, y+=68);
+      doc.moveTo(x+100, y+8); // Move to the starting point
+      doc.lineTo(x+310, y+8); // Draw a line to the ending point
+      doc.stroke();
+
+      doc
+      .fontSize(9)
+      .text(user_id.deliverydate, x+150, y);
+
+
+      doc
+      .fontSize(9)
+      .text('NAME OF TRUCKER/DRIVER', x, y+=20);
+      doc.moveTo(x+100, y+8); // Move to the starting point
+      doc.lineTo(x+310, y+8); // Draw a line to the ending point
+      doc.stroke();
+
+      doc
+    .fontSize(9)
+    .text(user_id.driver, x+150, y);
+
+      doc
+      .fontSize(9)
+      .text('PLATE #', x, y+=15);
+      doc.moveTo(x+100, y+8); // Move to the starting point
+      doc.lineTo(x+310, y+8); // Draw a line to the ending point
+      doc.stroke();
+
+      doc
+    .fontSize(9)
+    .text(user_id.plate, x+150, y);
+
+      doc
+      .fontSize(9)
+      .text('VAN/SEAL #', x, y+=20);
+
+      doc.moveTo(x+100, y+8); // Move to the starting point
+      doc.lineTo(x+310, y+8); // Draw a line to the ending point
+      doc.stroke();
+
+      doc
+    .fontSize(9)
+    .text(user_id.van, x+150, y);
+
+      doc
+      .fontSize(9)
+      .text('D.R. /S.I. #', x, y+=15);
+
+      doc.moveTo(x+100, y+8); // Move to the starting point
+      doc.lineTo(x+310, y+8); // Draw a line to the ending point
+      doc.stroke();
+
+      doc
+    .fontSize(9)
+    .text(user_id.DRSI, x+150, y);
+
+      const table = {
+          headers: [
+            { label: "MATERIAL CODE", property: 'itemcode', width: 60, renderer: null },
+            { label: "MATERIAL DESCRIPTION", property: 'itemdescription', width: 165, renderer: null },
+            { label: "CBM", property: 'CBM', width: 40, renderer: null },
+            { label: "LOT#", property: 'LOT', width: 40, renderer: null },
+            { label: "UOM", property: 'unit', width: 40, renderer: null },
+            { label: "QTY", property: 'qty', width: 60, renderer: null },
+            // { label: "NO. OF BOX", property: 'nobox', width: 40, renderer: null },
+            { label: "BATCH NO.", property: 'batchno', width: 63, renderer: null },
+            { label: "Bin Location", property: 'binloc', width: 63, renderer: null },
+          ],
+          datas: [],
+        };
+        var totalQTY = 0; 
+        let warecode = "";
+        var totalPerUnit =0;
+        var totalPCS = 0;
+        var palletsno= 0;
+        user_id.product.forEach((ProductDetl) => {
+
+          let dataUnit = '';
+          
+          const qtydata = ProductDetl.to_quantity;
+          for (let index = 1; index <= qtydata; index++) {
+            
+            if(qtydata == index){
+              dataUnit += ProductDetl.maxPerUnit;
+            }else{
+              dataUnit += ProductDetl.maxPerUnit+',';
+            }
+            
+            
+            totalPerUnit +=ProductDetl.maxPerUnit;
+            totalPCS += ProductDetl.maxPerUnit
+          }
+          
+          // dataUnit += ' / ' + ProductDetl.secondary_unit ;
+          const rowData = {
+            itemcode: ProductDetl.product_code,
+            itemdescription: ProductDetl.product_name,
+            qty: ProductDetl.to_quantity,
+            unit: ProductDetl.unit,
+            proddate: ProductDetl.production_date,
+            batchno: ProductDetl.batch_code,
+            binloc: ProductDetl.to_isle+ProductDetl.to_pallet,
+          };
+          totalQTY += ProductDetl.to_quantity
+          palletsno += 1; 
+          table.datas.push(rowData);
+        });
+
+       
+        let number = 14-table.datas.length;
+
+        for(var x = 1; x <= number; x++){
+
+          var rowData;
+          if(x == 1){
+            rowData = {
+
+            
+              itemcode: "",
+              itemdescription: "",
+              nobox: "",
+              unit: "",
+              qty:"",
+              proddate: "",
+              batchno: "",
+              binloc: ""
+            };
+
+
+          }else{
+            rowData = {
+
+            
+              itemcode: "",
+              itemdescription: "",
+              nobox: "",
+              unit: "",
+              qty:"",
+              proddate: "",
+              batchno: "",
+              binloc: ""
+            };
+
+          }
+
+          
+          
+          table.datas.push(rowData);
+        }
+
+   
+
+      doc.table(table, {
+          x: x1,
+          y: y+=25,
+          prepareHeader: () => doc.font("Helvetica-Bold").fontSize(8),
+          prepareRow: (row, indexColumn, indexRow, rectRow) => doc.font("Helvetica").fontSize(8),
+          
+         
+        });
+        var lastTableY = doc.page.height -300
+        var lastTableX = doc.x
+
+
+        doc
+        .fontSize(9)
+        .text('NUMBER OF PALLETS', lastTableX, lastTableY);
+
+        
+
+        doc
+        .fontSize(9)
+        .text(':', lastTableX+100, lastTableY);
+
+
+        doc
+        .fontSize(9)
+        .text(palletsno, lastTableX+150, lastTableY);
+
+        doc.moveTo(lastTableX+105, lastTableY+10); // Move to the starting point
+        doc.lineTo(lastTableX+210, lastTableY+10); // Draw a line to the ending point
+        doc.stroke();
+
+
+        doc
+        .fontSize(9)
+        .text('NUMBER OF CARTONS', lastTableX+270, lastTableY);
+
+        doc.moveTo(lastTableX+380, lastTableY+10); // Move to the starting point
+        doc.lineTo(lastTableX+570, lastTableY+10); // Draw a line to the ending point
+        doc.stroke();
+
+        doc
+        .fontSize(9)
+        .text(totalQTY, lastTableX+400, lastTableY);
+
+
+        doc
+        .fontSize(9)
+        .text('NUMBER OF CBM', lastTableX, lastTableY+=13);
+
+        doc
+        .fontSize(9)
+        .text(':', lastTableX+100, lastTableY);
+
+        doc.moveTo(lastTableX+105, lastTableY+10); // Move to the starting point
+        doc.lineTo(lastTableX+210, lastTableY+10); // Draw a line to the ending point
+        doc.stroke();
+
+
+
+        
+
+
+        doc
+        .fontSize(9)
+        .text('NUMBER OF PCS', lastTableX+270, lastTableY);
+        doc.moveTo(lastTableX+380, lastTableY+10); // Move to the starting point
+        doc.lineTo(lastTableX+570, lastTableY+10); // Draw a line to the ending point
+        doc.stroke();
+
+        doc
+        .fontSize(9)
+        .text(totalPCS, lastTableX+400, lastTableY);
+
+
+
+        doc
+        .fontSize(9)
+        .text('TIME START UNLOADING', lastTableX, lastTableY+=50);
+
+        doc
+        .fontSize(9)
+        .text(':', lastTableX+110, lastTableY);
+
+        doc.moveTo(lastTableX+115, lastTableY+10); // Move to the starting point
+        doc.lineTo(lastTableX+210, lastTableY+10); // Draw a line to the ending point
+        doc.stroke();
+
+        doc
+        .fontSize(9)
+        .text('TIME FINISH UNLOADING', lastTableX, lastTableY+=20);
+
+        doc
+        .fontSize(9)
+        .text(':', lastTableX+110, lastTableY);
+
+        doc.moveTo(lastTableX+115, lastTableY+10); // Move to the starting point
+        doc.lineTo(lastTableX+210, lastTableY+10); // Draw a line to the ending point
+        doc.stroke();
+
+
+
+        doc.rect(lastTableX+235, lastTableY-50, (lastTableX+660)/2, 120).stroke(); // (x, y, width, height)
+
+
+        doc.rect(lastTableX, lastTableY+75, lastTableX+565, 20).stroke(); // (x, y, width, height)
+
+        doc
+        .fontSize(9)
+        .text('NOTE: THE ABOVE STOCKS ARE RECEIVED IN GOOD CONDITION', lastTableX+=155, lastTableY+=82);
+
+
+        doc
+        .fontSize(9)
+        .text('Checked by:', lastTableX-=155, lastTableY+=25);
+
+
+        doc.moveTo(lastTableX, lastTableY+30); // Move to the starting point
+        doc.lineTo(lastTableX+100, lastTableY+30); // Draw a line to the ending point
+        doc.stroke();
+
+
+        doc
+        .fontSize(9)
+        .text('Checker', lastTableX+35, lastTableY+=35);
+
+
+        doc
+        .fontSize(9)
+        .text('Counter Checked by:', lastTableX+=150, lastTableY-=35);
+
+        doc.moveTo(lastTableX, lastTableY+30); // Move to the starting point
+        doc.lineTo(lastTableX+100, lastTableY+30); // Draw a line to the ending point
+        doc.stroke();
+
+
+        doc
+        .fontSize(9)
+        .text('Guard on duty', lastTableX+20, lastTableY+=35);
+
+
+        doc
+        .fontSize(9)
+        .text('Checked by:', lastTableX+=150, lastTableY-=35);
+
+        doc.moveTo(lastTableX, lastTableY+30); // Move to the starting point
+        doc.lineTo(lastTableX+100, lastTableY+30); // Draw a line to the ending point
+        doc.stroke();
+
+
+        doc
+        .fontSize(9)
+        .text('Truck Driver Signature', lastTableX, lastTableY+=35);
+
+
+
+        doc
+        .fontSize(9)
+        .text('Noted by:', lastTableX+=150, lastTableY-=35);
+
+        doc.moveTo(lastTableX, lastTableY+30); // Move to the starting point
+        doc.lineTo(lastTableX+100, lastTableY+30); // Draw a line to the ending point
+        doc.stroke();
+
+
+        doc
+        .fontSize(9)
+        .text('Warehouse Supervisor', lastTableX, lastTableY+=35);
+
+
+      let pages = doc.bufferedPageRange();
+
+      // let pages = doc.bufferedPageRange();
+      for (let i = 0; i < pages.count; i++) {
+      doc.switchToPage(i);
+
+      //Footer: Add page number
+      let oldBottomMargin = doc.page.margins.bottom;
+      doc.page.margins.bottom = 0 //Dumb: Have to remove bottom margin in order to write into it
+      doc
+          .text(
+          `Page: ${i + 1} of ${pages.count}`,
+          0,
+          doc.page.height - (oldBottomMargin/2), // Centered vertically in bottom margin
+          { align: 'center' }
+          );
+      doc.page.margins.bottom = oldBottomMargin; // ReProtect bottom margin
+      }
+    
+      
+      const lasttextY = doc.y
+      const lasttextX = doc.x
+
+
+      // Finalize the PDF
+      doc.end();
+  } catch (error) {
+      console.log(error);
+      res.status(500).send("An error occurred while generating the PDF.");
+  }
+});
 
 
 router.get("/PDF_adjustment/:id", auth, async (req, res) => {

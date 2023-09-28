@@ -71,11 +71,24 @@
                                         </div>
 
                                         <div class="card-body">
-                                            
-                                            <a href="/picking_list/PDF_transfer/<%= transfer._id %>" id="picklist" data-id="<%= transfer._id %>"
-                                                    class="btn btn-warning btn-sm" target="_blank">
-                                                    <i class="feather icon-printer"></i>
-                                            Print Picking List</a>
+
+                                            <% if(transfer.finalize == "False"){ %>
+                                                <a href="/picking_list/PDF_transfer/<%= transfer._id %>" id="picklist" data-id="<%= transfer._id %>"
+                                                        class="btn btn-warning btn-sm" target="_blank">
+                                                        <i class="feather icon-printer"></i>
+                                                
+                                                    Print Picking List
+                                                </a>
+                                            <% } else{ %>
+    
+                                                <a href="/picking_list/PDF_transferFinal/<%= transfer._id %>" id="picklist" data-id="<%= transfer._id %>"
+                                                        class="btn btn-warning btn-sm" target="_blank">
+                                                        <i class="feather icon-printer"></i>
+                                                
+                                                    Print J.O Transfer
+                                                </a>
+    
+                                            <% } %>
                                         </div>
                                         <div class="card-body">
                                             <div class="form-validation">
