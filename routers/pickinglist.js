@@ -3,7 +3,7 @@ const res = require("express/lib/response");
 const app = express();
 const router = express.Router();
 const multer = require('multer');
-const { profile, master_shop, categories, brands, units, product, purchases, warehouse, sales_finished, sales, transfers_finished, adjustment_finished, purchases_finished, sales_return_finished, adjustment, transfers } = require("../models/all_models");
+const { profile, master_shop, categories, brands, units, product, purchases, warehouse, sales_finished, sales, transfers_finished, adjustment_finished, purchases_finished, sales_return_finished, adjustment, transfers, supervisor_settings } = require("../models/all_models");
 const auth = require("../middleware/auth");
 const users = require("../public/language/languages.json");
 const excelJS = require("exceljs");
@@ -3047,7 +3047,7 @@ router.get("/pdf_puchases_fin/:id", auth, async (req, res) => {
       const profile_data = await profile.findOne({ email: role_data.email });
 
       const master = await master_shop.find();
-
+      const supervisor_data = await supervisor_settings.find();
       const _id = req.params.id;
       const user_id = await purchases_finished.findById(_id);
 
@@ -3602,11 +3602,16 @@ router.get("/pdf_puchases_fin/:id", auth, async (req, res) => {
         doc
         .fontSize(9)
         .text('Noted by:', lastTableX+=150, lastTableY-=35);
+       
+        doc
+        .fontSize(9)
+        .text(supervisor_data[0].RMSName, lastTableX+5, lastTableY+20);
 
+        
         doc.moveTo(lastTableX, lastTableY+30); // Move to the starting point
         doc.lineTo(lastTableX+100, lastTableY+30); // Draw a line to the ending point
         doc.stroke();
-
+        
 
         doc
         .fontSize(9)
@@ -3883,6 +3888,7 @@ router.get("/pdf_puchases/:id", auth, async (req, res) => {
       const profile_data = await profile.findOne({ email: role_data.email });
 
       const master = await master_shop.find();
+      const supervisor_data = await supervisor_settings.find();
 
       const _id = req.params.id;
       const user_id = await purchases.findById(_id);
