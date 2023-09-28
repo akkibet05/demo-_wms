@@ -1938,7 +1938,22 @@ const email_settings = new mongoose.model("email_settings", email_settings_data)
 // ========= email_settings end =========== //
 
 
+const supervisor_settings_data = new mongoose.Schema({
+    RMSName: {
+        type: String,
+    },
+    RMSEmail: {
+        type: String,
+    },
+    RMSnumber: {
+        type: String,
+    }
+})
+
+const supervisor_settings = new mongoose.model("supervisor_setup", supervisor_settings_data);
+
+
 
 module.exports = { sing_up, profile, categories, brands, units, product, warehouse, staff, customer,
                     suppliers, suppliers_payment, s_payment_data, purchases, purchases_return, sales, sales_return,
-                    customer_payment, c_payment_data, transfers, expenses_type, all_expenses, adjustment, master_shop, email_settings, purchases_finished, sales_finished, adjustment_finished, transfers_finished, purchases_return_finished, sales_return_finished };
+                    customer_payment, c_payment_data, transfers, expenses_type, all_expenses, adjustment, master_shop, email_settings, purchases_finished, sales_finished, adjustment_finished, transfers_finished, purchases_return_finished, sales_return_finished, supervisor_settings };
