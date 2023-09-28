@@ -697,7 +697,37 @@ const purchases_data_finished = new mongoose.Schema({
     },
     JO_number: {
         type: String
-    }
+    },
+    RequestedBy: {
+        type: String
+    },
+    DateofRequest: {
+        type: String
+    },
+    typeservices: {
+        type: String
+    },
+    typevehicle: {
+        type: String
+    },
+    destination: {
+        type: String
+    },
+    deliverydate: {
+        type: String
+    },
+    driver: {
+        type: String
+    },
+    plate: {
+        type: String
+    },
+    van: {
+        type: String
+    },
+    DRSI: {
+        type: String
+    },
 })
 
 
