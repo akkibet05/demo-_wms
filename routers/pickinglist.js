@@ -45,7 +45,7 @@ router.get("/PDF/:id", auth, async (req, res) => {
         doc
         .fontSize(10)
         .font('Helvetica-Bold')
-        .text('JOB ORDER - OUTGOING', x+=190, y+=10);
+        .text('JOB ORDER - '+ user_id.customer, x+=190, y+=10);
         
         doc
         .fontSize(9)
@@ -93,6 +93,10 @@ router.get("/PDF/:id", auth, async (req, res) => {
         doc.lineTo(x+310, y+5); // Draw a line to the ending point
         doc.stroke();
 
+        doc
+      .fontSize(9)
+      .text(user_id.RequestedBy, x+150, y-3);
+
 
         doc
         .fontSize(9)
@@ -102,6 +106,10 @@ router.get("/PDF/:id", auth, async (req, res) => {
         doc.lineTo(x+310, y+5); // Draw a line to the ending point
         doc.stroke();
 
+        doc
+      .fontSize(9)
+      .text(user_id.DateofRequest, x+150, y-3);
+
 
         doc
         .fontSize(9)
@@ -110,6 +118,12 @@ router.get("/PDF/:id", auth, async (req, res) => {
         doc.moveTo(x+100, y+5); // Move to the starting point
         doc.lineTo(x+310, y+5); // Draw a line to the ending point
         doc.stroke();
+
+
+        doc
+      .fontSize(9)
+      .text(user_id.PO_number, x+150, y-3);
+
         
 
         doc.dash(4, { space: 1 }); // Adjust the numbers for the desired dash length and space
@@ -139,6 +153,33 @@ router.get("/PDF/:id", auth, async (req, res) => {
         doc
         .fontSize(9)
         .text(':', x1+90, y1);
+
+        var x3, y3;
+        if (user_id.typeservices == "F") {
+          x3 = x1+104;
+          y3 = y1+3;
+        }else if(user_id.typeservices == "HI"){
+          x3 = x1+405; //164
+          y3 = y1+3;
+
+        }else if(user_id.typeservices == "S"){
+          x3 = x1+244;
+          y3 = y1+3;
+
+        }else if(user_id.typeservices == "PA"){
+          x3 = x1+325;
+          y3 = y1+3;
+
+        }else if(user_id.typeservices == "OTH"){
+          x3 = x1+115;
+          y3 = y1+3;
+
+        }
+        if(x3 > 0 && y3 > 0 ){
+          doc
+            .fontSize(9)
+            .text("X", x3, y3);
+        }
 
         // // Define the outer rectangle
         // doc.rect(50, 50, 300, 100).stroke(); // (x, y, width, height)
@@ -190,6 +231,9 @@ router.get("/PDF/:id", auth, async (req, res) => {
         doc
         .fontSize(9)
         .text(':', x1+90, y1);
+        doc
+      .fontSize(9)
+      .text(user_id.typevehicle, x1+120, y1);
 
 
         doc
@@ -199,6 +243,10 @@ router.get("/PDF/:id", auth, async (req, res) => {
         doc
         .fontSize(9)
         .text(':', x1+90, y1);
+
+        doc
+        .fontSize(9)
+        .text(user_id.destination, x1+120, y1);
 
         doc.moveTo(x1+100, y1+10); // Move to the starting point
         doc.lineTo(x1+200, y1+10); // Draw a line to the ending point
@@ -212,6 +260,10 @@ router.get("/PDF/:id", auth, async (req, res) => {
         doc.lineTo(x+310, y+8); // Draw a line to the ending point
         doc.stroke();
 
+        doc
+        .fontSize(9)
+        .text(user_id.deliverydate, x+150, y);
+
 
         doc
         .fontSize(9)
@@ -221,11 +273,19 @@ router.get("/PDF/:id", auth, async (req, res) => {
         doc.stroke();
 
         doc
+      .fontSize(9)
+      .text(user_id.driver, x+150, y);
+
+        doc
         .fontSize(9)
         .text('PLATE #', x, y+=15);
         doc.moveTo(x+100, y+8); // Move to the starting point
         doc.lineTo(x+310, y+8); // Draw a line to the ending point
         doc.stroke();
+
+        doc
+      .fontSize(9)
+      .text(user_id.plate, x+150, y);
 
         doc
         .fontSize(9)
@@ -236,12 +296,20 @@ router.get("/PDF/:id", auth, async (req, res) => {
         doc.stroke();
 
         doc
+      .fontSize(9)
+      .text(user_id.van, x+150, y);
+
+        doc
         .fontSize(9)
         .text('D.R. /S.I. #', x, y+=15);
 
         doc.moveTo(x+100, y+8); // Move to the starting point
         doc.lineTo(x+310, y+8); // Draw a line to the ending point
         doc.stroke();
+
+        doc
+      .fontSize(9)
+      .text(user_id.DRSI, x+150, y);
 
         const table = {
             headers: [
@@ -251,7 +319,7 @@ router.get("/PDF/:id", auth, async (req, res) => {
               { label: "LOT#", property: 'LOT', width: 40, renderer: null },
               { label: "UOM", property: 'unit', width: 40, renderer: null },
               { label: "QTY", property: 'qty', width: 60, renderer: null },
-              { label: "NO. OF BOX", property: 'nobox', width: 40, renderer: null },
+              // { label: "NO. OF BOX", property: 'nobox', width: 40, renderer: null },
               { label: "BATCH NO.", property: 'batchno', width: 63, renderer: null },
               { label: "Bin Location", property: 'binloc', width: 63, renderer: null },
             ],
@@ -275,7 +343,7 @@ router.get("/PDF/:id", auth, async (req, res) => {
                 dataUnit += ProductDetl.maxperunit+',';
               }
               
-              palletsno += 1;
+              
               totalPerUnit +=ProductDetl.maxperunit;
               totalPCS += ProductDetl.maxperunit
             }
@@ -284,14 +352,14 @@ router.get("/PDF/:id", auth, async (req, res) => {
             const rowData = {
               itemcode: ProductDetl.product_code,
               itemdescription: ProductDetl.product_name,
-              nobox: ProductDetl.quantity,
+              qty: ProductDetl.quantity,
               unit: ProductDetl.unit,
-              qty:dataUnit,
               proddate: ProductDetl.production_date,
               batchno: ProductDetl.batch_code,
               binloc: ProductDetl.isle+ProductDetl.pallet,
             };
-            totalQTY += ProductDetl.quantity 
+            totalQTY += ProductDetl.quantity
+            palletsno += 1; 
             table.datas.push(rowData);
           });
 

@@ -361,9 +361,8 @@ router.post("/view/add_sale/product", auth, async (req, res) => {
 
 router.post("/view/add_sales", auth, async (req, res) => {
     try {
-        const { invoice, date, warehouse_name, product_name, stock, quantity, note, room, primary_code, secondary_code, prod_code, level, isle, pallet, batch_code, SCRN,expiry_date } = req.body
+        const { invoice, date, warehouse_name, product_name, stock, quantity, note, room, primary_code, secondary_code, prod_code, level, isle, pallet, batch_code, SCRN,expiry_date,PO_number, ReqBy, dateofreq,typeservices, destination, deliverydate, driver, plate, van, DRSI, typevehicle } = req.body
     
-        
         if(typeof product_name == "string"){
             var product_name_array = [req.body.product_name]
             var stock_array = [req.body.stock]
@@ -499,7 +498,7 @@ router.post("/view/add_sales", auth, async (req, res) => {
 
         const Newnewproduct = newproduct.filter(obj => obj.quantity !== "0" && obj.quantity !== "");
 
-        const data = new sales_finished({ invoice, customer: req.body.customer, date, warehouse_name, sale_product:Newnewproduct, note, room, primary_code, secondary_code, prod_code, SCRN, finalize: "False" })
+        const data = new sales_finished({ invoice, customer: req.body.customer, date, warehouse_name, sale_product:Newnewproduct, note, room, primary_code, secondary_code, prod_code, SCRN, finalize: "False", PO_number , RequestedBy: ReqBy, DateofRequest: dateofreq, typeservices, destination, deliverydate, driver, plate, van, DRSI, typevehicle:typevehicle  })
 
         const purchases_data = await data.save()
         // console.log(data);

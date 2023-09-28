@@ -1099,6 +1099,39 @@ const sales_data_finished = new mongoose.Schema({
     finalize:{
         type: String,
         default: "False"
+    },
+    RequestedBy: {
+        type: String
+    },
+    DateofRequest: {
+        type: String
+    },
+    typeservices: {
+        type: String
+    },
+    typevehicle: {
+        type: String
+    },
+    destination: {
+        type: String
+    },
+    deliverydate: {
+        type: String
+    },
+    driver: {
+        type: String
+    },
+    plate: {
+        type: String
+    },
+    van: {
+        type: String
+    },
+    DRSI: {
+        type: String
+    },
+    PO_number: {
+        type: String
     }
 })
 
