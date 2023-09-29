@@ -130,14 +130,7 @@
                                                         </div>
                                                         
                                                         
-                                                        <!-- <div class="col-xl-3 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label for="invoice_no">From Room<span
-                                                                        class="text-red">*</span></label>
-                                                                  <input type="text" name="FromRoom_name" class="form-control"
-                                                                    id="FromRoom_name" value="<%= transfer.from_room %>" readonly>
-                                                            </div>
-                                                        </div> -->
+
                                                         <div class="col-xl-4 col-sm-6">
                                                             <div class="form-group">
                                                                 <label for="invoice_no"><%= language.to_warehouse %> <span
@@ -147,17 +140,132 @@
                                                                     id="to_warehouse" value="<%= transfer.to_warehouse %>" readonly>
                                                             </div>
                                                         </div>
-                                                        
-                                                        
-                                                        <!-- <div class="col-xl-3 col-sm-6">
+
+
+                                                        <div class="col-xl-3 col-sm-6">
+                                                  
+                                                                <label class="form-label">Requested By</label>
+                                                                <input type="text" class="form-control" name="ReqBy" id="ReqBy" value="<%= transfer.RequestedBy %>" readonly>
+                                             
+                                                        </div>
+
+
+                                                        <div class="col-xl-3 col-sm-6">
                                                             <div class="form-group">
-                                                                <label for="invoice_no">To Room<span
-                                                                        class="text-red">*</span></label>
-                                                                  <input type="text" name="ToRoom_name" class="form-control"
-                                                                    id="ToRoom_name" value="<%= transfer.to_room %>" readonly>
+                                                                <label class="form-label">Date of Request</label>
+                                                                <input type="date" class="form-control" name="dateofreq" id="dateofreq" value="<%= transfer.DateofRequest %>" readonly>
                                                             </div>
-                                                        </div> -->
+                                                        </div>
+
+
+                                                        <div class="col-xl-3 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label">PO number</label>
+                                                                <input type="text" class="form-control" name="PO_number" value="<%= transfer.PO_number %>" readonly>
+                                                            </div>
+                                                        </div>
                                                         
+                                                        
+
+                                                        
+                                                    </div>
+
+
+                                                    <div class="row mb-3">
+
+                                                        <div class="col-xl-3 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label for="invoice_no">Type of Services  <span
+                                                                        class="text-red">*</span></label>
+                                                                <select class="form-control" name="typeservices"
+                                                                    id="typeservices" disabled>
+                                                                    <option value="F" <%=transfer.typeservices=="F"
+                                                                    ? "selected" : "" %>>Freight</option>
+                                                                    <option value="HI" <%=transfer.typeservices=="HI"
+                                                                    ? "selected" : "" %>>Handling In</option>
+                                                                    <option value="S" <%=transfer.typeservices=="S"
+                                                                    ? "selected" : "" %>>Stripping</option>
+                                                                    <option value="PA" <%=transfer.typeservices=="PA"
+                                                                    ? "selected" : "" %>>Put Away</option>
+                                                                    <option value="OTH" <%=transfer.typeservices=="OTH"
+                                                                    ? "selected" : "" %>>Others</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-xl-3 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label for="invoice_no">Type of Vehicle  <span
+                                                                        class="text-red">*</span></label>
+                                                                <select class="form-control" name="typevehicle"
+                                                                    id="typevehicle" disabled>
+                                                                    <option value="4WH" <%=transfer.typevehicle=="4WH"
+                                                                    ? "selected" : "" %>>4 WHEELER</option>
+                                                                    <option value="6WH" <%=transfer.typevehicle=="6WH"
+                                                                    ? "selected" : "" %>>6 WHEELER</option>
+                                                                    <option value="FWD" <%=transfer.typevehicle=="FWD"
+                                                                    ? "selected" : "" %>>FORWARD</option>
+                                                                    <option value="10WH" <%=transfer.typevehicle=="10WH"
+                                                                    ? "selected" : "" %>>10 WHEELER</option>
+                                                                    <option value="10FT" <%=transfer.typevehicle=="10FT"
+                                                                    ? "selected" : "" %>>10 FOOTER</option>
+                                                                    <option value="20FT" <%=transfer.typevehicle=="20FT"
+                                                                    ? "selected" : "" %>>20 FOOTER</option>
+                                                                    <option value="40FT" <%=transfer.typevehicle=="40FT"
+                                                                    ? "selected" : "" %>>40 FOOTER</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-xl-3 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label">Destination</label>
+                                                                <input type="text" class="form-control" name="destination" id="destination" value="<%= transfer.destination %>" readonly>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-xl-3 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label">Pick Up/Delivery Date</label>
+                                                                <input type="date" class="form-control" name="deliverydate" id="deliverydate" value="<%= transfer.deliverydate %>" readonly>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-xl-3 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label">Name of trucker/Driver</label>
+                                                                <input type="text" class="form-control" name="driver" id="driver" value="<%= transfer.driver %>" readonly>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-xl-3 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label">Plate Number</label>
+                                                                <input type="text" class="form-control" name="plate" id="plate" value="<%= transfer.plate %>" readonly>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-xl-3 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label">Van/Seal Number</label>
+                                                                <input type="text" class="form-control" name="van" id="can" value="<%= transfer.van %>" readonly>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-xl-3 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label">D.R. / S.I Number</label>
+                                                                <input type="text" class="form-control" name="DRSI" id="DRSI" value="<%= transfer.DRSI %>" readonly>
+                                                            </div>
+                                                        </div>
+
+
+
+
+
                                                     </div>
                                                     
                                            

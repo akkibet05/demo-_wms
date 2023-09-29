@@ -89,21 +89,46 @@
 
                                                     <div class="row mb-3">
                                                         <div class="col-xl-3 col-sm-6">
-                                                            <div class="form-group">
+                                           
                                                                 <label for="invoice_no">Document Number </label>
                                                                 <input type="text" name="invoice" class="form-control"
                                                                     id="invoice" value="<%= user.invoice %>" readonly>
-                                                            </div>
+                                                           
                                                         </div>
 
 
                                                         <div class="col-xl-4 col-sm-6">
-                                                            <div class="form-group">
+                                                          
                                                                 <label for="invoice_no"> Supplier / Client Ref Number <span class="text-red">*</span></label>
                                                                 <input type="text" name="SCRN" class="form-control"
                                                                     id="SCRN" value="<%= user.SCRN  %>" readonly>
+                    
+                                                        </div>
+
+
+                                                        <div class="col-xl-3 col-sm-6">
+                                                  
+                                                                <label class="form-label">Requested By</label>
+                                                                <input type="text" class="form-control" name="ReqBy" id="ReqBy" value="<%= user.RequestedBy %>" readonly>
+                                             
+                                                        </div>
+
+
+                                                        <div class="col-xl-3 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label">Date of Request</label>
+                                                                <input type="date" class="form-control" name="dateofreq" id="dateofreq" value="<%= user.DateofRequest %>" readonly>
                                                             </div>
                                                         </div>
+
+
+                                                        <div class="col-xl-3 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label">PO number</label>
+                                                                <input type="text" class="form-control" name="PO_number" value="<%= user.POnumber %>" readonly>
+                                                            </div>
+                                                        </div>
+
 
                                                         <div class="col-xl-3 col-sm-6">
                                                             <div class="form-group">
@@ -127,43 +152,110 @@
                                                                 <input type="text" name="warehouse_name" class="form-control" id="warehouse_name" value="<%= user.warehouse_name  %>" readonly>
                                                             </div>
                                                          
-                                                        </div>
-
-
-                                                        <!-- <div class="col-xl-3 col-sm-6">  
-                                                            <div class="form-group">
-                                                                <label for="invoice_no">Room <span class="text-red">*</span></label>
-                                                                <input type="text" name="room" class="form-control" id="room" value="<%= user.room  %>" readonly>
-                                                                
-                                                            </div>
-                                                        </div> -->
-                                                        
+                                                        </div>       
                                                         
                                                     </div>
-                                                    <div class="row mb-3">
-                                                        <div class="col-xl-4 col-sm-6">
-            
-                                                            <div class="form-group">
-                                                                <label for="invoice_no"><%= language.mode_transpo %> Mode of transportation<span class="text-red">*</span></label>
-                                                                <input type="text" name="mode_transpo" class="form-control" id="mode_transpo"  value="" readonly>
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="col-xl-4 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label for="invoice_no"><%= language.name_driver %> Driver's Name<span class="text-red">*</span></label>
-                                                                <input type="text" name="name_driver" class="form-control" id="name_driver" readonly>
-                                                            </div>
-                                                        </div>
-                                                         
-                                                      
-                                                    </div>
+                                                    
 
                                                    
 
                                                     </div>
-                                                    
+                                                    <div class="row mb-3">
+
+                                                        <div class="col-xl-3 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label for="invoice_no">Type of Services  <span
+                                                                        class="text-red">*</span></label>
+                                                                <select class="form-control" name="typeservices"
+                                                                    id="typeservices" disabled>
+                                                                    <option value="F" <%=user.typeservices=="F"
+                                                                    ? "selected" : "" %>>Freight</option>
+                                                                    <option value="HI" <%=user.typeservices=="HI"
+                                                                    ? "selected" : "" %>>Handling In</option>
+                                                                    <option value="S" <%=user.typeservices=="S"
+                                                                    ? "selected" : "" %>>Stripping</option>
+                                                                    <option value="PA" <%=user.typeservices=="PA"
+                                                                    ? "selected" : "" %>>Put Away</option>
+                                                                    <option value="OTH" <%=user.typeservices=="OTH"
+                                                                    ? "selected" : "" %>>Others</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-xl-3 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label for="invoice_no">Type of Vehicle  <span
+                                                                        class="text-red">*</span></label>
+                                                                <select class="form-control" name="typevehicle"
+                                                                    id="typevehicle" disabled>
+                                                                    <option value="4WH" <%=user.typevehicle=="4WH"
+                                                                    ? "selected" : "" %>>4 WHEELER</option>
+                                                                    <option value="6WH" <%=user.typevehicle=="6WH"
+                                                                    ? "selected" : "" %>>6 WHEELER</option>
+                                                                    <option value="FWD" <%=user.typevehicle=="FWD"
+                                                                    ? "selected" : "" %>>FORWARD</option>
+                                                                    <option value="10WH" <%=user.typevehicle=="10WH"
+                                                                    ? "selected" : "" %>>10 WHEELER</option>
+                                                                    <option value="10FT" <%=user.typevehicle=="10FT"
+                                                                    ? "selected" : "" %>>10 FOOTER</option>
+                                                                    <option value="20FT" <%=user.typevehicle=="20FT"
+                                                                    ? "selected" : "" %>>20 FOOTER</option>
+                                                                    <option value="40FT" <%=user.typevehicle=="40FT"
+                                                                    ? "selected" : "" %>>40 FOOTER</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-xl-3 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label">Destination</label>
+                                                                <input type="text" class="form-control" name="destination" id="destination" value="<%= user.destination %>" readonly>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-xl-3 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label">Pick Up/Delivery Date</label>
+                                                                <input type="date" class="form-control" name="deliverydate" id="deliverydate" value="<%= user.deliverydate %>" readonly>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-xl-3 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label">Name of trucker/Driver</label>
+                                                                <input type="text" class="form-control" name="driver" id="driver" value="<%= user.driver %>" readonly>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-xl-3 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label">Plate Number</label>
+                                                                <input type="text" class="form-control" name="plate" id="plate" value="<%= user.plate %>" readonly>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-xl-3 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label">Van/Seal Number</label>
+                                                                <input type="text" class="form-control" name="van" id="can" value="<%= user.van %>" readonly>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-xl-3 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label">D.R. / S.I Number</label>
+                                                                <input type="text" class="form-control" name="DRSI" id="DRSI" value="<%= user.DRSI %>" readonly>
+                                                            </div>
+                                                        </div>
+
+
+
+
+
+                                                    </div>
         
                                                             
                                                     
