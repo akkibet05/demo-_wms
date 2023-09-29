@@ -34,7 +34,35 @@ router.get("/view", auth, async(req, res) => {
             const staff_data = await staff.findOne({ email: role_data.email })
             adjustment_data = await adjustment_finished.find({ warehouse_name : staff_data.warehouse })
         }else{
-            adjustment_data = await adjustment_finished.find()
+            // adjustment_data = await adjustment_finished.find()
+            adjustment_data = await adjustment_finished.aggregate([
+                {
+                    $unwind: "$product"
+                },
+                {
+                  $group: {
+                    _id: "$_id",
+                    invoice: { $first: "$invoice" },
+                    date: { $first: "$date" },
+                    warehouse_name: { $first: "$warehouse_name" },
+                    room: { $addToSet: "$product.room_names" },
+                    finalize: { $first: "$finalize" }
+                  }
+                  
+                },
+                {
+                  $project: {
+                    _id: 1,
+                    invoice: 1,
+                    suppliers: 1,
+                    date: 1,
+                    warehouse_name: 1,
+                    room: 1,
+                    finalize: 1
+                    
+                  }
+               }
+          ]);
         }
 
         

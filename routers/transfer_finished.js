@@ -19,7 +19,41 @@ router.get("/view", auth, async(req, res) => {
             const staff_data = await staff.findOne({ email: role_data.email })
             transfer_data = await transfers_finished.find({ from_warehouse : staff_data.warehouse });
         }else{
-            transfer_data = await transfers_finished.find()
+            // transfer_data = await transfers_finished.find()
+
+            transfer_data = await transfers_finished.aggregate([
+              
+        
+                {
+                  $unwind: "$product"
+                },
+                {
+                  $group: {
+                    _id: "$_id",
+                    invoice: { $first: "$invoice" },
+                    date: { $first: "$date" },
+                    from_warehouse: { $first: "$from_warehouse" },
+                    to_warehouse: { $first: "$to_warehouse" },
+                    from_room_name: { $addToSet: "$product.from_room_name" },
+                    to_room_name: { $addToSet: "$product.to_room_name" },
+                    finalize: { $first: "$finalize" }
+                  }
+                  
+                },
+                {
+                  $project: {
+                    _id: 1,
+                    invoice: 1,
+                    date: 1,
+                    from_warehouse:1,
+                    to_warehouse: 1,
+                    from_room_name: 1,
+                    to_room_name: 1,
+                    finalize: 1
+                    
+                  }
+               }
+          ]);
         }
 
         if (master[0].language == "English (US)") {
