@@ -728,6 +728,12 @@ const purchases_data_finished = new mongoose.Schema({
     DRSI: {
         type: String
     },
+    TSU: {
+        type: String
+    },
+    TFU: {
+        type: String
+    },
 })
 
 
