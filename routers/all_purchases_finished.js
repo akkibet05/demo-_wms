@@ -1,12 +1,13 @@
 const express = require("express");
 const app = express();
 const router = express.Router();
-const { profile, master_shop, categories, brands, units, product, warehouse, staff, customer, suppliers, purchases, purchases_return, suppliers_payment, s_payment_data, email_settings, purchases_finished, purchases_return_finished } = require("../models/all_models");
+const { profile, master_shop, categories, brands, units, product, warehouse, staff, customer, suppliers, purchases, purchases_return, suppliers_payment, s_payment_data, email_settings, purchases_finished, purchases_return_finished, supervisor_settings } = require("../models/all_models");
 const auth = require("../middleware/auth");
 const nodemailer = require('nodemailer');
 var ejs = require('ejs');
 const path = require("path");
 const users = require("../public/language/languages.json");
+
 
 router.get("/view", auth, async (req, res) => {
     try {
@@ -577,6 +578,7 @@ router.post("/view/add_purchases", auth, async (req, res) => {
         const master = await master_shop.find()
         const email_data = await email_settings.findOne()
         const suppliers_data = await suppliers.findOne({name : req.body.suppliers})
+        const supervisor_data = await supervisor_settings.find();
 
         if (master[0].currency_placement == 1) {
             right_currency = master[0].currency
@@ -627,7 +629,7 @@ router.post("/view/add_purchases", auth, async (req, res) => {
 
         let mailDetails = {
             from: email_data.email,
-            to: 'christian.villamer@jakagroup.com',
+            to: supervisor_data[0].RMSEmail,
             subject:'Purchase Mail',
             attachments: [{
                 filename: 'Logo.png',

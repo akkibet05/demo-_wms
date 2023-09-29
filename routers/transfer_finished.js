@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const router = express.Router();
-const { profile, master_shop, categories, brands, units, product, warehouse, staff, email_settings, customer, suppliers, purchases, purchases_return, sales, sales_return, suppliers_payment, customer_payment, transfers , transfers_finished } = require("../models/all_models");
+const { profile, master_shop, categories, brands, units, product, warehouse, staff, email_settings, customer, suppliers, purchases, purchases_return, sales, sales_return, suppliers_payment, customer_payment, transfers , transfers_finished, supervisor_settings } = require("../models/all_models");
 const auth = require("../middleware/auth");
 const users = require("../public/language/languages.json");
 const nodemailer = require('nodemailer');
@@ -602,6 +602,8 @@ router.post("/preview/:id", auth , async (req, res) => {
                                 var product_list = data.product
                                 const master = await master_shop.find()
                                 const email_data = await email_settings.findOne()
+                                const supervisor_data = await supervisor_settings.find();
+
                                 let mailTransporter = nodemailer.createTransport({
                                     host: email_data.host,
                                     port: Number(email_data.port),
@@ -629,7 +631,7 @@ router.post("/preview/:id", auth , async (req, res) => {
 
                                 let mailDetails = {
                                     from: email_data.email,
-                                    to: 'christian.villamer@jakagroup.com',
+                                    to: supervisor_data[0].RMSEmail,
                                     subject:'Transfer Product Mail',
                                     attachments: [{
                                         filename: 'Logo.png',
