@@ -614,7 +614,7 @@ router.get("/PDF/:id", auth, async (req, res) => {
       const role_data = req.user;
 
       const profile_data = await profile.findOne({ email: role_data.email });
-
+      const supervisor_data = await supervisor_settings.find();
       const master = await master_shop.find();
 
       const _id = req.params.id;
@@ -779,7 +779,7 @@ router.get("/PDF/:id", auth, async (req, res) => {
 
       doc
         .fontSize(10)
-        .text("                                     ", lastTableX+60, lastTableY,{ underline: true});
+        .text("      "+supervisor_data[0].RMSName+"              ", lastTableX+60, lastTableY,{ underline: true});
         
         doc
         .fontSize(10)
@@ -829,7 +829,7 @@ router.get("/PDFFinal/:id", auth, async (req, res) => {
       const role_data = req.user;
 
       const profile_data = await profile.findOne({ email: role_data.email });
-
+      const supervisor_data = await supervisor_settings.find();
       const master = await master_shop.find();
 
       const _id = req.params.id;
@@ -1381,6 +1381,11 @@ router.get("/PDFFinal/:id", auth, async (req, res) => {
 
         doc
         .fontSize(9)
+        .text(supervisor_data[0].RMSName, lastTableX+5, lastTableY+20);
+
+
+        doc
+        .fontSize(9)
         .text('Warehouse Supervisor', lastTableX, lastTableY+=35);
 
 
@@ -1423,7 +1428,7 @@ router.get("/PDF_transfer/:id", auth, async (req, res) => {
       const role_data = req.user;
 
       const profile_data = await profile.findOne({ email: role_data.email });
-
+      const supervisor_data = await supervisor_settings.find();
       const master = await master_shop.find();
 
       const _id = req.params.id;
@@ -1588,7 +1593,7 @@ router.get("/PDF_transfer/:id", auth, async (req, res) => {
 
       doc
         .fontSize(10)
-        .text("                                     ", lastTableX+60, lastTableY,{ underline: true});
+        .text("      "+supervisor_data[0].RMSName+"           ", lastTableX+60, lastTableY,{ underline: true});
         
         doc
         .fontSize(10)
@@ -1635,7 +1640,7 @@ router.get("/PDF_transferFinal/:id", auth, async (req, res) => {
   try {
       const { username, email, role } = req.user;
       const role_data = req.user;
-
+      const supervisor_data = await supervisor_settings.find();
       const profile_data = await profile.findOne({ email: role_data.email });
 
       const master = await master_shop.find();
@@ -2185,6 +2190,10 @@ router.get("/PDF_transferFinal/:id", auth, async (req, res) => {
         doc.moveTo(lastTableX, lastTableY+30); // Move to the starting point
         doc.lineTo(lastTableX+100, lastTableY+30); // Draw a line to the ending point
         doc.stroke();
+
+        doc
+        .fontSize(9)
+        .text(supervisor_data[0].RMSName, lastTableX+5, lastTableY+20);
 
 
         doc
