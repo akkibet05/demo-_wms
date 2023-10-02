@@ -126,12 +126,15 @@ router.post('/MapData', async (req, res) => {
         $group: {
           _id: {
                 isle: "$product_details.isle",
-                pallet: "$product_details.pallet"
+                pallet: "$product_details.pallet",
+                product_code: "$product_details.product_code"
           },
           products: {
             $push: {
               product_name: "$product_details.product_name",
-              product_quantity: "$product_details.product_stock"
+              product_quantity: "$product_details.product_stock",
+              product_code: "$product_details.product_code",
+
             }
           },
           totalQuantity: {
@@ -150,6 +153,7 @@ router.post('/MapData', async (req, res) => {
           _id: 0,
           isle: "$_id.isle",
           pallet: "$_id.pallet",
+          product_code: "$_id.product_code",
           products: {
             $filter: {
               input: "$products",
