@@ -23,6 +23,7 @@
         }
       </style>
 
+<script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
 </head>
 
 <body onload="myFunction_Stocks(); SelectRoom();">
@@ -184,6 +185,18 @@
     ***********************************-->
 
     <%- include('./partials/script'); -%>
+
+
+    <script>
+        function ExportToExcel( fn, dl) {
+            var type = 'xlsx';
+            var elt = document.getElementById('example');
+            var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
+            return dl ?
+                XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }):
+                XLSX.writeFile(wb, fn || ('MySheetName.' + (type || 'xlsx')));
+    }
+    </script>
 
         <!--**********************************
         Scripts end

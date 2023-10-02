@@ -331,6 +331,10 @@ function LogicDropdown(){
             dataItem2 +='<button class="btn btn-info float-right" id="barcode_print1" onclick="printDiv()">';
             dataItem2 +='<i class="fas fa-print"></i> Print';
             dataItem2 +='</button>';
+
+            dataItem2 +='<button class="btn btn-info" id="barcode_print1" onclick="ExportToExcel()">';
+            dataItem2 +='<i class="fa fa-file-excel-o"></i> Download Excel';
+            dataItem2 +='</button>';
             dataItem2 +='</div>';
             document.getElementById("stock_report_table_print").innerHTML = dataItem2;
             
