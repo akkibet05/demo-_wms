@@ -192,7 +192,7 @@ router.get("/view/add_transfer", auth, async(req, res) => {
 router.post("/view/add_transfer", auth, async(req, res) => {
     try{
         
-        const {date, from_warehouse, FromRoom_name, to_warehouse, ToRoom_name, prod_name, from_prod_qty, from_prod_level, from_prod_isle, from_prod_pallet, to_prod_qty, to_prod_level, to_prod_isle, to_prod_pallet, primary_code, secondary_code, product_code3, note, MaxStocks_data2, invoice, expiry_date,PO_number, ReqBy, dateofreq,typeservices, destination, deliverydate, driver, plate, van, DRSI, typevehicle} = req.body
+        const {date, from_warehouse, FromRoom_name, to_warehouse, ToRoom_name, prod_name, from_prod_qty, from_prod_level, from_prod_isle, from_prod_pallet, to_prod_qty, to_prod_level, to_prod_isle, to_prod_pallet, primary_code, secondary_code, product_code3, note, MaxStocks_data2, invoice, expiry_date,PO_number, ReqBy, dateofreq,typeservices, destination, deliverydate, driver, plate, van, DRSI, typevehicle, TSU, TFU} = req.body
         
         if(typeof prod_name == "string"){
             var product_name_array = [req.body.prod_name]
@@ -385,7 +385,7 @@ router.post("/view/add_transfer", auth, async(req, res) => {
     
         
         
-        const data = new transfers_finished({ date, from_warehouse, to_warehouse, product:Newnewproduct, note, invoice, PO_number , RequestedBy: ReqBy, DateofRequest: dateofreq, typeservices, destination, deliverydate, driver, plate, van, DRSI, typevehicle:typevehicle })
+        const data = new transfers_finished({ date, from_warehouse, to_warehouse, product:Newnewproduct, note, invoice, PO_number , RequestedBy: ReqBy, DateofRequest: dateofreq, typeservices, destination, deliverydate, driver, plate, van, DRSI, typevehicle:typevehicle, TSU, TFU })
         const transfers_data = await data.save()
 
 

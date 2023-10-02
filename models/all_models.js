@@ -1630,7 +1630,13 @@ const transfers_data_finished = new mongoose.Schema({
     },
     PO_number: {
         type: String
-    }
+    },
+    TSU: {
+        type: String
+    },
+    TFU: {
+        type: String
+    },
 })
 
 const transfers_finished = new mongoose.model("transfer_finished", transfers_data_finished);

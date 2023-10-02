@@ -2119,6 +2119,10 @@ router.get("/PDF_transferFinal/:id", auth, async (req, res) => {
         .text(totalPCS, lastTableX+400, lastTableY);
 
 
+        const StartUnloading = formatTime(user_id.TSU);
+        const FinishUnloading = formatTime(user_id.TFU);
+
+
 
         doc
         .fontSize(9)
@@ -2127,6 +2131,10 @@ router.get("/PDF_transferFinal/:id", auth, async (req, res) => {
         doc
         .fontSize(9)
         .text(':', lastTableX+110, lastTableY);
+
+        doc
+        .fontSize(9)
+        .text(StartUnloading, lastTableX+150, lastTableY);
 
         doc.moveTo(lastTableX+115, lastTableY+10); // Move to the starting point
         doc.lineTo(lastTableX+210, lastTableY+10); // Draw a line to the ending point
@@ -2139,6 +2147,10 @@ router.get("/PDF_transferFinal/:id", auth, async (req, res) => {
         doc
         .fontSize(9)
         .text(':', lastTableX+110, lastTableY);
+
+        doc
+        .fontSize(9)
+        .text(FinishUnloading, lastTableX+150, lastTableY);
 
         doc.moveTo(lastTableX+115, lastTableY+10); // Move to the starting point
         doc.lineTo(lastTableX+210, lastTableY+10); // Draw a line to the ending point
