@@ -14,6 +14,12 @@ const blobStream  = require('blob-stream');
 
 
 
+function formatTime(timeString) {
+  const [hourString, minute] = timeString.split(":");
+  const hour = +hourString % 24;
+  return (hour % 12 || 12) + ":" + minute + (hour < 12 ? " AM " : " PM ");
+}
+
 
 // router.get("/PDF/:id", auth, async (req, res) => {
 //     try {
@@ -1289,7 +1295,10 @@ router.get("/PDFFinal/:id", auth, async (req, res) => {
         .text(totalPCS, lastTableX+400, lastTableY);
 
 
+        const StartUnloading = formatTime(user_id.TSU);
+        const FinishUnloading = formatTime(user_id.TFU);
 
+        
         doc
         .fontSize(9)
         .text('TIME START UNLOADING', lastTableX, lastTableY+=50);
@@ -1297,6 +1306,10 @@ router.get("/PDFFinal/:id", auth, async (req, res) => {
         doc
         .fontSize(9)
         .text(':', lastTableX+110, lastTableY);
+
+        doc
+        .fontSize(9)
+        .text(StartUnloading, lastTableX+150, lastTableY);
 
         doc.moveTo(lastTableX+115, lastTableY+10); // Move to the starting point
         doc.lineTo(lastTableX+210, lastTableY+10); // Draw a line to the ending point
@@ -1309,6 +1322,10 @@ router.get("/PDFFinal/:id", auth, async (req, res) => {
         doc
         .fontSize(9)
         .text(':', lastTableX+110, lastTableY);
+
+        doc
+        .fontSize(9)
+        .text(FinishUnloading, lastTableX+150, lastTableY);
 
         doc.moveTo(lastTableX+115, lastTableY+10); // Move to the starting point
         doc.lineTo(lastTableX+210, lastTableY+10); // Draw a line to the ending point
@@ -3532,6 +3549,7 @@ router.get("/pdf_puchases_fin/:id", auth, async (req, res) => {
 
 
 
+        
         doc
         .fontSize(9)
         .text('TIME START UNLOADING', lastTableX, lastTableY+=50);
@@ -3539,6 +3557,13 @@ router.get("/pdf_puchases_fin/:id", auth, async (req, res) => {
         doc
         .fontSize(9)
         .text(':', lastTableX+110, lastTableY);
+
+        const StartUnloading = formatTime(user_id.TSU);
+        const FinishUnloading = formatTime(user_id.TFU);
+
+        doc
+        .fontSize(9)
+        .text(StartUnloading, lastTableX+150, lastTableY);
 
         doc.moveTo(lastTableX+115, lastTableY+10); // Move to the starting point
         doc.lineTo(lastTableX+210, lastTableY+10); // Draw a line to the ending point
@@ -3551,6 +3576,10 @@ router.get("/pdf_puchases_fin/:id", auth, async (req, res) => {
         doc
         .fontSize(9)
         .text(':', lastTableX+110, lastTableY);
+
+        doc
+        .fontSize(9)
+        .text(FinishUnloading, lastTableX+150, lastTableY);
 
         doc.moveTo(lastTableX+115, lastTableY+10); // Move to the starting point
         doc.lineTo(lastTableX+210, lastTableY+10); // Draw a line to the ending point

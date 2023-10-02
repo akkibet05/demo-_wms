@@ -1138,7 +1138,13 @@ const sales_data_finished = new mongoose.Schema({
     },
     PO_number: {
         type: String
-    }
+    },
+    TSU: {
+        type: String
+    },
+    TFU: {
+        type: String
+    },
 })
 
 const sales_finished = new mongoose.model("sales_finished", sales_data_finished);
