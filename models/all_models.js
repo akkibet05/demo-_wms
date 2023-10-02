@@ -1887,7 +1887,13 @@ const adjustment_data_finished = new mongoose.Schema({
     },
     PO_number: {
         type: String
-    }
+    },
+    TSU: {
+        type: String
+    },
+    TFU: {
+        type: String
+    },
 })
 
 const adjustment_finished = new mongoose.model("adjustment_finished", adjustment_data_finished);
