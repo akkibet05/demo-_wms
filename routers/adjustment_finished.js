@@ -202,7 +202,7 @@ router.get("/view/add_adjustment", auth, async (req, res) => {
 
 router.post("/view/add_adjustment", auth, async(req, res) => {
     try{
-        const {warehouse_name, date, prod_name, level, isle, pallet, stock, types, adjust_qty, new_adjust_qty, note, Room_name, invoice, JO_number, expiry_date,PO_number, ReqBy, dateofreq,typeservices, destination, deliverydate, driver, plate, van, DRSI, typevehicle, TSU, TFU } = req.body
+        const {warehouse_name, date, prod_name, level, isle, pallet, stock, types, adjust_qty, new_adjust_qty, note, Room_name, invoice, JO_number, expiry_date,PO_number, ReqBy, dateofreq,typeservicesData, destination, deliverydate, driver, plate, van, DRSI, typevehicle, TSU, TFU } = req.body
         // res.json(req.body)
         // return
         if(typeof prod_name == "string"){
@@ -341,7 +341,7 @@ router.post("/view/add_adjustment", auth, async(req, res) => {
             return res.redirect("back")
         }
 
-        const data = new adjustment_finished({ warehouse_name, date, product:newFilter, note, room: Room_name, invoice, JO_number, expiry_date, PO_number , RequestedBy: ReqBy, DateofRequest: dateofreq, typeservices, destination, deliverydate, driver, plate, van, DRSI, typevehicle:typevehicle, TSU, TFU })
+        const data = new adjustment_finished({ warehouse_name, date, product:newFilter, note, room: Room_name, invoice, JO_number, expiry_date, PO_number , RequestedBy: ReqBy, DateofRequest: dateofreq, typeservices : typeservicesData, destination, deliverydate, driver, plate, van, DRSI, typevehicle:typevehicle, TSU, TFU })
 
         const adjustment_data = await data.save() 
         

@@ -968,70 +968,74 @@ router.get("/PDFFinal/:id", auth, async (req, res) => {
       .fontSize(9)
       .text(':', x1+90, y1);
 
-      var x3, y3;
-      if (user_id.typeservices == "F") {
-        x3 = x1+104;
-        y3 = y1+3;
-      }else if(user_id.typeservices == "HI"){
-        x3 = x1+405; //164
-        y3 = y1+3;
+      // var x3, y3;
+      // if (user_id.typeservices == "F") {
+      //   x3 = x1+104;
+      //   y3 = y1+3;
+      // }else if(user_id.typeservices == "HI"){
+      //   x3 = x1+405; //164
+      //   y3 = y1+3;
 
-      }else if(user_id.typeservices == "S"){
-        x3 = x1+244;
-        y3 = y1+3;
+      // }else if(user_id.typeservices == "S"){
+      //   x3 = x1+244;
+      //   y3 = y1+3;
 
-      }else if(user_id.typeservices == "PA"){
-        x3 = x1+325;
-        y3 = y1+3;
+      // }else if(user_id.typeservices == "PA"){
+      //   x3 = x1+325;
+      //   y3 = y1+3;
 
-      }else if(user_id.typeservices == "OTH"){
-        x3 = x1+115;
-        y3 = y1+3;
+      // }else if(user_id.typeservices == "OTH"){
+      //   x3 = x1+115;
+      //   y3 = y1+3;
 
-      }
-      if(x3 > 0 && y3 > 0 ){
-        doc
-          .fontSize(9)
-          .text("X", x3, y3);
-      }
+      // }
+      // if(x3 > 0 && y3 > 0 ){
+      //   doc
+      //     .fontSize(9)
+      //     .text("X", x3, y3);
+      // }
 
       // // Define the outer rectangle
       // doc.rect(50, 50, 300, 100).stroke(); // (x, y, width, height)
 
-      // Define the inner rectangle
-      doc.rect(x1+100, y1, 55, 12).stroke(); // (x, y, width, height)
+      // // Define the inner rectangle
+      // doc.rect(x1+100, y1, 55, 12).stroke(); // (x, y, width, height)
 
-      const checkboxSize = 12;
-      doc.rect(x1+100, y1, checkboxSize, checkboxSize).stroke()
+      // const checkboxSize = 12;
+      // doc.rect(x1+100, y1, checkboxSize, checkboxSize).stroke()
+
+
+      // doc.fontSize(9);
+      // doc.text('Freight', x1+115, y1+3, { width: 130 }); // (text, x, y, options)
+
+
+      // // Define the inner rectangle
+      // doc.rect(x1+160, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
+      // doc.rect(x1+160, y1, checkboxSize, checkboxSize).stroke()
+      // doc.fontSize(9);
+      // doc.text('Handling In', x1+175, y1+3, { width: 130 }); // (text, x, y, options)
+
+
+      // // Define the inner rectangle
+      // doc.rect(x1+240, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
+      // doc.rect(x1+240, y1, checkboxSize, checkboxSize).stroke()
+      // doc.fontSize(9);
+      // doc.text('Stripping', x1+260, y1+3, { width: 130 }); // (text, x, y, options)
+
+
+      // doc.rect(x1+320, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
+      // doc.rect(x1+320, y1, checkboxSize, checkboxSize).stroke()
+      // doc.fontSize(9);
+      // doc.text('PUT AWAY', x1+340, y1+3, { width: 130 }); // (text, x, y, options)
+
+      // doc.rect(x1+400, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
+      // doc.rect(x1+400, y1, checkboxSize, checkboxSize).stroke()
+      // doc.fontSize(9);
+      // doc.text('Others', x1+420, y1+3, { width: 130 }); // (text, x, y, options)
 
 
       doc.fontSize(9);
-      doc.text('Freight', x1+115, y1+3, { width: 130 }); // (text, x, y, options)
-
-
-      // Define the inner rectangle
-      doc.rect(x1+160, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
-      doc.rect(x1+160, y1, checkboxSize, checkboxSize).stroke()
-      doc.fontSize(9);
-      doc.text('Handling In', x1+175, y1+3, { width: 130 }); // (text, x, y, options)
-
-
-      // Define the inner rectangle
-      doc.rect(x1+240, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
-      doc.rect(x1+240, y1, checkboxSize, checkboxSize).stroke()
-      doc.fontSize(9);
-      doc.text('Stripping', x1+260, y1+3, { width: 130 }); // (text, x, y, options)
-
-
-      doc.rect(x1+320, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
-      doc.rect(x1+320, y1, checkboxSize, checkboxSize).stroke()
-      doc.fontSize(9);
-      doc.text('PUT AWAY', x1+340, y1+3, { width: 130 }); // (text, x, y, options)
-
-      doc.rect(x1+400, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
-      doc.rect(x1+400, y1, checkboxSize, checkboxSize).stroke()
-      doc.fontSize(9);
-      doc.text('Others', x1+420, y1+3, { width: 130 }); // (text, x, y, options)
+      doc.text(user_id.typeservices, x1+110, y1+3); // (text, x, y, options)
       
 
       doc
@@ -1792,72 +1796,74 @@ router.get("/PDF_transferFinal/:id", auth, async (req, res) => {
       .fontSize(9)
       .text(':', x1+90, y1);
 
-      var x3, y3;
-      if (user_id.typeservices == "F") {
-        x3 = x1+104;
-        y3 = y1+3;
-      }else if(user_id.typeservices == "HI"){
-        x3 = x1+405; //164
-        y3 = y1+3;
+      // var x3, y3;
+      // if (user_id.typeservices == "F") {
+      //   x3 = x1+104;
+      //   y3 = y1+3;
+      // }else if(user_id.typeservices == "HI"){
+      //   x3 = x1+405; //164
+      //   y3 = y1+3;
 
-      }else if(user_id.typeservices == "S"){
-        x3 = x1+244;
-        y3 = y1+3;
+      // }else if(user_id.typeservices == "S"){
+      //   x3 = x1+244;
+      //   y3 = y1+3;
 
-      }else if(user_id.typeservices == "PA"){
-        x3 = x1+325;
-        y3 = y1+3;
+      // }else if(user_id.typeservices == "PA"){
+      //   x3 = x1+325;
+      //   y3 = y1+3;
 
-      }else if(user_id.typeservices == "OTH"){
-        x3 = x1+115;
-        y3 = y1+3;
+      // }else if(user_id.typeservices == "OTH"){
+      //   x3 = x1+115;
+      //   y3 = y1+3;
 
-      }
-      if(x3 > 0 && y3 > 0 ){
-        doc
-          .fontSize(9)
-          .text("X", x3, y3);
-      }
+      // }
+      // if(x3 > 0 && y3 > 0 ){
+      //   doc
+      //     .fontSize(9)
+      //     .text("X", x3, y3);
+      // }
 
       // // Define the outer rectangle
       // doc.rect(50, 50, 300, 100).stroke(); // (x, y, width, height)
 
       // Define the inner rectangle
-      doc.rect(x1+100, y1, 55, 12).stroke(); // (x, y, width, height)
+      // doc.rect(x1+100, y1, 55, 12).stroke(); // (x, y, width, height)
 
-      const checkboxSize = 12;
-      doc.rect(x1+100, y1, checkboxSize, checkboxSize).stroke()
-
-
-      doc.fontSize(9);
-      doc.text('Freight', x1+115, y1+3, { width: 130 }); // (text, x, y, options)
+      // const checkboxSize = 12;
+      // doc.rect(x1+100, y1, checkboxSize, checkboxSize).stroke()
 
 
-      // Define the inner rectangle
-      doc.rect(x1+160, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
-      doc.rect(x1+160, y1, checkboxSize, checkboxSize).stroke()
-      doc.fontSize(9);
-      doc.text('Handling In', x1+175, y1+3, { width: 130 }); // (text, x, y, options)
+      // doc.fontSize(9);
+      // doc.text('Freight', x1+115, y1+3, { width: 130 }); // (text, x, y, options)
 
 
-      // Define the inner rectangle
-      doc.rect(x1+240, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
-      doc.rect(x1+240, y1, checkboxSize, checkboxSize).stroke()
-      doc.fontSize(9);
-      doc.text('Stripping', x1+260, y1+3, { width: 130 }); // (text, x, y, options)
+      // // Define the inner rectangle
+      // doc.rect(x1+160, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
+      // doc.rect(x1+160, y1, checkboxSize, checkboxSize).stroke()
+      // doc.fontSize(9);
+      // doc.text('Handling In', x1+175, y1+3, { width: 130 }); // (text, x, y, options)
 
 
-      doc.rect(x1+320, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
-      doc.rect(x1+320, y1, checkboxSize, checkboxSize).stroke()
-      doc.fontSize(9);
-      doc.text('PUT AWAY', x1+340, y1+3, { width: 130 }); // (text, x, y, options)
+      // // Define the inner rectangle
+      // doc.rect(x1+240, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
+      // doc.rect(x1+240, y1, checkboxSize, checkboxSize).stroke()
+      // doc.fontSize(9);
+      // doc.text('Stripping', x1+260, y1+3, { width: 130 }); // (text, x, y, options)
 
-      doc.rect(x1+400, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
-      doc.rect(x1+400, y1, checkboxSize, checkboxSize).stroke()
-      doc.fontSize(9);
-      doc.text('Others', x1+420, y1+3, { width: 130 }); // (text, x, y, options)
+
+      // doc.rect(x1+320, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
+      // doc.rect(x1+320, y1, checkboxSize, checkboxSize).stroke()
+      // doc.fontSize(9);
+      // doc.text('PUT AWAY', x1+340, y1+3, { width: 130 }); // (text, x, y, options)
+
+      // doc.rect(x1+400, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
+      // doc.rect(x1+400, y1, checkboxSize, checkboxSize).stroke()
+      // doc.fontSize(9);
+      // doc.text('Others', x1+420, y1+3, { width: 130 }); // (text, x, y, options)
       
-
+      doc.fontSize(9);
+      doc.text(user_id.typeservices, x1+110, y1+3); // (text, x, y, options)
+      
       doc
       .fontSize(9)
       .text('TYPE OF VEHICLE', x1, y1+=20);
@@ -2621,71 +2627,72 @@ router.get("/PDF_adjustmentFinal/:id", auth, async (req, res) => {
       .fontSize(9)
       .text(':', x1+90, y1);
 
-      var x3, y3;
-      if (user_id.typeservices == "F") {
-        x3 = x1+104;
-        y3 = y1+3;
-      }else if(user_id.typeservices == "HI"){
-        x3 = x1+405; //164
-        y3 = y1+3;
+      // var x3, y3;
+      // if (user_id.typeservices == "F") {
+      //   x3 = x1+104;
+      //   y3 = y1+3;
+      // }else if(user_id.typeservices == "HI"){
+      //   x3 = x1+405; //164
+      //   y3 = y1+3;
 
-      }else if(user_id.typeservices == "S"){
-        x3 = x1+244;
-        y3 = y1+3;
+      // }else if(user_id.typeservices == "S"){
+      //   x3 = x1+244;
+      //   y3 = y1+3;
 
-      }else if(user_id.typeservices == "PA"){
-        x3 = x1+325;
-        y3 = y1+3;
+      // }else if(user_id.typeservices == "PA"){
+      //   x3 = x1+325;
+      //   y3 = y1+3;
 
-      }else if(user_id.typeservices == "OTH"){
-        x3 = x1+115;
-        y3 = y1+3;
+      // }else if(user_id.typeservices == "OTH"){
+      //   x3 = x1+115;
+      //   y3 = y1+3;
 
-      }
-      if(x3 > 0 && y3 > 0 ){
-        doc
-          .fontSize(9)
-          .text("X", x3, y3);
-      }
+      // }
+      // if(x3 > 0 && y3 > 0 ){
+      //   doc
+      //     .fontSize(9)
+      //     .text("X", x3, y3);
+      // }
 
       // // Define the outer rectangle
       // doc.rect(50, 50, 300, 100).stroke(); // (x, y, width, height)
 
-      // Define the inner rectangle
-      doc.rect(x1+100, y1, 55, 12).stroke(); // (x, y, width, height)
+      // // Define the inner rectangle
+      // doc.rect(x1+100, y1, 55, 12).stroke(); // (x, y, width, height)
 
-      const checkboxSize = 12;
-      doc.rect(x1+100, y1, checkboxSize, checkboxSize).stroke()
+      // const checkboxSize = 12;
+      // doc.rect(x1+100, y1, checkboxSize, checkboxSize).stroke()
 
 
+      // doc.fontSize(9);
+      // doc.text('Freight', x1+115, y1+3, { width: 130 }); // (text, x, y, options)
+
+
+      // // Define the inner rectangle
+      // doc.rect(x1+160, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
+      // doc.rect(x1+160, y1, checkboxSize, checkboxSize).stroke()
+      // doc.fontSize(9);
+      // doc.text('Handling In', x1+175, y1+3, { width: 130 }); // (text, x, y, options)
+
+
+      // // Define the inner rectangle
+      // doc.rect(x1+240, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
+      // doc.rect(x1+240, y1, checkboxSize, checkboxSize).stroke()
+      // doc.fontSize(9);
+      // doc.text('Stripping', x1+260, y1+3, { width: 130 }); // (text, x, y, options)
+
+
+      // doc.rect(x1+320, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
+      // doc.rect(x1+320, y1, checkboxSize, checkboxSize).stroke()
+      // doc.fontSize(9);
+      // doc.text('PUT AWAY', x1+340, y1+3, { width: 130 }); // (text, x, y, options)
+
+      // doc.rect(x1+400, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
+      // doc.rect(x1+400, y1, checkboxSize, checkboxSize).stroke()
+      // doc.fontSize(9);
+      // doc.text('Others', x1+420, y1+3, { width: 130 }); // (text, x, y, options)
       doc.fontSize(9);
-      doc.text('Freight', x1+115, y1+3, { width: 130 }); // (text, x, y, options)
-
-
-      // Define the inner rectangle
-      doc.rect(x1+160, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
-      doc.rect(x1+160, y1, checkboxSize, checkboxSize).stroke()
-      doc.fontSize(9);
-      doc.text('Handling In', x1+175, y1+3, { width: 130 }); // (text, x, y, options)
-
-
-      // Define the inner rectangle
-      doc.rect(x1+240, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
-      doc.rect(x1+240, y1, checkboxSize, checkboxSize).stroke()
-      doc.fontSize(9);
-      doc.text('Stripping', x1+260, y1+3, { width: 130 }); // (text, x, y, options)
-
-
-      doc.rect(x1+320, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
-      doc.rect(x1+320, y1, checkboxSize, checkboxSize).stroke()
-      doc.fontSize(9);
-      doc.text('PUT AWAY', x1+340, y1+3, { width: 130 }); // (text, x, y, options)
-
-      doc.rect(x1+400, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
-      doc.rect(x1+400, y1, checkboxSize, checkboxSize).stroke()
-      doc.fontSize(9);
-      doc.text('Others', x1+420, y1+3, { width: 130 }); // (text, x, y, options)
-      
+      doc.text(user_id.typeservices, x1+110, y1+3); // (text, x, y, options)
 
       doc
       .fontSize(9)
@@ -3227,68 +3234,69 @@ router.get("/pdf_puchases_fin/:id", auth, async (req, res) => {
       doc
       .fontSize(9)
       .text(':', x1+90, y1);
-      var x3, y3;
-      if (user_id.typeservices == "F") {
-        x3 = x1+104;
-        y3 = y1+3;
-      }else if(user_id.typeservices == "HI"){
-        x3 = x1+405; //164
-        y3 = y1+3;
+      // var x3, y3;
+      // if (user_id.typeservices == "F") {
+      //   x3 = x1+104;
+      //   y3 = y1+3;
+      // }else if(user_id.typeservices == "HI"){
+      //   x3 = x1+405; //164
+      //   y3 = y1+3;
 
-      }else if(user_id.typeservices == "S"){
-        x3 = x1+244;
-        y3 = y1+3;
+      // }else if(user_id.typeservices == "S"){
+      //   x3 = x1+244;
+      //   y3 = y1+3;
 
-      }else if(user_id.typeservices == "PA"){
-        x3 = x1+325;
-        y3 = y1+3;
+      // }else if(user_id.typeservices == "PA"){
+      //   x3 = x1+325;
+      //   y3 = y1+3;
 
-      }else if(user_id.typeservices == "OTH"){
-        x3 = x1+115;
-        y3 = y1+3;
+      // }else if(user_id.typeservices == "OTH"){
+      //   x3 = x1+115;
+      //   y3 = y1+3;
 
-      }
-      if(x3 > 0 && y3 > 0 ){
-        doc
-          .fontSize(9)
-          .text("X", x3, y3);
-      }
-      
+      // }
+      // if(x3 > 0 && y3 > 0 ){
+      //   doc
+      //     .fontSize(9)
+      //     .text("X", x3, y3);
+      // }
+      doc.fontSize(9);
+      doc.text(user_id.typeservices, x1+110, y1+3); // (text, x, y, options)
 
       // Define the inner rectangle
-      doc.rect(x1+100, y1, 55, 12).stroke(); // (x, y, width, height)
+      // doc.rect(x1+100, y1, 55, 12).stroke(); // (x, y, width, height)
 
-      const checkboxSize = 12;
-      doc.rect(x1+100, y1, checkboxSize, checkboxSize).stroke()
-
-
-      doc.fontSize(9);
-      doc.text('Freight', x1+115, y1+3, { width: 130 }); // (text, x, y, options)
+      // const checkboxSize = 12;
+      // doc.rect(x1+100, y1, checkboxSize, checkboxSize).stroke()
 
 
-      // Define the inner rectangle
-      doc.rect(x1+160, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
-      doc.rect(x1+160, y1, checkboxSize, checkboxSize).stroke()
-      doc.fontSize(9);
-      doc.text('Handling In', x1+175, y1+3, { width: 130 }); // (text, x, y, options)
+      // doc.fontSize(9);
+      // doc.text('Freight', x1+115, y1+3, { width: 130 }); // (text, x, y, options)
 
 
       // Define the inner rectangle
-      doc.rect(x1+240, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
-      doc.rect(x1+240, y1, checkboxSize, checkboxSize).stroke()
-      doc.fontSize(9);
-      doc.text('Stripping', x1+260, y1+3, { width: 130 }); // (text, x, y, options)
+      // doc.rect(x1+160, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
+      // doc.rect(x1+160, y1, checkboxSize, checkboxSize).stroke()
+      // doc.fontSize(9);
+      // doc.text('Handling In', x1+175, y1+3, { width: 130 }); // (text, x, y, options)
 
 
-      doc.rect(x1+320, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
-      doc.rect(x1+320, y1, checkboxSize, checkboxSize).stroke()
-      doc.fontSize(9);
-      doc.text('PUT AWAY', x1+340, y1+3, { width: 130 }); // (text, x, y, options)
+      // Define the inner rectangle
+      // doc.rect(x1+240, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
+      // doc.rect(x1+240, y1, checkboxSize, checkboxSize).stroke()
+      // doc.fontSize(9);
+      // doc.text('Stripping', x1+260, y1+3, { width: 130 }); // (text, x, y, options)
 
-      doc.rect(x1+400, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
-      doc.rect(x1+400, y1, checkboxSize, checkboxSize).stroke()
-      doc.fontSize(9);
-      doc.text('Others', x1+420, y1+3, { width: 130 }); // (text, x, y, options)
+
+      // doc.rect(x1+320, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
+      // doc.rect(x1+320, y1, checkboxSize, checkboxSize).stroke()
+      // doc.fontSize(9);
+      // doc.text('PUT AWAY', x1+340, y1+3, { width: 130 }); // (text, x, y, options)
+
+      // doc.rect(x1+400, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
+      // doc.rect(x1+400, y1, checkboxSize, checkboxSize).stroke()
+      // doc.fontSize(9);
+      // doc.text('Others', x1+420, y1+3, { width: 130 }); // (text, x, y, options)
       
 
       doc

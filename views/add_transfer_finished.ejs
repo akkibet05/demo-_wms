@@ -523,14 +523,37 @@
                                                             <div class="form-group">
                                                                 <label for="invoice_no">Type of Services  <span
                                                                         class="text-red">*</span></label>
-                                                                <select class="form-control" name="typeservices"
+                                                                <!-- <select class="form-control" name="typeservices"
                                                                     id="typeservices" required>
                                                                     <option value="F">Freight</option>
                                                                     <option value="HI">Handling In</option>
                                                                     <option value="S">Stripping</option>
                                                                     <option value="PA">Put Away</option>
                                                                     <option value="OTH">Others</option>
-                                                                </select>
+                                                                </select> -->
+                                                                <br>
+                                                                <input type="checkbox" class="form-check-input" id="typeservices" name="typeservices" onclick="datahceck()" value="Freight">
+                                                                <label for="Freight"> Freight</label><br>
+                                                                <input type="checkbox" class="form-check-input" id="typeservices" name="typeservices" onclick="datahceck()" value="Handling In">
+                                                                <label for="HandlingIn"> Handling In</label><br>
+                                                                <input type="checkbox" class="form-check-input" id="typeservices" name="typeservices" onclick="datahceck()" value="Handling Out">
+                                                                <label for="HandlingOut"> Handling Out</label><br>
+                                                                <input type="checkbox" class="form-check-input" id="typeservices" name="typeservices" onclick="datahceck()" value="Stripping">
+                                                                <label for="Stripping"> Stripping</label><br>
+                                                                <input type="checkbox" class="form-check-input" id="typeservices" name="typeservices" onclick="datahceck()" value="Stuffing">
+                                                                <label for="Stuffing"> Stuffing</label><br>
+                                                                <input type="checkbox" class="form-check-input" id="typeservices" name="typeservices" onclick="datahceck()" value="Barcoding">
+                                                                <label for="Barcoding"> Barcoding</label><br>
+                                                                <input type="checkbox" class="form-check-input" id="typeservices" name="typeservices" onclick="datahceck()" value="Repacking">
+                                                                <label for="Repacking"> Repacking</label><br>
+                                                                <input type="checkbox" class="form-check-input" id="typeservices" name="typeservices" onclick="datahceck()" value="Reprocessing">
+                                                                <label for="Reprocessing"> Reprocessing</label><br>
+                                                                <input type="checkbox" class="form-check-input" id="typeservices" name="typeservices" onclick="datahceck()" value="Stickering">
+                                                                <label for="Stickering"> Stickering</label><br>
+                                                                <input type="checkbox" class="form-check-input" id="typeservices" name="typeservices" onclick="datahceck()" value="Sorting">
+                                                                <label for="Sorting"> Sorting</label><br>
+
+                                                                <input type="hidden" class="form-check-input" id="typeservicesData" name="typeservicesData">
                                                             </div>
                                                         </div>
 
@@ -1135,6 +1158,26 @@
                 }
             }
 
+            function datahceck(){
+                var checkBox = document.getElementsByName("typeservices");
+                var arrayData = [];
+                for (let index = 0; index < checkBox.length; index++) {
+                    const element = checkBox[index];
+
+                    if(element.checked == true){
+                        arrayData += element.value + ',';
+                    }
+                    
+                }
+
+                if (arrayData.endsWith(',')) {
+                    arrayData = arrayData.substring(0, arrayData.length - 1);
+                }
+
+                document.getElementById("typeservicesData").value = arrayData;
+
+            
+            }
 
 
             function checkingWarehouse(i){
