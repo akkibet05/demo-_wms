@@ -871,13 +871,26 @@ router.get("/PDFFinal/:id", auth, async (req, res) => {
       .fontSize(9)
       .text('Name of Client', x+=80, y+=25);
 
+
+      doc
+      .fontSize(9)
+      .text(":", x+80, y-3);
+
       doc
       .fontSize(9)
       .text(user_id.customer, x+150, y-3);
 
+      doc.moveTo(x+100, y+5); // Move to the starting point
+      doc.lineTo(x+310, y+5); // Draw a line to the ending point
+      doc.stroke();
+
       doc
       .fontSize(9)
       .text('J.O. #', x, y+=13);
+
+      doc
+      .fontSize(9)
+      .text(":", x+80, y-3);
 
 
       doc
@@ -899,6 +912,10 @@ router.get("/PDFFinal/:id", auth, async (req, res) => {
 
       doc
       .fontSize(9)
+      .text(":", x+80, y-3);
+
+      doc
+      .fontSize(9)
       .text(user_id.date, x+150, y-3);
 
       doc.moveTo(x+100, y+5); // Move to the starting point
@@ -908,6 +925,10 @@ router.get("/PDFFinal/:id", auth, async (req, res) => {
       doc
       .fontSize(9)
       .text('Requested By', x, y+=23);
+
+      doc
+      .fontSize(9)
+      .text(":", x+80, y-3);
 
       doc.moveTo(x+100, y+5); // Move to the starting point
       doc.lineTo(x+310, y+5); // Draw a line to the ending point
@@ -922,6 +943,10 @@ router.get("/PDFFinal/:id", auth, async (req, res) => {
       .fontSize(9)
       .text('Date of Request', x, y+=13);
 
+      doc
+      .fontSize(9)
+      .text(":", x+80, y-3);
+
       doc.moveTo(x+100, y+5); // Move to the starting point
       doc.lineTo(x+310, y+5); // Draw a line to the ending point
       doc.stroke();
@@ -934,6 +959,10 @@ router.get("/PDFFinal/:id", auth, async (req, res) => {
       doc
       .fontSize(9)
       .text('PO Number', x, y+=13);
+
+      doc
+      .fontSize(9)
+      .text(":", x+80, y-3);
 
       doc.moveTo(x+100, y+5); // Move to the starting point
       doc.lineTo(x+310, y+5); // Draw a line to the ending point
@@ -1701,11 +1730,24 @@ router.get("/PDF_transferFinal/:id", auth, async (req, res) => {
 
       doc
       .fontSize(9)
+      .text(":", x+80, y-3);
+
+      doc
+      .fontSize(9)
       .text(user_id.customer, x+150, y-3);
+
+      doc.moveTo(x+100, y+5); // Move to the starting point
+      doc.lineTo(x+310, y+5); // Draw a line to the ending point
+      doc.stroke();
 
       doc
       .fontSize(9)
       .text('J.O. #', x, y+=13);
+
+
+      doc
+      .fontSize(9)
+      .text(":", x+80, y-3);
 
 
       doc
@@ -1727,6 +1769,10 @@ router.get("/PDF_transferFinal/:id", auth, async (req, res) => {
 
       doc
       .fontSize(9)
+      .text(":", x+80, y-3);
+
+      doc
+      .fontSize(9)
       .text(user_id.date, x+150, y-3);
 
       doc.moveTo(x+100, y+5); // Move to the starting point
@@ -1736,6 +1782,10 @@ router.get("/PDF_transferFinal/:id", auth, async (req, res) => {
       doc
       .fontSize(9)
       .text('Requested By', x, y+=23);
+
+      doc
+      .fontSize(9)
+      .text(":", x+80, y-3);
 
       doc.moveTo(x+100, y+5); // Move to the starting point
       doc.lineTo(x+310, y+5); // Draw a line to the ending point
@@ -1750,6 +1800,11 @@ router.get("/PDF_transferFinal/:id", auth, async (req, res) => {
       .fontSize(9)
       .text('Date of Request', x, y+=13);
 
+
+      doc
+      .fontSize(9)
+      .text(":", x+80, y-3);
+
       doc.moveTo(x+100, y+5); // Move to the starting point
       doc.lineTo(x+310, y+5); // Draw a line to the ending point
       doc.stroke();
@@ -1762,6 +1817,11 @@ router.get("/PDF_transferFinal/:id", auth, async (req, res) => {
       doc
       .fontSize(9)
       .text('PO Number', x, y+=13);
+
+
+      doc
+      .fontSize(9)
+      .text(":", x+80, y-3);
 
       doc.moveTo(x+100, y+5); // Move to the starting point
       doc.lineTo(x+310, y+5); // Draw a line to the ending point
@@ -1785,6 +1845,8 @@ router.get("/PDF_transferFinal/:id", auth, async (req, res) => {
       doc
       .fontSize(9)
       .text('JOB DETAILS', x, y1+=3);
+
+      
 
       doc.moveTo(x1, y1+=10); // Starting point
       doc.lineTo(x1+570, y1); // Ending point
@@ -2532,11 +2594,24 @@ router.get("/PDF_adjustmentFinal/:id", auth, async (req, res) => {
 
       doc
       .fontSize(9)
+      .text(":", x+80, y-3);
+
+
+      doc.moveTo(x+100, y+5); // Move to the starting point
+      doc.lineTo(x+310, y+5); // Draw a line to the ending point
+      doc.stroke();
+
+      doc
+      .fontSize(9)
       .text(user_id.customer, x+150, y-3);
 
       doc
       .fontSize(9)
       .text('J.O. #', x, y+=13);
+
+      doc
+      .fontSize(9)
+      .text(":", x+80, y-3);
 
 
       doc
@@ -2558,6 +2633,10 @@ router.get("/PDF_adjustmentFinal/:id", auth, async (req, res) => {
 
       doc
       .fontSize(9)
+      .text(":", x+80, y-3);
+
+      doc
+      .fontSize(9)
       .text(user_id.date, x+150, y-3);
 
       doc.moveTo(x+100, y+5); // Move to the starting point
@@ -2567,6 +2646,10 @@ router.get("/PDF_adjustmentFinal/:id", auth, async (req, res) => {
       doc
       .fontSize(9)
       .text('Requested By', x, y+=23);
+
+      doc
+      .fontSize(9)
+      .text(":", x+80, y-3);
 
       doc.moveTo(x+100, y+5); // Move to the starting point
       doc.lineTo(x+310, y+5); // Draw a line to the ending point
@@ -2581,6 +2664,10 @@ router.get("/PDF_adjustmentFinal/:id", auth, async (req, res) => {
       .fontSize(9)
       .text('Date of Request', x, y+=13);
 
+      doc
+      .fontSize(9)
+      .text(":", x+80, y-3);
+
       doc.moveTo(x+100, y+5); // Move to the starting point
       doc.lineTo(x+310, y+5); // Draw a line to the ending point
       doc.stroke();
@@ -2593,6 +2680,10 @@ router.get("/PDF_adjustmentFinal/:id", auth, async (req, res) => {
       doc
       .fontSize(9)
       .text('PO Number', x, y+=13);
+
+      doc
+      .fontSize(9)
+      .text(":", x+80, y-3);
 
       doc.moveTo(x+100, y+5); // Move to the starting point
       doc.lineTo(x+310, y+5); // Draw a line to the ending point
