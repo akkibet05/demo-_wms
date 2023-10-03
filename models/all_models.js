@@ -158,6 +158,9 @@ const product_data = new mongoose.Schema({
     },
     product_category:{
         type: String
+    },
+    CBM : {
+        type: mongoose.Types.Decimal128
     }
     
 })

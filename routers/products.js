@@ -652,10 +652,10 @@ router.get("/view/add_products", auth, async (req, res) => {
 
 router.post("/view/add_products", auth, upload.single("image"), async (req, res) => {
     try {
-        const { name, category, brand, unit, alertquantity, stock, product_code,  warehouse, primary_ItemCode, second_ItemCode, second_unit } = req.body
+        const { name, category, brand, unit, alertquantity, stock, product_code,  warehouse, primary_ItemCode, second_ItemCode, second_unit, CBM } = req.body
         const image = req.file.filename;
         
-        const data = new product({ image, name, category, brand, unit, alertquantity, stock, product_code, warehouse, primary_code: primary_ItemCode, secondary_code: second_ItemCode, second_unit: second_unit, maxStocks: MaxPerProduct, maxProdPerUnit:maxPerUnit });
+        const data = new product({ image, name, category, brand, unit, alertquantity, stock, product_code, warehouse, primary_code: primary_ItemCode, secondary_code: second_ItemCode, second_unit: second_unit, maxStocks: MaxPerProduct, maxProdPerUnit:maxPerUnit, CBM });
         const products_data = await data.save()
 
         const categories_data = await categories.findOne({name : category});
@@ -764,7 +764,7 @@ router.post("/view/:id", auth, upload.single("image"), async (req, res) => {
         const _id = req.params.id;
         const data = await product.findById(_id)
 
-        const { image, name, category, brand, sku, unit, alertquantity, product_code,  warehouse, primary_ItemCode, second_ItemCode, second_unit, maxPerUnit, MaxPerProduct } = req.body
+        const { image, name, category, brand, sku, unit, alertquantity, product_code,  warehouse, primary_ItemCode, second_ItemCode, second_unit, maxPerUnit, MaxPerProduct, CBM } = req.body
 
         if (req.file) {
             data.image = req.file.filename
@@ -782,6 +782,7 @@ router.post("/view/:id", auth, upload.single("image"), async (req, res) => {
         data.secondary_unit = second_unit
         data.maxStocks = MaxPerProduct
         data.maxProdPerUnit = maxPerUnit
+        data.CBM = CBM
        
 
         const new_data = await data.save();
@@ -870,7 +871,7 @@ router.get("/products_export_migrate_file", auth, async (req, res) => {
             { header: "Category", key: "PCat", width: 10 },
             { header: "Alert_QTY", key: "PAlQty", width: 10 },
             { header: "Maximum_Stocks", key: "PAlQty", width: 10 },
-            { header: "Products_category", key: "Prod_Cat", width: 10 },
+            { header: "CBM", key: "CBM", width: 10 },
         ];
         
         res.setHeader(
@@ -925,7 +926,7 @@ router.post("/products_import_migrate_file", auth, uploadMigrate.single("migrate
       const Secondary_code = item.Secondary_Code;
       const MaxStocks = item.Maximum_Stocks;
       const max_number_per_units = item.max_number_per_units;
-      const Products_category = item.Products_category;
+      const CBM = item.CBM;
     
       try {
         let categories_data = await categories.findOne({ name: category });
@@ -968,7 +969,7 @@ router.post("/products_import_migrate_file", auth, uploadMigrate.single("migrate
             secondary_code: Secondary_code,
             maxStocks: MaxStocks, 
             maxProdPerUnit: max_number_per_units,
-            product_category:Products_category
+            CBM:CBM
           });
     
           const savedData = await data5.save();
