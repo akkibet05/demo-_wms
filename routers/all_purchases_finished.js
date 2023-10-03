@@ -287,7 +287,7 @@ router.get("/view/add_purchases", auth, async (req, res) => {
         const find_data = await warehouse.find({status : 'Enabled'});
         const purchases_data = await purchases_finished.find({})
         const invoice_noint = purchases_data.length + 1
-        const invoice_no = "INCF-" + invoice_noint.toString().padStart(5, "0")
+        const invoice_no = "INC-" + invoice_noint.toString().padStart(5, "0")
         var rooms_data = ["Ambient", "Enclosed"];
         if (master[0].language == "English (US)") {
             var lan_data = users.English
@@ -354,7 +354,7 @@ router.get("/view/add_purchases/:id", auth, async (req, res) => {
 router.post("/view/add_purchases", auth, async (req, res) => {
     try {
         // console.log(req.body, "done");
-        const { invoice, date, warehouse_name, prod_name, prod_code, prod_qty, prod_unit, prod_secondunit, prod_level, prod_isle, prod_pallet, note, expiry_date, batch_code,payable, due_amount, Room_name, primary_code, secondary_code, MaxStocks_data, PO_number, SCRN, JO_number, ReqBy, dateofreq,typeservicesData, destination, deliverydate, driver, plate, van, DRSI, typevehicle, TSU, TFU } = req.body
+        const { invoice, date, warehouse_name, prod_name, prod_code, prod_qty, prod_unit, prod_secondunit, prod_level, prod_isle, prod_pallet, note, expiry_date, batch_code,payable, due_amount, Room_name, primary_code, secondary_code, MaxStocks_data, PO_number, SCRN, JO_number, ReqBy, dateofreq,typeservicesData,  driver, plate, van, DRSI, typevehicle, TSU, TFU } = req.body
         
     //    res.json(req.body)
     //    return
@@ -478,7 +478,7 @@ router.post("/view/add_purchases", auth, async (req, res) => {
         // res.json(Newnewproduct);
         // return
        
-        const data = new purchases_finished({ invoice, suppliers:req.body.suppliers, date, warehouse_name, product:Newnewproduct, note, due_amount, room: Room_name, POnumber: PO_number, SCRN, JO_number, RequestedBy: ReqBy, DateofRequest: dateofreq, typeservices: typeservicesData, destination, deliverydate, driver, plate, van, DRSI, typevehicle:typevehicle, TSU, TFU })
+        const data = new purchases_finished({ invoice, suppliers:req.body.suppliers, date, warehouse_name, product:Newnewproduct, note, due_amount, room: Room_name, POnumber: PO_number, SCRN, JO_number, RequestedBy: ReqBy, DateofRequest: dateofreq, typeservices: typeservicesData, driver, plate, van, DRSI, typevehicle:typevehicle, TSU, TFU })
         const purchases_data = await data.save()
   
 

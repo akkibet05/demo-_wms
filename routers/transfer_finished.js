@@ -145,7 +145,7 @@ router.get("/view/add_transfer", auth, async(req, res) => {
 
         const transfer_data = await transfers_finished.find({})
         const invoice_noint = transfer_data.length + 1
-        const invoice_no = "TRFF-" + invoice_noint.toString().padStart(5, "0")
+        const invoice_no = "TRF-" + invoice_noint.toString().padStart(5, "0")
 
 
         if (master[0].language == "English (US)") {

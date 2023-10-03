@@ -155,7 +155,7 @@ router.get("/view/add_adjustment", auth, async (req, res) => {
 
         const adjustment_data = await adjustment_finished.find({})
         const invoice_noint = adjustment_data.length + 1
-        const invoice_no = "ADJF-" + invoice_noint.toString().padStart(5, "0")
+        const invoice_no = "ADJ-" + invoice_noint.toString().padStart(5, "0")
         var rooms_data = ["Ambient", "Enclosed", "Return Rooms"];
 
         if (master[0].language == "English (US)") {

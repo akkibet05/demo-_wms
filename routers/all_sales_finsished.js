@@ -244,7 +244,7 @@ router.get("/view/add_sales", auth, async (req, res) => {
 
         const sales_data = await sales_finished.find({})
         const invoice_noint = sales_data.length + 1
-        const invoice_no = "OUTF-" + invoice_noint.toString().padStart(5, "0")
+        const invoice_no = "OUT-" + invoice_noint.toString().padStart(5, "0")
 
         if (master[0].language == "English (US)") {
             var lan_data = users.English
