@@ -297,7 +297,6 @@ router.get("/view/product/:id", auth, async (req, res) => {
 router.post("/Reports", async (req, res)=> {
     const { warehouseNew, rooms, Type } = req.body
 
-    console.log(req.body)
     let warehouse_data;
     if(warehouseNew == "All"){
         if(rooms == "All"){
