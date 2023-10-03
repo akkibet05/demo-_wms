@@ -664,9 +664,9 @@ router.get("/PDF/:id", auth, async (req, res) => {
       .fontSize(15)
       .text(Title, x, y+=50);
 
-      doc
-      .fontSize(10)
-      .text(SubTitle, x, y+=20);
+      // doc
+      // .fontSize(10)
+      // .text(SubTitle, x, y+=20);
 
       doc
       .fontSize(9)
