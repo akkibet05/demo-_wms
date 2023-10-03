@@ -296,32 +296,110 @@ router.get("/view/product/:id", auth, async (req, res) => {
 
 router.post("/Reports", async (req, res)=> {
     const { warehouseNew, rooms, Type } = req.body
-    let warehouse_data;
 
-        warehouse_data = await warehouse.aggregate([
-            {
-                $match:{
-                    name: warehouseNew,
-                    room: rooms,
+    console.log(req.body)
+    let warehouse_data;
+    if(warehouseNew == "All"){
+        if(rooms == "All"){
+            warehouse_data = await warehouse.aggregate([
+                {
+                    $unwind: "$product_details"
+                },
+                {
+                    $match:{
+                        "product_details.type": Type,
+                        "product_details.product_stock": { $gt: 0 } 
+                    }
+                },
+                {
+                    $sort: { 
+                        "warehouse_category": 1,
+                        "product_details.bay": 1 
+                        
+                    }
                 }
-            },
-            {
-                $unwind: "$product_details"
-            },
-            {
-                $match:{
-                    "product_details.type": Type,
-                    "product_details.product_stock": { $gt: 0 } 
+            ]);
+
+        }else{
+            warehouse_data = await warehouse.aggregate([
+                {
+                    $match:{
+                        room: rooms,
+                    }
+                },
+                {
+                    $unwind: "$product_details"
+                },
+                {
+                    $match:{
+                        "product_details.type": Type,
+                        "product_details.product_stock": { $gt: 0 } 
+                    }
+                },
+                {
+                    $sort: { 
+                        "warehouse_category": 1,
+                        "product_details.bay": 1 
+                        
+                    }
                 }
-            },
-            {
-                $sort: { 
-                    "warehouse_category": 1,
-                    "product_details.bay": 1 
-                    
+            ]);
+        }
+        
+    }else{
+        if(rooms == "All"){
+            warehouse_data = await warehouse.aggregate([
+                {
+                    $match:{
+                        name: warehouseNew,
+                    }
+                },
+                {
+                    $unwind: "$product_details"
+                },
+                {
+                    $match:{
+                        "product_details.type": Type,
+                        "product_details.product_stock": { $gt: 0 } 
+                    }
+                },
+                {
+                    $sort: { 
+                        "warehouse_category": 1,
+                        "product_details.bay": 1 
+                        
+                    }
                 }
-            }
-        ]);
+            ]);
+
+        }else{
+            warehouse_data = await warehouse.aggregate([
+                {
+                    $match:{
+                        name: warehouseNew,
+                        room: rooms,
+                    }
+                },
+                {
+                    $unwind: "$product_details"
+                },
+                {
+                    $match:{
+                        "product_details.type": Type,
+                        "product_details.product_stock": { $gt: 0 } 
+                    }
+                },
+                {
+                    $sort: { 
+                        "warehouse_category": 1,
+                        "product_details.bay": 1 
+                        
+                    }
+                }
+            ]);
+        }
+    }
+        
     res.json(warehouse_data)
 })
 

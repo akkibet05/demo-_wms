@@ -24,14 +24,18 @@ function SelectRoom(){
         
     var varibale = document.getElementById("warehouse").value;
     var selectRoom = $('#room');
+
+    // alert(varibale + " <> " + selectRoom )
     $.ajax({
-        url: '/warehousemap_Income/Rooms_data', 
+        url: '/warehousemap_Income/Rooms_dataStock', 
         method: 'POST',
         data: { warehouse_name: varibale }, 
         success: function(response) {
 
         
             selectRoom.empty();
+            var defaultOption = $('<option>').text("All").val("All").attr('roomcode', "All");
+              selectRoom.append(defaultOption);
                 $.each(response, function(index, data) {
                     var roomName = data.room_name;
                     var roomCode = data.room_name
@@ -53,14 +57,7 @@ var A = document.getElementById("A");
 var BVal = document.getElementById("B").value;
 
   var CatVal = '';
-  var IndiVal = '';
-  if(A.value == "raw"){
-    CatVal = "Raw Materials"; 
-  }else if(A.value == "finish"){
-    CatVal = "Finished Goods";
-  }else{
-    CatVal = "All";
-  }
+
 
   $.ajax({
         url: '/warehousemap_Income/Rooms_data2', 

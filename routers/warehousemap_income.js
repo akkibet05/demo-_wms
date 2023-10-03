@@ -606,4 +606,71 @@ router.post("/Rooms_data2", async (req, res) => {
   
   })
 
+
+
+  router.post("/Rooms_dataStock", async (req, res) => {
+
+    try{
+        const { warehouse_name, A, B } = req.body
+  
+  
+        var include = '';
+        if(warehouse_name == "All"){
+          
+            include = [
+              {
+                  $match: { 
+                      "status" : 'Enabled',
+                
+                  }
+              },
+              {
+                  $group: {
+                      _id: "$room",
+                      room_name: { $first: "$room"}
+                  }
+              },
+              {
+                $sort: {
+                    room_name: 1 // 1 for ascending order, -1 for descending order
+                }
+            }
+          ]
+          
+  
+        }else{
+          
+          include = [
+            {
+                $match: { 
+                    "name": warehouse_name,
+                    "status" : 'Enabled',
+              
+                }
+            },
+            {
+                $group: {
+                    _id: "$_id",
+                    room_name: { $first: "$room"}
+                }
+            },
+            {
+              $sort: {
+                  room_name: 1 // 1 for ascending order, -1 for descending order
+              }
+          }
+        ]
+        }
+        const warehouse_data = await warehouse.aggregate(include)
+          
+    
+  
+        res.status(200).json(warehouse_data)
+    }catch(error){
+        res.status(400).json({ errorMessage: error.message })
+    }
+    
+  
+  })
+
 module.exports = router

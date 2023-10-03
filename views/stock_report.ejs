@@ -114,7 +114,7 @@
                                                                 <div class="mb-3 col-md-6">
                                                                     <label for="warrehouse">Warehouse <span class="text-red">*</span> </label>
                                                                     <select class="form-control" name="warehouse" id="warehouse" onchange="SelectRoom()" required>
-                                                                       
+                                                                        <option value="All">All</option>
                                                                         <% warehouse.forEach((data)=> { %>
                                                                         <option value="<%= data.name %>"><%= data.name %></option>
                                                                         <% }) %>
