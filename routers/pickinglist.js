@@ -3141,11 +3141,23 @@ router.get("/pdf_puchases_fin/:id", auth, async (req, res) => {
 
       doc
       .fontSize(9)
+      .text(":", x+80, y-3);
+
+      doc
+      .fontSize(9)
       .text(user_id.suppliers, x+150, y-3);
+
+      doc.moveTo(x+100, y+5); // Move to the starting point
+      doc.lineTo(x+310, y+5); // Draw a line to the ending point
+      doc.stroke();
 
       doc
       .fontSize(9)
       .text('J.O. #', x, y+=13);
+
+      doc
+      .fontSize(9)
+      .text(":", x+80, y-3);
 
 
       doc
@@ -3167,6 +3179,10 @@ router.get("/pdf_puchases_fin/:id", auth, async (req, res) => {
 
       doc
       .fontSize(9)
+      .text(":", x+80, y-3);
+
+      doc
+      .fontSize(9)
       .text(user_id.date, x+150, y-3);
 
       doc.moveTo(x+100, y+5); // Move to the starting point
@@ -3176,6 +3192,9 @@ router.get("/pdf_puchases_fin/:id", auth, async (req, res) => {
       doc
       .fontSize(9)
       .text('Requested By', x, y+=23);
+      doc
+      .fontSize(9)
+      .text(":", x+80, y-3);
 
       doc
       .fontSize(9)
@@ -3190,6 +3209,10 @@ router.get("/pdf_puchases_fin/:id", auth, async (req, res) => {
       .fontSize(9)
       .text('Date of Request', x, y+=13);
 
+      doc
+      .fontSize(9)
+      .text(":", x+80, y-3);
+
 
       doc
       .fontSize(9)
@@ -3203,6 +3226,10 @@ router.get("/pdf_puchases_fin/:id", auth, async (req, res) => {
       doc
       .fontSize(9)
       .text('PO Number', x, y+=13);
+
+      doc
+      .fontSize(9)
+      .text(":", x+80, y-3);
 
       doc
       .fontSize(9)
