@@ -70,16 +70,26 @@
                                         </div>
 
                                         <div class="card-body">
-                                            
+                                            <% if(user.finalize == "False"){ %>
                                             <a href="/picking_list/pdf/<%= user._id %>" id="picklist" data-id="<%= user._id %>"
                                                     class="btn btn-warning btn-sm" target="_blank">
                                                     <i class="feather icon-printer"></i>
-                                                    <% if(user.finalize == "False"){ %>
+                                                    
                                                         Print Picking List
-                                                    <% } else{ %>
-                                                        Print JO
-                                                    <% } %>
+                                                   
                                             </a>
+
+                                            <% } else{ %>
+
+                                                <a href="/picking_list/PDFFinal/<%= user._id %>" id="picklist" data-id="<%= user._id %>"
+                                                    class="btn btn-warning btn-sm" target="_blank">
+                                                    <i class="feather icon-printer"></i>
+                                                    
+                                                    Print JO
+                                                   
+                                            </a>
+                                                
+                                            <% } %>
                                         </div>
                                         <div class="card-body">
                                             <div class="form-validation">
