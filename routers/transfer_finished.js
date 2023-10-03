@@ -223,7 +223,7 @@ router.post("/view/add_transfer", auth, async(req, res) => {
 
             var RoomAssigned_array = [req.body.RoomAssigned]
             var ToRoomAssigned_array = [req.body.ToRoomAssigned]
-            
+            var CBM_array = [req.body.CBM]
             
         }else{
             var product_name_array = [...req.body.prod_name]
@@ -254,6 +254,7 @@ router.post("/view/add_transfer", auth, async(req, res) => {
 
             var RoomAssigned_array = [...req.body.RoomAssigned]
             var ToRoomAssigned_array = [...req.body.ToRoomAssigned]
+            var CBM_array = [...req.body.CBM]
 
         } 
         
@@ -360,6 +361,10 @@ router.post("/view/add_transfer", auth, async(req, res) => {
 
         ToRoomAssigned_array.forEach((value, i) => {
             newproduct[i].to_room_name = value
+        })
+
+        CBM_array.forEach((value, i) => {
+            newproduct[i].CBM = value
         })
 
         
@@ -607,7 +612,8 @@ router.post("/preview/:id", auth , async (req, res) => {
                                     secondary_unit: product_details.secondary_unit,
                                     unit: product_details.unit,
                                     maxProducts: product_details.maxProducts,
-                                    maxPerUnit: product_details.maxPerUnit
+                                    maxPerUnit: product_details.maxPerUnit,
+                                    CBM: product_details.CBM
                                 })
                             }
                         }  
@@ -1298,7 +1304,8 @@ router.post("/barcode_scanner", async (req, res) => {
                     maxPerUnit: { $first: "$product_details.maxPerUnit" },
                     roomNamed : { $first: "$room" },
                     prod_cat: { $first: "P" },
-                    maxProducts: { $first: "$product_details.maxProducts"}
+                    maxProducts: { $first: "$product_details.maxProducts"},
+                    CBM : { $first: { $toDouble: "$product_details.CBM" } }
                 }
             },
         ]);
@@ -1335,7 +1342,8 @@ router.post("/barcode_scanner", async (req, res) => {
                     maxPerUnit: { $first: "$product_details.maxPerUnit" },
                     roomNamed : { $first: "$room" },
                     prod_cat: { $first: "S" },
-                    maxProducts: { $first: "$product_details.maxProducts"}
+                    maxProducts: { $first: "$product_details.maxProducts"},
+                    CBM : { $first: { $toDouble: "$product_details.CBM" } }
                 }
             },
         ]);

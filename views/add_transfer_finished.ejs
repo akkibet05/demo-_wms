@@ -1949,6 +1949,13 @@
                             name: 'New_Qty_Converted',
                             value: ""
                         }).appendTo(row);
+
+                        $('<input>').attr({
+                            type: 'hidden',
+                            id: 'CBM',
+                            name: 'CBM',
+                            value: data.CBM
+                        }).appendTo(row);
                         
 
 

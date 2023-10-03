@@ -1343,6 +1343,14 @@
                             value: data.maxPerUnit
                         }).addClass('associated-hidden').appendTo(row);
 
+
+                        $('<input>').attr({
+                            type: 'hidden',
+                            id: 'CBM',
+                            name: 'CBM',
+                            value: data.CBM
+                        }).appendTo(row);
+
                         
                         $('#tblPage_new').append(row);
 

@@ -224,7 +224,7 @@ router.post("/view/add_adjustment", auth, async(req, res) => {
             var level_array1 = [req.body.type]
             var primary_code_array = [req.body.primary_code]
             var secondary_code_array = [req.body.secondary_code]
-        
+            var CBM_array = [req.body.CBM]
         }else{
             var product_name_array = [...req.body.prod_name]
             var level_array = [...req.body.level]
@@ -244,6 +244,7 @@ router.post("/view/add_adjustment", auth, async(req, res) => {
             var level_array1 = [...req.body.type]
             var primary_code_array = [...req.body.primary_code]
             var secondary_code_array = [...req.body.secondary_code]
+            var CBM_array = [...req.body.CBM]
         } 
         
         const newproduct = product_name_array.map((value)=>{
@@ -323,6 +324,11 @@ router.post("/view/add_adjustment", auth, async(req, res) => {
 
         maxPerUnit_array.forEach((value, i) => {
             newproduct[i].maxPerUnit = value
+        })
+
+
+        CBM_array.forEach((value, i) => {
+            newproduct[i].CBM = value
         })
 
 
@@ -1153,7 +1159,8 @@ router.post("/barcode_scanner", async (req, res) => {
                     batch_code: { $first: "$product_details.batch_code"},
                     product_cat: { $first: "P" },
                     maxPerUnit: { $first: "$product_details.maxPerUnit"},
-                    roomNamed : { $first: "$room" }
+                    roomNamed : { $first: "$room" },
+                    CBM : { $first: { $toDouble: "$product_details.CBM" } }
                 }
             },
         ]);
@@ -1190,7 +1197,8 @@ router.post("/barcode_scanner", async (req, res) => {
                     batch_code: { $first: "$product_details.batch_code"},
                     product_cat: { $first: "S" },
                     maxPerUnit: { $first: "$product_details.maxPerUnit"},
-                    roomNamed : { $first: "$room" }
+                    roomNamed : { $first: "$room" },
+                    CBM : { $first: { $toDouble: "$product_details.CBM" } }
                 }
             },
         ]);

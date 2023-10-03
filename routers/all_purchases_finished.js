@@ -376,6 +376,7 @@ router.post("/view/add_purchases", auth, async (req, res) => {
             var prod_cat_array = [req.body.prod_cat]
             var RoomAssign_array = [req.body.RoomAssign]
             var level_array = [req.body.type]
+            var CBM_array = [req.body.CBM]
             // console.log("if");
         }else{
             var product_name_array = [...req.body.prod_name]
@@ -394,6 +395,7 @@ router.post("/view/add_purchases", auth, async (req, res) => {
             var prod_cat_array = [...req.body.prod_cat]
             var RoomAssign_array = [...req.body.RoomAssign]
             var level_array = [...req.body.type]
+            var CBM_array = [...req.body.CBM]
         } 
         
         const newproduct = product_name_array.map((value)=>{
@@ -471,6 +473,10 @@ router.post("/view/add_purchases", auth, async (req, res) => {
             newproduct[i].room_name = value
         })
 
+        CBM_array.forEach((value, i) => {
+            newproduct[i].CBM = value
+        })
+
 
 
 
@@ -520,7 +526,8 @@ router.post("/view/add_purchases", auth, async (req, res) => {
                     maxProducts: product_details.maxStocks,
                     maxPerUnit: product_details.maxperunit,
                     batch_code: product_details.batch_code,
-                    product_cat: product_details.product_cat
+                    product_cat: product_details.product_cat,
+                    CBM: product_details.CBM
                 })
             }
             return warehouse_data;
@@ -1667,7 +1674,8 @@ router.post("/barcode_scanner", async (req, res) => {
                 maxProdPerUnit:  { $first: "$maxProdPerUnit" },
                 product_cat: { $first : "P" },
                 secondary_unit: { $first: "$secondary_unit" },
-                maxProducts: { $first: "$maxProducts" }
+                maxProducts: { $first: "$maxProducts" },
+                CBM : { $first: { $toDouble: "$CBM" } }
             }
         },
         {
@@ -1684,7 +1692,8 @@ router.post("/barcode_scanner", async (req, res) => {
                 maxStocks: 1,
                 maxProdPerUnit: 1,
                 product_cat: 1,
-                secondary_unit: 1
+                secondary_unit: 1,
+                CBM: 1
             }
         }
     ])

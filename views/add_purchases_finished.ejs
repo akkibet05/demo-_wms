@@ -1783,6 +1783,14 @@
 
                             $('<input>').attr({
                                 type: 'hidden',
+                                id: 'CBM',
+                                name: 'CBM',
+                                value: data.CBM
+                            }).appendTo(row);
+
+                            console.log(data.CBM)
+                            $('<input>').attr({
+                                type: 'hidden',
                                 id: 'prod_Qty'+lastIncre,
                                 name: 'prod_Qty',
                                 value: ""

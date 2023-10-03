@@ -380,6 +380,7 @@ router.post("/view/add_sales", auth, async (req, res) => {
             var prod_cat_array = [req.body.prod_cat]
             var RoomAssigned_array = [req.body.RoomAssigned]
             var level_array1 = [req.body.type]
+            var CBM_array = [req.body.CBM]
             
             
         }else{
@@ -399,6 +400,8 @@ router.post("/view/add_sales", auth, async (req, res) => {
             var prod_cat_array = [...req.body.prod_cat]
             var RoomAssigned_array = [...req.body.RoomAssigned]
             var level_array1 = [...req.body.type]
+            var CBM_array = [...req.body.CBM]
+
 
         } 
         
@@ -477,6 +480,10 @@ router.post("/view/add_sales", auth, async (req, res) => {
 
         RoomAssigned_array.forEach((value, i) =>{
             newproduct[i].room_name = value
+        })
+
+        CBM_array.forEach((value, i) => {
+            newproduct[i].CBM = value
         })
 
         // res.json(newproduct)
@@ -2299,7 +2306,8 @@ router.post("/barcode_scanner", async (req, res) => {
                     batch_code: { $first: "$product_details.batch_code" },
                     product_cat:{ $first: "$product_details.product_cat" },
                     computeUsed : { $first: "P" },
-                    roomNamed : { $first: "$room" }
+                    roomNamed : { $first: "$room" },
+                    CBM : { $first: { $toDouble: "$product_details.CBM" } }
                 }
             },
         ]);
@@ -2337,7 +2345,8 @@ router.post("/barcode_scanner", async (req, res) => {
                     batch_code: { $first: "$product_details.batch_code" },
                     product_cat:{ $first: "$product_details.product_cat" },
                     computeUsed : { $first: "S" },
-                    roomNamed : { $first: "$room" }
+                    roomNamed : { $first: "$room" },
+                    CBM : { $first: { $toDouble: "$product_details.CBM" } }
                 }
             },
         ]);

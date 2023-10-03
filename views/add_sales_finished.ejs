@@ -1349,6 +1349,14 @@ $(document).ready(function() {
 
                 $('<input>').attr({
                     type: 'hidden',
+                    id: 'CBM',
+                    name: 'CBM',
+                    value: data.CBM
+                }).appendTo(row);
+
+
+                $('<input>').attr({
+                    type: 'hidden',
                     id: 'primary_unit'+x,
                     name: 'primary_unit',
                     value: data.unit

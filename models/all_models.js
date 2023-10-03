@@ -259,6 +259,9 @@ const warehouse_data = new mongoose.Schema({
             },
             product_cat:{
                 type: String
+            },
+            CBM : {
+                type: mongoose.Types.Decimal128
             }
         }
     ]
@@ -670,6 +673,9 @@ const purchases_data_finished = new mongoose.Schema({
         },
         room_name: {
             type: String
+        },
+        CBM : {
+            type: mongoose.Types.Decimal128
         }
     }],
     note: {
@@ -736,7 +742,7 @@ const purchases_data_finished = new mongoose.Schema({
     },
     TFU: {
         type: String
-    },
+    }
 })
 
 
@@ -1093,6 +1099,9 @@ const sales_data_finished = new mongoose.Schema({
         },
         room_name: {
             type: String
+        },
+        CBM : {
+            type: mongoose.Types.Decimal128
         }
     }],
     note: {
@@ -1589,6 +1598,9 @@ const transfers_data_finished = new mongoose.Schema({
         },
         to_room_name:{
             type:String
+        },
+        CBM : {
+            type: mongoose.Types.Decimal128
         }
     }],
     note: {
@@ -1850,6 +1862,9 @@ const adjustment_data_finished = new mongoose.Schema({
         secondary_code:{
             type: String
         },
+        CBM : {
+            type: mongoose.Types.Decimal128
+        }
     }],
     note:{
         type: String,
