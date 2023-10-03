@@ -1183,11 +1183,13 @@ router.get("/PDFFinal/:id", auth, async (req, res) => {
         var totalPerUnit =0;
         var totalPCS = 0;
         var palletsno= 0;
+        var TotalCBM = 0;
         user_id.sale_product.forEach((ProductDetl) => {
 
           let dataUnit = '';
           
           const qtydata = ProductDetl.quantity;
+          
           for (let index = 1; index <= qtydata; index++) {
             
             if(qtydata == index){
@@ -1202,6 +1204,7 @@ router.get("/PDFFinal/:id", auth, async (req, res) => {
           }
           
           // dataUnit += ' / ' + ProductDetl.secondary_unit ;
+          var cbm = ProductDetl.quantity * ProductDetl.CBM
           const rowData = {
             itemcode: ProductDetl.product_code,
             itemdescription: ProductDetl.product_name,
@@ -1210,9 +1213,11 @@ router.get("/PDFFinal/:id", auth, async (req, res) => {
             proddate: ProductDetl.production_date,
             batchno: ProductDetl.batch_code,
             binloc: ProductDetl.isle+ProductDetl.pallet,
+            CBM: cbm
           };
           totalQTY += ProductDetl.quantity
           palletsno += 1; 
+          TotalCBM += cbm
           table.datas.push(rowData);
         });
 
@@ -1312,6 +1317,10 @@ router.get("/PDFFinal/:id", auth, async (req, res) => {
         doc
         .fontSize(9)
         .text(':', lastTableX+100, lastTableY);
+
+        doc
+        .fontSize(9)
+        .text(TotalCBM, lastTableX+150, lastTableY);
 
         doc.moveTo(lastTableX+105, lastTableY+10); // Move to the starting point
         doc.lineTo(lastTableX+210, lastTableY+10); // Draw a line to the ending point
@@ -2042,6 +2051,7 @@ router.get("/PDF_transferFinal/:id", auth, async (req, res) => {
         var totalPerUnit =0;
         var totalPCS = 0;
         var palletsno= 0;
+        var TotalCBM = 0;
         user_id.product.forEach((ProductDetl) => {
 
           let dataUnit = '';
@@ -2061,6 +2071,7 @@ router.get("/PDF_transferFinal/:id", auth, async (req, res) => {
           }
           
           // dataUnit += ' / ' + ProductDetl.secondary_unit ;
+          var cbm = ProductDetl.to_quantity * ProductDetl.CBM
           const rowData = {
             itemcode: ProductDetl.product_code,
             itemdescription: ProductDetl.product_name,
@@ -2069,9 +2080,11 @@ router.get("/PDF_transferFinal/:id", auth, async (req, res) => {
             proddate: ProductDetl.production_date,
             batchno: ProductDetl.batch_code,
             binloc: ProductDetl.to_isle+ProductDetl.to_pallet,
+            CBM: cbm
           };
           totalQTY += ProductDetl.to_quantity
           palletsno += 1; 
+          TotalCBM += cbm;
           table.datas.push(rowData);
         });
 
@@ -2172,11 +2185,15 @@ router.get("/PDF_transferFinal/:id", auth, async (req, res) => {
         .fontSize(9)
         .text(':', lastTableX+100, lastTableY);
 
+        doc
+        .fontSize(9)
+        .text(TotalCBM, lastTableX+150, lastTableY);
+
         doc.moveTo(lastTableX+105, lastTableY+10); // Move to the starting point
         doc.lineTo(lastTableX+210, lastTableY+10); // Draw a line to the ending point
         doc.stroke();
 
-
+        
 
         
 
@@ -2901,6 +2918,7 @@ router.get("/PDF_adjustmentFinal/:id", auth, async (req, res) => {
         var totalPerUnit =0;
         var totalPCS = 0;
         var palletsno= 0;
+        var TotalCBM = 0;
         user_id.product.forEach((ProductDetl) => {
 
           let dataUnit = '';
@@ -2920,6 +2938,7 @@ router.get("/PDF_adjustmentFinal/:id", auth, async (req, res) => {
           }
           
           // dataUnit += ' / ' + ProductDetl.secondary_unit ;
+          var cbm = ProductDetl.new_adjust_qty*ProductDetl.CBM
           const rowData = {
             itemcode: ProductDetl.product_code,
             itemdescription: ProductDetl.product_name,
@@ -2928,9 +2947,11 @@ router.get("/PDF_adjustmentFinal/:id", auth, async (req, res) => {
             proddate: ProductDetl.production_date,
             batchno: ProductDetl.batch_code,
             binloc: ProductDetl.isle+ProductDetl.pallet,
+            CBM: cbm
           };
           totalQTY += ProductDetl.new_adjust_qty
           palletsno += 1; 
+          TotalCBM += cbm;
           table.datas.push(rowData);
         });
 
@@ -3031,6 +3052,11 @@ router.get("/PDF_adjustmentFinal/:id", auth, async (req, res) => {
         .fontSize(9)
         .text(':', lastTableX+100, lastTableY);
 
+
+        doc
+        .fontSize(9)
+        .text(TotalCBM, lastTableX+150, lastTableY);
+        
         doc.moveTo(lastTableX+105, lastTableY+10); // Move to the starting point
         doc.lineTo(lastTableX+210, lastTableY+10); // Draw a line to the ending point
         doc.stroke();
@@ -3541,12 +3567,13 @@ router.get("/pdf_puchases_fin/:id", auth, async (req, res) => {
 
         var pallet = 0;
         var totalPCS = 0;
+        var TotalCBM = 0;
         user_id.product.forEach((ProductDetl) => {
 
           let dataUnit = '';
           var totalPerUnit =  0;
           // totalPCS += ProductDetl.maxperunit
-
+          
 
           const qtydata = ProductDetl.quantity;
             for (let index = 1; index <= qtydata; index++) {
@@ -3561,13 +3588,13 @@ router.get("/pdf_puchases_fin/:id", auth, async (req, res) => {
             }
 
 
-
+          var cbm = ProductDetl.quantity*ProductDetl.CBM;
           const rowData = {
             itemcode: ProductDetl.product_code,
             itemdescription: ProductDetl.product_name,
             qty: ProductDetl.quantity,
             unit: ProductDetl.standard_unit,
-            // unitConversion:dataUnit,
+            CBM: cbm,
             expdate: ProductDetl.expiry_date,
             batchno: ProductDetl.batch_code,
             // binloc: ProductDetl.storage+ProductDetl.rack+ProductDetl.bay+ProductDetl.bin+ProductDetl.type[0]+ProductDetl.floorlevel,
@@ -3575,6 +3602,7 @@ router.get("/pdf_puchases_fin/:id", auth, async (req, res) => {
           };
           pallet += 1;
           totalQTY += ProductDetl.quantity
+          TotalCBM +=cbm
           table.datas.push(rowData);
         });
 
@@ -3679,6 +3707,12 @@ router.get("/pdf_puchases_fin/:id", auth, async (req, res) => {
         doc
         .fontSize(9)
         .text(':', lastTableX+100, lastTableY);
+
+        doc
+        .fontSize(9)
+        .text(TotalCBM, lastTableX+150, lastTableY);
+
+        
 
         doc.moveTo(lastTableX+105, lastTableY+10); // Move to the starting point
         doc.lineTo(lastTableX+210, lastTableY+10); // Draw a line to the ending point
