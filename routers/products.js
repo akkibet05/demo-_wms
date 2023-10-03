@@ -999,6 +999,8 @@ router.post("/products_import_migrate_file", auth, uploadMigrate.single("migrate
 router.post("/select_data", auth, async (req, res) => {
 try {
     const { datachoose } = req.body
+
+    console.log(datachoose)
     var dataShow;
     if(datachoose == "prod_categ"){
         dataShow = await product.aggregate([
@@ -1028,8 +1030,9 @@ try {
                 }
             }
         ])
+    }else if(datachoose == "All"){
+        dataShow = [{ "_id": "All" }]
     }
-    console.log(dataShow)
     res.json(dataShow)
 } catch (error) {
     res.json({ message: error.message })
@@ -1072,7 +1075,9 @@ router.post("/filter_product", auth, async (req, res) => {
                     }
                 }
             ])
-        }
+        }else if(data_choosing == "All"){
+            dataShow = await product.find()
+        } 
         // console.log(req.body)
         res.json(dataShow)
     } catch (error) {
