@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const router = express.Router();
 const auth = require("../middleware/auth");
-const { profile, sales, sales_return, purchases, purchases_return, categories, product, suppliers, customer, master_shop, transfers } = require("../models/all_models");
+const { profile, sales, sales_return, purchases, purchases_return, categories, product, suppliers, customer, master_shop, transfers, purchases_finished, sales_finished, sales_return_finished, purchases_return_finished, transfers_finished } = require("../models/all_models");
 const users = require("../public/language/languages.json");
 
 
@@ -11,17 +11,17 @@ router.get("/index", auth, async(req, res) => {
         
         const {username, email, role} = req.user
         const role_data = req.user
-        console.log("role_data" , role_data);
+        // console.log("role_data" , role_data);
 
         const profile_data = await profile.findOne({email : role_data.email})
-        console.log("profile_data" , profile_data);
+        // console.log("profile_data" , profile_data);
 
 
         const master = await master_shop.find()
-        console.log("master" , master);
+        // console.log("master" , master);
 
         
-        const sale_data = await sales.aggregate([
+        const sale_data = await sales_finished.aggregate([
             {
                 $group: {
                     _id: null,
@@ -30,7 +30,7 @@ router.get("/index", auth, async(req, res) => {
             }
         ])
         
-        const sale_data_QTY = await sales.aggregate([
+        const sale_data_QTY = await sales_finished.aggregate([
            {
             $unwind: "$sale_product" 
           },
@@ -45,7 +45,7 @@ router.get("/index", auth, async(req, res) => {
            
         // console.log("11111", sale_data);
 
-        const sales_return_data = await sales_return.aggregate([
+        const sales_return_data = await sales_return_finished.aggregate([
             {
                 $group: {
                     _id: null,
@@ -55,19 +55,19 @@ router.get("/index", auth, async(req, res) => {
         ])
         
         
-        const sales_return_data_QTY = await sales_return.aggregate([
+        const sales_return_data_QTY = await sales_return_finished.aggregate([
            {
             $unwind: "$return_sale" 
           },
           {
             $group: {
               _id: null,
-              totalQuantity: { $sum: "$return_sale.sale_qty" } // Sum the quantities
+              totalQuantity: { $sum: "$return_sale.return_qty" } // Sum the quantities
             }
           }
         ])
 // res.status(200).send(sales_return_data_QTY)
-        const purchases_data = await purchases.aggregate([
+        const purchases_data = await purchases_finished.aggregate([
             {
                 $group: {
                     _id: null,
@@ -76,7 +76,7 @@ router.get("/index", auth, async(req, res) => {
             }
         ])
 
-        const purchases_return_data = await purchases_return.aggregate([
+        const purchases_return_data = await purchases_return_finished.aggregate([
             {
                 $group: {
                     _id: null,
@@ -86,7 +86,7 @@ router.get("/index", auth, async(req, res) => {
         ])
         
         
-        const purchases_return_data_QTY = await purchases_return.aggregate([
+        const purchases_return_data_QTY = await purchases_return_finished.aggregate([
            {
             $unwind: "$return_product" 
           },
@@ -98,7 +98,7 @@ router.get("/index", auth, async(req, res) => {
           }
         ])
         
-        const purchases_data_QTY = await purchases.aggregate([
+        const purchases_data_QTY = await purchases_finished.aggregate([
            {
             $unwind: "$product" 
           },
@@ -111,7 +111,7 @@ router.get("/index", auth, async(req, res) => {
         ])
 
 
-        const purchases_table_data = await purchases.aggregate([
+        const purchases_table_data = await purchases_finished.aggregate([
             {
                 $sort: {
                     'invoice':-1
@@ -126,7 +126,7 @@ router.get("/index", auth, async(req, res) => {
         ])
 
 
-        const sales_table_data = await sales.aggregate([
+        const sales_table_data = await sales_finished.aggregate([
             {
                 $sort: {
                     'invoice':-1
@@ -142,7 +142,7 @@ router.get("/index", auth, async(req, res) => {
         
         
         
-        const transfer_table_data = await transfers.aggregate([
+        const transfer_table_data = await transfers_finished.aggregate([
             {
                 $unwind: "$product"
             },
