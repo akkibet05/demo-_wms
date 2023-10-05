@@ -1157,6 +1157,10 @@ const sales_data_finished = new mongoose.Schema({
     TFU: {
         type: String
     },
+    isAllowEdit: {
+        type: String,
+        default: "False"
+    },
 })
 
 const sales_finished = new mongoose.model("sales_finished", sales_data_finished);
@@ -1652,6 +1656,10 @@ const transfers_data_finished = new mongoose.Schema({
     TFU: {
         type: String
     },
+    isAllowEdit: {
+        type: String,
+        default: "False"
+    },
 })
 
 const transfers_finished = new mongoose.model("transfer_finished", transfers_data_finished);
@@ -1917,6 +1925,10 @@ const adjustment_data_finished = new mongoose.Schema({
     },
     TFU: {
         type: String
+    },
+    isAllowEdit: {
+        type: String,
+        default: "False"
     },
 })
 

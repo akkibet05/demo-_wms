@@ -1788,7 +1788,7 @@
                                 value: data.CBM
                             }).appendTo(row);
 
-                            console.log(data.CBM)
+                          
                             $('<input>').attr({
                                 type: 'hidden',
                                 id: 'prod_Qty'+lastIncre,
@@ -1891,6 +1891,14 @@
                                 id: 'prod_othUnit'+lastIncre,
                                 name: 'prod_othUnit',
                                 value: data.unit
+                            }).appendTo(row);
+
+
+                            $('<input>').attr({
+                                type: 'hidden',
+                                id: 'CBM',
+                                name: 'CBM',
+                                value: data.CBM
                             }).appendTo(row);
 
 

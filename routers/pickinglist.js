@@ -730,7 +730,7 @@ router.get("/PDF/:id", auth, async (req, res) => {
           if(prod_cat == "S"){
             
             Unit = ProductDetl.secondary_unit;
-            TotalQTYS = ProductDetl.quantity * ProductDetl.maxPerUnit
+            TotalQTYS = ProductDetl.quantity * ProductDetl.maxperunit
           }
           const rowData = {
 

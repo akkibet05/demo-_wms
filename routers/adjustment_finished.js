@@ -118,13 +118,12 @@ router.get("/view/add_adjustment", auth, async (req, res) => {
         let warehouse_data
         if(role_data.role == "staff"){
             const staff_data = await staff.findOne({ email: role_data.email })
-            // warehouse_data = await warehouse.find({status : 'Enabled', name: staff_data.warehouse });
             warehouse_data = await warehouse.aggregate([
                 {
                     $match: { 
                         "status" : 'Enabled', 
                         name: staff_data.warehouse,
-                        "name": { $ne: "QA Warehouse" }
+                        "name": { $ne: "Return Goods" }
                     }
                 },
                 {
@@ -140,7 +139,7 @@ router.get("/view/add_adjustment", auth, async (req, res) => {
                 {
                     $match: { 
                         "status" : 'Enabled',
-                        "name": { $ne: "QA Warehouse" }
+                        "name": { $ne: "Return Goods" }
                     }
                 },
                 {
@@ -332,11 +331,11 @@ router.post("/view/add_adjustment", auth, async(req, res) => {
         })
 
 
-        const newFilter = newproduct.filter(obj => obj.adjust_qty !== "0" && obj.adjust_qty !== "");
+        const newFilter = newproduct.filter(obj => obj.new_adjust_qty !== "0" && obj.new_adjust_qty !== "");
         var error = 0
         newFilter.forEach(data => {
             console.log("foreach newproduct", data);
-            if (parseInt(data.adjust_qty) <= 0 ) {
+            if (parseInt(data.new_adjust_qty) < 0 ) {
                 
                 error++
             }
@@ -1184,10 +1183,9 @@ router.post("/barcode_scanner", async (req, res) => {
                     primary_code: { $first: "$product_details.primary_code" },
                     secondary_code: {$first: "$product_details.secondary_code" },
                     product_code: { $first: "$product_details.product_code" },
-                    level: { $first: "$product_details.bay" },
-                    isle: { $first: "$product_details.bin" },
-                    type: { $first: "$product_details.type" },
-                    pallet: { $first: "$product_details.floorlevel" },
+                    level: { $first: "$product_details.level" },
+                    isle: { $first: "$product_details.isle" },
+                    pallet: { $first: "$product_details.pallet" },
                     unit: { $first: "$product_details.unit" },
                     secondary_unit: { $first: "$product_details.secondary_unit" },
                     storage: { $first: "$product_details.storage" },

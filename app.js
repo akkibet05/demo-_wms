@@ -81,6 +81,8 @@ const profile_router = require("./routers/profile");
 const sing_up_router = require("./routers/sing_up");
 const login_router = require("./routers/login");
 
+const edit_approver_router = require("./routers/edit_approval");
+
 
 // Finished Goods
 const all_purchases_router_finished = require("./routers/all_purchases_finished");
@@ -98,6 +100,8 @@ const pdfOutReport = require("./routers/pickinglist");
 
 
 // ========== define router =========== //
+
+app.use("/edit_approval", edit_approver_router);
 
 app.use("/", index_router);
 app.use("/products", products_router);

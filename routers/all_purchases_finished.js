@@ -27,11 +27,11 @@ router.get("/view", auth, async (req, res) => {
     if(role_data.role == "staff"){
         const staff_data = await staff.findOne({ email: role_data.email })
 
-         purchases_data = await purchases_finished.aggregate([
+          purchases_data = await purchases_finished.aggregate([
             {
-              $match: {
-                "warehouse_name": staff_data.warehouse
-              }
+                $match: {
+                  "warehouse_name": staff_data.warehouse
+                }
             },
             {
               $lookup: {
@@ -54,7 +54,7 @@ router.get("/view", auth, async (req, res) => {
                 suppliers: { $first: "$suppliers" },
                 date: { $first: "$date" },
                 warehouse_name: { $first: "$warehouse_name" },
-                room: { $first: "$room" },
+                room: { $addToSet: "$product.room_name" },
                 product: { $push: "$product" },
                 note: { $first: "$note" },
                 paid_amount: { $first: "$paid_amount" },
@@ -65,10 +65,10 @@ router.get("/view", auth, async (req, res) => {
                 suppliers_docs: { $first: "$suppliers_docs" },
                 total_product_quantity: { $sum: "$product.quantity" },
                 level: { $addToSet: "$product.level" },
-                isle: { $addToSet: "$product.bin" },
-                type: { $addToSet: "$product.type" },
-                floorlevel: { $addToSet: "$product.floorlevel" },
+                isle: { $addToSet: "$product.isle" },
+                pallet: { $addToSet: "$product.pallet" },
               }
+              
             },
             {
               $project: {
@@ -89,11 +89,12 @@ router.get("/view", auth, async (req, res) => {
                 total_product_quantity: 1,
                 level: 1,
                 isle: 1,
-                type: 1,
-                floorlevel:1
+                pallet: 1,
+                
               }
-            }
-          ]);
+           }
+      ]);
+          
 
     }else{
         purchases_data = await purchases_finished.aggregate([
@@ -1719,7 +1720,8 @@ router.post("/barcode_scanner", async (req, res) => {
                 maxStocks:  { $first: "$maxStocks" },
                 maxProdPerUnit:  { $first: "$maxProdPerUnit" },
                 product_cat: { $first : "S" },
-                secondary_unit: { $first: "$secondary_unit" }
+                secondary_unit: { $first: "$secondary_unit" },
+                CBM : { $first: { $toDouble: "$CBM" } }
             }
         },
         {
@@ -1736,7 +1738,8 @@ router.post("/barcode_scanner", async (req, res) => {
                 maxStocks: 1,
                 maxProdPerUnit: 1,
                 product_cat: 1,
-                secondary_unit: 1
+                secondary_unit: 1,
+                CBM: 1
             }
         }
     ])

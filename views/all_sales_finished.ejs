@@ -209,19 +209,31 @@
                                                         <% } else { %>
 
                                                             <tr>
-                                                                <td class="text-nowrap">
+                                                                
                                                                     <% if(sales.return_data=="True" ){ %>
+                                                                        <td class="text-nowrap">
                                                                         <small data-toggle="tooltip" data-placement="top" title="Returned">
                                                                             <svg class="mt-3" width="30" height="30" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                                 <rect width="15" height="15" rx="15.5" fill="red"></rect>
                                                                             </svg>
                                                                         </small>
                                                                         <%= sales.invoice %>
+                                                                    </td>
                                                                     <% }else {%>
-    
-                                                                        <%= sales.invoice %>
+                                                                        <% if(sales.isAllowEdit == "True"){ %>
+                                                                            <td class="text-nowrap">
+                                                                                <span class="badge text-bg-primary">For Editing</span>
+                                                                                <%= sales.invoice %>
+                                                                            </td>
+                                                                        <% }else { %>
+                                                                            <td class="text-nowrap">
+                                                                                <%= sales.invoice %>
+                                                                            </td>
+
+                                                                        <% } %>
+                                                                        
                                                                     <% } %>
-                                                                </td>
+                                                               
     
                                                                 <td class="text-nowrap">
                                                                     <%= sales.date %>
@@ -260,26 +272,26 @@
                                                                 </td>
 
 
-                                                                <!-- <td>
-                                                                    <a href="/picking_list/pdf/<%= sales._id %>" id="barcode" data-id="<%= sales._id %>"
-                                                                        class="btn btn-warning btn-sm">
-                                                                        <i class="feather icon-printer"></i>
-                                                                    </a>
-                                                                 </td> -->
+                                                
 
                                                                  <td class="text-nowrap">
-                                                                    <a href="/all_sales_finished/preview/<%= sales._id %>">
+
+
+                                                                    <% if(sales.isAllowEdit == "True"){ %>
+                                                                        <a href="/all_sales_finished/view/<%= sales._id %>">
+                                                                            <button type="button"
+                                                                             class="btn btn-success m-1">Edit </button>
+                                                                        </a>   
+                                                                    <% }else { %>
+                                                                       <a href="/all_sales_finished/preview/<%= sales._id %>">
                                                                         <button type="button"
-                                                                            class="btn btn-success m-1">view </button>
-                                                                    </a>
+                                                                         class="btn btn-success m-1">view </button>
+                                                                        </a>    
+
+                                                                    <% } %>
+                                                                    
                                                                 </td>
     
-                                                                <!-- <td class="text-nowrap">
-                                                                    <a href="/all_sales_finished/view/<%= sales._id %>">
-                                                                        <button type="button"
-                                                                            class="btn btn-success m-1"><%= language.edit %> </button>
-                                                                    </a>
-                                                                </td> -->
     
                                                                 <td class="text-nowrap">
                                                                     <div class="btn-group" role="group">
