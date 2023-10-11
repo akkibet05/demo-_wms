@@ -551,7 +551,7 @@ router.post("/view/add_purchases", auth, async (req, res) => {
 
                     for (const warehouseData of updatedWarehouseDataArray) {
                         await warehouse.updateOne({ _id: warehouseData._id }, {
-                                $push: {
+                                $addToSet: {
                                     product_details: { $each: warehouseData.product_details }
                                 }
                           });
