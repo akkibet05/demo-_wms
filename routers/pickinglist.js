@@ -1120,23 +1120,15 @@ router.get("/PDFFinal/:id", auth, async (req, res) => {
         var totalPCS = 0;
         var palletsno= 0;
         var TotalCBM = 0;
+        var totalSecondary =0;
         user_id.sale_product.forEach((ProductDetl) => {
 
-          let dataUnit = '';
-          
-          const qtydata = ProductDetl.quantity;
-          
-          for (let index = 1; index <= qtydata; index++) {
-            
-            if(qtydata == index){
-              dataUnit += ProductDetl.maxperunit;
-            }else{
-              dataUnit += ProductDetl.maxperunit+',';
-            }
-            
-            
-            totalPerUnit +=ProductDetl.maxperunit;
-            totalPCS += ProductDetl.maxperunit
+          var Units;       
+          Units = ProductDetl.unit
+          totalPerUnit = ProductDetl.quantity
+          if(ProductDetl.prod_cat == "S"){
+            Units = ProductDetl.secondary_unit
+            totalPerUnit = ProductDetl.quantity * ProductDetl.maxperunit
           }
           
           // dataUnit += ' / ' + ProductDetl.secondary_unit ;
@@ -1144,14 +1136,19 @@ router.get("/PDFFinal/:id", auth, async (req, res) => {
           const rowData = {
             itemcode: ProductDetl.product_code,
             itemdescription: ProductDetl.product_name,
-            qty: ProductDetl.quantity,
-            unit: ProductDetl.unit,
+            qty: totalPerUnit,
+            unit: Units,
             proddate: ProductDetl.production_date,
             batchno: ProductDetl.batch_code,
             binloc: ProductDetl.isle+ProductDetl.pallet,
             CBM: cbm
           };
-          totalQTY += ProductDetl.quantity
+          // totalQTY += ProductDetl.quantity
+          if(ProductDetl.prod_cat == "S"){
+            totalSecondary += ProductDetl.quantity * ProductDetl.maxperunit
+          }else{
+            totalQTY += ProductDetl.quantity
+          }
           palletsno += 1; 
           TotalCBM += cbm
           table.datas.push(rowData);
@@ -1276,7 +1273,7 @@ router.get("/PDFFinal/:id", auth, async (req, res) => {
 
         doc
         .fontSize(9)
-        .text(totalPCS, lastTableX+400, lastTableY);
+        .text(totalSecondary, lastTableX+400, lastTableY);
 
 
         const StartUnloading = formatTime(user_id.TSU);
@@ -1809,70 +1806,7 @@ router.get("/PDF_transferFinal/:id", auth, async (req, res) => {
       .fontSize(9)
       .text(':', x1+90, y1);
 
-      // var x3, y3;
-      // if (user_id.typeservices == "F") {
-      //   x3 = x1+104;
-      //   y3 = y1+3;
-      // }else if(user_id.typeservices == "HI"){
-      //   x3 = x1+405; //164
-      //   y3 = y1+3;
-
-      // }else if(user_id.typeservices == "S"){
-      //   x3 = x1+244;
-      //   y3 = y1+3;
-
-      // }else if(user_id.typeservices == "PA"){
-      //   x3 = x1+325;
-      //   y3 = y1+3;
-
-      // }else if(user_id.typeservices == "OTH"){
-      //   x3 = x1+115;
-      //   y3 = y1+3;
-
-      // }
-      // if(x3 > 0 && y3 > 0 ){
-      //   doc
-      //     .fontSize(9)
-      //     .text("X", x3, y3);
-      // }
-
-      // // Define the outer rectangle
-      // doc.rect(50, 50, 300, 100).stroke(); // (x, y, width, height)
-
-      // Define the inner rectangle
-      // doc.rect(x1+100, y1, 55, 12).stroke(); // (x, y, width, height)
-
-      // const checkboxSize = 12;
-      // doc.rect(x1+100, y1, checkboxSize, checkboxSize).stroke()
-
-
-      // doc.fontSize(9);
-      // doc.text('Freight', x1+115, y1+3, { width: 130 }); // (text, x, y, options)
-
-
-      // // Define the inner rectangle
-      // doc.rect(x1+160, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
-      // doc.rect(x1+160, y1, checkboxSize, checkboxSize).stroke()
-      // doc.fontSize(9);
-      // doc.text('Handling In', x1+175, y1+3, { width: 130 }); // (text, x, y, options)
-
-
-      // // Define the inner rectangle
-      // doc.rect(x1+240, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
-      // doc.rect(x1+240, y1, checkboxSize, checkboxSize).stroke()
-      // doc.fontSize(9);
-      // doc.text('Stripping', x1+260, y1+3, { width: 130 }); // (text, x, y, options)
-
-
-      // doc.rect(x1+320, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
-      // doc.rect(x1+320, y1, checkboxSize, checkboxSize).stroke()
-      // doc.fontSize(9);
-      // doc.text('PUT AWAY', x1+340, y1+3, { width: 130 }); // (text, x, y, options)
-
-      // doc.rect(x1+400, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
-      // doc.rect(x1+400, y1, checkboxSize, checkboxSize).stroke()
-      // doc.fontSize(9);
-      // doc.text('Others', x1+420, y1+3, { width: 130 }); // (text, x, y, options)
+    
       
       doc.fontSize(9);
       doc.text(user_id.typeservices, x1+110, y1+3); // (text, x, y, options)
@@ -1988,37 +1922,35 @@ router.get("/PDF_transferFinal/:id", auth, async (req, res) => {
         var totalPCS = 0;
         var palletsno= 0;
         var TotalCBM = 0;
+        var totalSecondary = 0;
         user_id.product.forEach((ProductDetl) => {
 
-          let dataUnit = '';
-          
-          const qtydata = ProductDetl.to_quantity;
-          for (let index = 1; index <= qtydata; index++) {
-            
-            if(qtydata == index){
-              dataUnit += ProductDetl.maxPerUnit;
-            }else{
-              dataUnit += ProductDetl.maxPerUnit+',';
-            }
-            
-            
-            totalPerUnit +=ProductDetl.maxPerUnit;
-            totalPCS += ProductDetl.maxPerUnit
+          var Units;       
+          Units = ProductDetl.unit
+          totalPerUnit = ProductDetl.to_quantity
+          if(ProductDetl.prod_cat == "S"){
+            Units = ProductDetl.secondary_unit
+            totalPerUnit = ProductDetl.to_quantity * ProductDetl.maxPerUnit
           }
-          
-          // dataUnit += ' / ' + ProductDetl.secondary_unit ;
+
+
           var cbm = ProductDetl.to_quantity * ProductDetl.CBM
           const rowData = {
             itemcode: ProductDetl.product_code,
             itemdescription: ProductDetl.product_name,
-            qty: ProductDetl.to_quantity,
-            unit: ProductDetl.unit,
+            qty: totalPerUnit,
+            unit: Units,
             proddate: ProductDetl.production_date,
             batchno: ProductDetl.batch_code,
             binloc: ProductDetl.to_isle+ProductDetl.to_pallet,
             CBM: cbm
           };
-          totalQTY += ProductDetl.to_quantity
+          // totalQTY += ProductDetl.to_quantity
+          if(ProductDetl.prod_cat == "S"){
+            totalSecondary += ProductDetl.to_quantity * ProductDetl.maxPerUnit
+          }else{
+            totalQTY += ProductDetl.to_quantity
+          }
           palletsno += 1; 
           TotalCBM += cbm;
           table.datas.push(rowData);
@@ -2143,7 +2075,7 @@ router.get("/PDF_transferFinal/:id", auth, async (req, res) => {
 
         doc
         .fontSize(9)
-        .text(totalPCS, lastTableX+400, lastTableY);
+        .text(totalSecondary, lastTableX+400, lastTableY);
 
 
         const StartUnloading = formatTime(user_id.TSU);
@@ -2677,70 +2609,6 @@ router.get("/PDF_adjustmentFinal/:id", auth, async (req, res) => {
       .fontSize(9)
       .text(':', x1+90, y1);
 
-      // var x3, y3;
-      // if (user_id.typeservices == "F") {
-      //   x3 = x1+104;
-      //   y3 = y1+3;
-      // }else if(user_id.typeservices == "HI"){
-      //   x3 = x1+405; //164
-      //   y3 = y1+3;
-
-      // }else if(user_id.typeservices == "S"){
-      //   x3 = x1+244;
-      //   y3 = y1+3;
-
-      // }else if(user_id.typeservices == "PA"){
-      //   x3 = x1+325;
-      //   y3 = y1+3;
-
-      // }else if(user_id.typeservices == "OTH"){
-      //   x3 = x1+115;
-      //   y3 = y1+3;
-
-      // }
-      // if(x3 > 0 && y3 > 0 ){
-      //   doc
-      //     .fontSize(9)
-      //     .text("X", x3, y3);
-      // }
-
-      // // Define the outer rectangle
-      // doc.rect(50, 50, 300, 100).stroke(); // (x, y, width, height)
-
-      // // Define the inner rectangle
-      // doc.rect(x1+100, y1, 55, 12).stroke(); // (x, y, width, height)
-
-      // const checkboxSize = 12;
-      // doc.rect(x1+100, y1, checkboxSize, checkboxSize).stroke()
-
-
-      // doc.fontSize(9);
-      // doc.text('Freight', x1+115, y1+3, { width: 130 }); // (text, x, y, options)
-
-
-      // // Define the inner rectangle
-      // doc.rect(x1+160, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
-      // doc.rect(x1+160, y1, checkboxSize, checkboxSize).stroke()
-      // doc.fontSize(9);
-      // doc.text('Handling In', x1+175, y1+3, { width: 130 }); // (text, x, y, options)
-
-
-      // // Define the inner rectangle
-      // doc.rect(x1+240, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
-      // doc.rect(x1+240, y1, checkboxSize, checkboxSize).stroke()
-      // doc.fontSize(9);
-      // doc.text('Stripping', x1+260, y1+3, { width: 130 }); // (text, x, y, options)
-
-
-      // doc.rect(x1+320, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
-      // doc.rect(x1+320, y1, checkboxSize, checkboxSize).stroke()
-      // doc.fontSize(9);
-      // doc.text('PUT AWAY', x1+340, y1+3, { width: 130 }); // (text, x, y, options)
-
-      // doc.rect(x1+400, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
-      // doc.rect(x1+400, y1, checkboxSize, checkboxSize).stroke()
-      // doc.fontSize(9);
-      // doc.text('Others', x1+420, y1+3, { width: 130 }); // (text, x, y, options)
       doc.fontSize(9);
       doc.text(user_id.typeservices, x1+110, y1+3); // (text, x, y, options)
 
@@ -2855,37 +2723,35 @@ router.get("/PDF_adjustmentFinal/:id", auth, async (req, res) => {
         var totalPCS = 0;
         var palletsno= 0;
         var TotalCBM = 0;
+        var totalSecondary =0;
         user_id.product.forEach((ProductDetl) => {
 
-          let dataUnit = '';
-          
-          const qtydata = ProductDetl.adjust_qty;
-          for (let index = 1; index <= qtydata; index++) {
-            
-            if(qtydata == index){
-              dataUnit += ProductDetl.maxPerUnit;
-            }else{
-              dataUnit += ProductDetl.maxPerUnit+',';
-            }
-            
-            
-            totalPerUnit +=ProductDetl.maxPerUnit;
-            totalPCS += ProductDetl.maxPerUnit
+          var Units;       
+          Units = ProductDetl.unit
+          totalPerUnit = ProductDetl.adjust_qty
+          if(ProductDetl.prod_cat == "S"){
+            Units = ProductDetl.secondary_unit
+            totalPerUnit = ProductDetl.adjust_qty * ProductDetl.maxPerUnit
           }
           
-          // dataUnit += ' / ' + ProductDetl.secondary_unit ;
+
           var cbm = ProductDetl.adjust_qty*ProductDetl.CBM
           const rowData = {
             itemcode: ProductDetl.product_code,
             itemdescription: ProductDetl.product_name,
-            qty: ProductDetl.adjust_qty,
-            unit: ProductDetl.unit,
+            qty: totalPerUnit,
+            unit: Units,
             proddate: ProductDetl.production_date,
             batchno: ProductDetl.batch_code,
             binloc: ProductDetl.isle+ProductDetl.pallet,
             CBM: cbm
           };
-          totalQTY += ProductDetl.adjust_qty
+         
+          if(ProductDetl.prod_cat == "S"){
+            totalSecondary += ProductDetl.adjust_qty * ProductDetl.maxPerUnit
+          }else{
+            totalQTY += ProductDetl.adjust_qty
+          }
           palletsno += 1; 
           TotalCBM += cbm;
           table.datas.push(rowData);
@@ -3011,7 +2877,7 @@ router.get("/PDF_adjustmentFinal/:id", auth, async (req, res) => {
 
         doc
         .fontSize(9)
-        .text(totalPCS, lastTableX+400, lastTableY);
+        .text(totalSecondary, lastTableX+400, lastTableY);
 
         const StartUnloading = formatTime(user_id.TSU);
         const FinishUnloading = formatTime(user_id.TFU);
@@ -3320,69 +3186,11 @@ router.get("/pdf_puchases_fin/:id", auth, async (req, res) => {
       doc
       .fontSize(9)
       .text(':', x1+90, y1);
-      // var x3, y3;
-      // if (user_id.typeservices == "F") {
-      //   x3 = x1+104;
-      //   y3 = y1+3;
-      // }else if(user_id.typeservices == "HI"){
-      //   x3 = x1+405; //164
-      //   y3 = y1+3;
 
-      // }else if(user_id.typeservices == "S"){
-      //   x3 = x1+244;
-      //   y3 = y1+3;
-
-      // }else if(user_id.typeservices == "PA"){
-      //   x3 = x1+325;
-      //   y3 = y1+3;
-
-      // }else if(user_id.typeservices == "OTH"){
-      //   x3 = x1+115;
-      //   y3 = y1+3;
-
-      // }
-      // if(x3 > 0 && y3 > 0 ){
-      //   doc
-      //     .fontSize(9)
-      //     .text("X", x3, y3);
-      // }
       doc.fontSize(9);
       doc.text(user_id.typeservices, x1+110, y1+3); // (text, x, y, options)
 
-      // Define the inner rectangle
-      // doc.rect(x1+100, y1, 55, 12).stroke(); // (x, y, width, height)
-
-      // const checkboxSize = 12;
-      // doc.rect(x1+100, y1, checkboxSize, checkboxSize).stroke()
-
-
-      // doc.fontSize(9);
-      // doc.text('Freight', x1+115, y1+3, { width: 130 }); // (text, x, y, options)
-
-
-      // Define the inner rectangle
-      // doc.rect(x1+160, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
-      // doc.rect(x1+160, y1, checkboxSize, checkboxSize).stroke()
-      // doc.fontSize(9);
-      // doc.text('Handling In', x1+175, y1+3, { width: 130 }); // (text, x, y, options)
-
-
-      // Define the inner rectangle
-      // doc.rect(x1+240, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
-      // doc.rect(x1+240, y1, checkboxSize, checkboxSize).stroke()
-      // doc.fontSize(9);
-      // doc.text('Stripping', x1+260, y1+3, { width: 130 }); // (text, x, y, options)
-
-
-      // doc.rect(x1+320, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
-      // doc.rect(x1+320, y1, checkboxSize, checkboxSize).stroke()
-      // doc.fontSize(9);
-      // doc.text('PUT AWAY', x1+340, y1+3, { width: 130 }); // (text, x, y, options)
-
-      // doc.rect(x1+400, y1, 70, checkboxSize).stroke(); // (x, y, width, height)
-      // doc.rect(x1+400, y1, checkboxSize, checkboxSize).stroke()
-      // doc.fontSize(9);
-      // doc.text('Others', x1+420, y1+3, { width: 130 }); // (text, x, y, options)
+     
       
 
       doc
@@ -3500,7 +3308,7 @@ router.get("/pdf_puchases_fin/:id", auth, async (req, res) => {
         };
         var totalQTY = 0; 
         let warecode = "";
-
+        var totalSecondary = 0;;
         var pallet = 0;
         var totalPCS = 0;
         var TotalCBM = 0;
@@ -3508,19 +3316,13 @@ router.get("/pdf_puchases_fin/:id", auth, async (req, res) => {
 
           let dataUnit = '';
           var totalPerUnit =  0;
-          // totalPCS += ProductDetl.maxperunit
           
-
-          const qtydata = ProductDetl.quantity;
-            for (let index = 1; index <= qtydata; index++) {
-              
-              if(qtydata == index){
-                dataUnit += ProductDetl.maxperunit;
-              }else{
-                dataUnit += ProductDetl.maxperunit+',';
-              }
-              totalPerUnit +=ProductDetl.maxperunit;
-              totalPCS += ProductDetl.maxperunit
+          var Units;       
+            Units = ProductDetl.standard_unit
+            totalPerUnit = ProductDetl.quantity
+            if(ProductDetl.product_cat == "S"){
+              Units = ProductDetl.secondary_unit
+              totalPerUnit = ProductDetl.quantity * ProductDetl.maxperunit
             }
 
 
@@ -3528,8 +3330,8 @@ router.get("/pdf_puchases_fin/:id", auth, async (req, res) => {
           const rowData = {
             itemcode: ProductDetl.product_code,
             itemdescription: ProductDetl.product_name,
-            qty: ProductDetl.quantity,
-            unit: ProductDetl.standard_unit,
+            qty: totalPerUnit,
+            unit: Units,
             CBM: cbm,
             expdate: ProductDetl.expiry_date,
             batchno: ProductDetl.batch_code,
@@ -3537,7 +3339,14 @@ router.get("/pdf_puchases_fin/:id", auth, async (req, res) => {
             binloc: ProductDetl.isle+ProductDetl.pallet,
           };
           pallet += 1;
-          totalQTY += ProductDetl.quantity
+
+          if(ProductDetl.product_cat == "S"){
+            totalSecondary += ProductDetl.quantity * ProductDetl.maxperunit
+          }else{
+            totalQTY += ProductDetl.quantity
+          }
+          
+          
           TotalCBM +=cbm
           table.datas.push(rowData);
         });
@@ -3668,7 +3477,7 @@ router.get("/pdf_puchases_fin/:id", auth, async (req, res) => {
 
         doc
         .fontSize(9)
-        .text(totalPCS, lastTableX+400, lastTableY);
+        .text(totalSecondary, lastTableX+400, lastTableY);
 
 
 
