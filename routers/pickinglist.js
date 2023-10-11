@@ -2462,11 +2462,11 @@ router.get("/PDF_adjustment/:id", auth, async (req, res) => {
             var prod_cat = ProductDetl.prod_cat;
             var Unit, TotalQTYS ;
             Unit = ProductDetl.unit;
-            TotalQTYS = ProductDetl.new_adjust_qty;
+            TotalQTYS = ProductDetl.adjust_qty;
             if(prod_cat == "S"){
               
               Unit = ProductDetl.secondary_unit;
-              TotalQTYS = ProductDetl.new_adjust_qty * ProductDetl.maxPerUnit
+              TotalQTYS = ProductDetl.adjust_qty * ProductDetl.maxPerUnit
             }
           const rowData = {
 
@@ -2923,7 +2923,7 @@ router.get("/PDF_adjustmentFinal/:id", auth, async (req, res) => {
 
           let dataUnit = '';
           
-          const qtydata = ProductDetl.new_adjust_qty;
+          const qtydata = ProductDetl.adjust_qty;
           for (let index = 1; index <= qtydata; index++) {
             
             if(qtydata == index){
@@ -2938,18 +2938,18 @@ router.get("/PDF_adjustmentFinal/:id", auth, async (req, res) => {
           }
           
           // dataUnit += ' / ' + ProductDetl.secondary_unit ;
-          var cbm = ProductDetl.new_adjust_qty*ProductDetl.CBM
+          var cbm = ProductDetl.adjust_qty*ProductDetl.CBM
           const rowData = {
             itemcode: ProductDetl.product_code,
             itemdescription: ProductDetl.product_name,
-            qty: ProductDetl.new_adjust_qty,
+            qty: ProductDetl.adjust_qty,
             unit: ProductDetl.unit,
             proddate: ProductDetl.production_date,
             batchno: ProductDetl.batch_code,
             binloc: ProductDetl.isle+ProductDetl.pallet,
             CBM: cbm
           };
-          totalQTY += ProductDetl.new_adjust_qty
+          totalQTY += ProductDetl.adjust_qty
           palletsno += 1; 
           TotalCBM += cbm;
           table.datas.push(rowData);

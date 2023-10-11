@@ -18,9 +18,7 @@ router.get("/view", auth, async (req, res) => {
         console.log("master" , master);
 
         const find_data = await warehouse.find();
-        var rooms_data = ["Rack 1", "Rack 2","Rack A", "Rack B",  "Rack C" ,"Rack D","Rack E","Rack F", "Receiving Area", "Shelves"];
-        var rawfinished_data = ["Raw Materials", "Finished Goods"];
-        var vategory_data = ["ALL", "Packaging", "Ingredients"];
+        var rooms_data = ["Ambient", "Enclosed"];
         // console.log(find_data);
 
         if (master[0].language == "English (US)") {
@@ -57,8 +55,6 @@ router.get("/view", auth, async (req, res) => {
             role : role_data,
             language : lan_data,
             rooms_data,
-            rawfinished_data,
-            vategory_data
         })
     } catch (error) {
         console.log(error);
@@ -67,9 +63,9 @@ router.get("/view", auth, async (req, res) => {
 
 router.post("/view", auth, async (req, res) => {
     try {
-        const {name, address, status, Room_name, rawfinished, category_name } = req.body;
+        const {name, address, status, Room_name } = req.body;
 
-        const data = new warehouse({ name, address, status, room: Room_name, main_category: rawfinished , category: category_name })
+        const data = new warehouse({ name, address, status, room: Room_name })
 
         const warehouse_name = await warehouse.findOne({ name:name, room: Room_name });
         if(warehouse_name){

@@ -83,7 +83,7 @@ router.post("/view", auth, async(req, res) => {
        
         const hash = await bcrypt.hash(password, 10)
 
-        const data = new staff({name, email, mobile, status, warehouse, position, warehouse_category:warehouse_cat })
+        const data = new staff({name, email, mobile, status, warehouse, position })
 
         const staff_name = await staff.findOne({email:email});
         console.log(staff_name);
@@ -123,7 +123,7 @@ router.get("/view/:id", auth, async(req, res) => {
 
         if (master[0].language == "English (US)") {
             var lan_data = users.English
-            console.log(lan_data);
+            
         } else if(master[0].language == "Hindi") {
             var lan_data = users.Hindi
 

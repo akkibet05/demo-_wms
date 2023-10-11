@@ -226,17 +226,6 @@
                                        
                                        
 
-                                       <div class="row">                          
-                                        <div class="mb-3 col-md-6">
-                                            <label for="warrehouse">Warehouse Category<span class="text-red">*</span> </label>
-                                            <select class="form-control" name="warehouse_cat" id="warehouse_cat" required>
-                                                <option value="Raw Materials">Raw Materials</option>
-                                                <option value="Finished Goods">Finished Goods</option>
-                                            </select>
-                                        </div>
-                                        
-                                        
-                                       </div>  
                                                                 
 
                                                              
@@ -327,18 +316,7 @@
                                                      value="<%= user.position %>" name="position" required>
                                             </div>
                                        </div>   
-                                       <div class="row">                          
-                                        <div class="mb-3 col-md-6">
-                                            <label for="warrehouse">Warehouse Category<span class="text-red">*</span> </label>
-                                            <select class="form-control" name="warehouse_cat" id="edit-warehouse_cat" required>
-                                                <% warehouse_cat.forEach((data)=> { %>
-                                                    <option value="<%= data %>"  <%= user.warehouse_category == data ? "selected" : "" %>  ><%= data %></option>
-                                                <% }) %>
-                                            </select>
-                                        </div>
-                                        
-                                        
-                                       </div>  
+                                    
                                         <button type="submit" class="btn btn-primary w-100"><%= language.submit %> </button>
 
                                     </div>
@@ -388,7 +366,6 @@
         let dataStatus = $(this).attr("data-status");
         let dataPosition = $(this).attr("data-position")
         let datawarehouse = $(this).attr("data-warehouse");
-        let warehousecategory = $(this).attr("data-warehouse_cat");
 
         $("#edit_form").attr('action', '/staff/view/' + dataId);
         $('#edit-name').attr('value', dataName);
@@ -398,7 +375,6 @@
         $('#edit-poistion').attr('value', dataPosition);
         $("#edit-status").val(dataStatus).attr("selected","selected");
         $("#edit-warehouse").val(datawarehouse).attr("selected", "selected");
-        $("#edit-warehouse_cat").val(warehousecategory).attr("selected", "selected");
     });
     </script>
 

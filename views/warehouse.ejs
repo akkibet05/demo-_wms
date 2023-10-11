@@ -173,36 +173,10 @@
                                         
                                         
 
-                                        <div class="col-xl-3 col-sm-6">
-                                            <div class="form-group">
-                                                <label for="invoice_no">Room  <span
-                                                        class="text-red">*</span></label>
-                                                <select class="form-control" name="rawfinished"
-                                                    id="rawfinished" required>
-                                                    <% rawfinished_data.forEach((wae)=> { %>
-                                                        <option value="<%= wae %>">
-                                                            <%= wae %>
-                                                        </option>
-                                                        <% }) %>
-                                                </select>
-                                            </div>
-                                        </div>
+                                    
 
 
-                                        <div class="col-xl-3 col-sm-6">
-                                            <div class="form-group">
-                                                <label for="invoice_no">Room  <span
-                                                        class="text-red">*</span></label>
-                                                <select class="form-control" name="category_name"
-                                                    id="category_name" required>
-                                                    <% vategory_data.forEach((cat)=> { %>
-                                                        <option value="<%= cat %>">
-                                                            <%= cat %>
-                                                        </option>
-                                                        <% }) %>
-                                                </select>
-                                            </div>
-                                        </div>
+                                        
 
                                         
                                         <div class="col-xl-3 col-sm-6">
@@ -270,39 +244,9 @@
                                             </select>
 
 
-                                            <div class="col-xl-3 col-sm-6">
-                                                <div class="form-group">
-                                                    <label for="invoice_no">Room  <span
-                                                            class="text-red">*</span></label>
-                                                    <select class="form-control" name="rawfinished"
-                                                        id="rawfinished" required>
-                                                        <% rawfinished_data.forEach((wae)=> { %>
-                                                            <option <%=user.main_category==wae
-                                                            ? "selected" : "" %>>
-                                                                <%= wae %>
-                                                            </option>
-                                                            <% }) %>
-                                                    </select>
-                                                </div>
-                                            </div>
+                                          
     
     
-                                            <div class="col-xl-3 col-sm-6">
-                                                <div class="form-group">
-                                                    <label for="invoice_no">Room  <span
-                                                            class="text-red">*</span></label>
-                                                    <select class="form-control" name="category_name"
-                                                        id="category_name" required>
-                                                        <% vategory_data.forEach((cat)=> { %>
-
-                                                            <option <%=user.category==cat
-                                                            ? "selected" : "" %>>
-                                                                <%= cat %>
-                                                            </option>
-                                                            <% }) %>
-                                                    </select>
-                                                </div>
-                                            </div>
     
                                             
                                             <div class="col-xl-3 col-sm-6">
@@ -363,6 +307,22 @@
     ***********************************-->
    
     <%- include('./partials/script'); -%>
+
+
+    <script>
+        $(document).on("click", "#warehouses_id", function () {
+        let dataId = $(this).attr("data-id");
+        let dataName = $(this).attr("data-name");
+        let dataAddress = $(this).attr("data-address");
+        let dataRoom = $(this).attr("data-room");
+
+
+        $("#edit_form").attr('action', '/staff/view/' + dataId);
+        $('#edit-name').attr('value', dataName);
+        $('#edit-address').attr('value', dataAddress);
+        $("#Room_name").val(dataRoom).attr("selected","selected");
+    });
+    </script>
 
        
         <!--**********************************
