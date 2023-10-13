@@ -171,6 +171,13 @@
             return;
         }
          document.getElementById("form").submit();
+         modal.style.display = "none";
+        Swal.fire({
+        title: "Loading...",
+        html: "Please wait a moment",
+        allowOutsideClick: false, 
+        })
+        Swal.showLoading()
         }
         function clearModalContent() {
             document.getElementById("dateRec").innerHTML = "";

@@ -507,6 +507,13 @@
            
                 if (result.isConfirmed) {
                     document.getElementById("form").submit();
+                   
+                    Swal.fire({
+                    title: "Loading...",
+                    html: "Please wait a moment",
+                    allowOutsideClick: false, 
+                    })
+                    Swal.showLoading()
                 } else if (result.isDenied) {
                     Swal.fire('Changes are not saved', '', 'info')
                 }

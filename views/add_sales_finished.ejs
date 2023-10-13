@@ -194,6 +194,13 @@
         }
   
          document.getElementById("form").submit();
+         modal.style.display = "none";
+            Swal.fire({
+            title: "Loading...",
+            html: "Please wait a moment",
+            allowOutsideClick: false, 
+            })
+            Swal.showLoading()
         }
         function clearModalContent() {
         // Reset the values of elements with specific IDs to empty
