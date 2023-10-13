@@ -1136,12 +1136,12 @@ router.get("/PDFFinal/:id", auth, async (req, res) => {
           const rowData = {
             itemcode: ProductDetl.product_code,
             itemdescription: ProductDetl.product_name,
-            qty: totalPerUnit,
+            qty: totalPerUnit.toFixed(3),
             unit: Units,
             proddate: ProductDetl.production_date,
             batchno: ProductDetl.batch_code,
             binloc: ProductDetl.isle+ProductDetl.pallet,
-            CBM: cbm
+            CBM: cbm.toFixed(3)
           };
           // totalQTY += ProductDetl.quantity
           if(ProductDetl.prod_cat == "S"){
@@ -1223,7 +1223,7 @@ router.get("/PDFFinal/:id", auth, async (req, res) => {
 
         doc
         .fontSize(9)
-        .text(palletsno, lastTableX+150, lastTableY);
+        .text(palletsno.toFixed(3), lastTableX+150, lastTableY);
 
         doc.moveTo(lastTableX+105, lastTableY+10); // Move to the starting point
         doc.lineTo(lastTableX+210, lastTableY+10); // Draw a line to the ending point
@@ -1240,7 +1240,7 @@ router.get("/PDFFinal/:id", auth, async (req, res) => {
 
         doc
         .fontSize(9)
-        .text(totalQTY, lastTableX+400, lastTableY);
+        .text(totalQTY.toFixed(3), lastTableX+400, lastTableY);
 
 
         doc
@@ -1253,7 +1253,7 @@ router.get("/PDFFinal/:id", auth, async (req, res) => {
 
         doc
         .fontSize(9)
-        .text(TotalCBM, lastTableX+150, lastTableY);
+        .text(TotalCBM.toFixed(3), lastTableX+150, lastTableY);
 
         doc.moveTo(lastTableX+105, lastTableY+10); // Move to the starting point
         doc.lineTo(lastTableX+210, lastTableY+10); // Draw a line to the ending point
@@ -1938,12 +1938,12 @@ router.get("/PDF_transferFinal/:id", auth, async (req, res) => {
           const rowData = {
             itemcode: ProductDetl.product_code,
             itemdescription: ProductDetl.product_name,
-            qty: totalPerUnit,
+            qty: totalPerUnit.toFixed(3),
             unit: Units,
             proddate: ProductDetl.production_date,
             batchno: ProductDetl.batch_code,
             binloc: ProductDetl.to_isle+ProductDetl.to_pallet,
-            CBM: cbm
+            CBM: cbm.toFixed(3)
           };
           // totalQTY += ProductDetl.to_quantity
           if(ProductDetl.prod_cat == "S"){
@@ -2025,7 +2025,7 @@ router.get("/PDF_transferFinal/:id", auth, async (req, res) => {
 
         doc
         .fontSize(9)
-        .text(palletsno, lastTableX+150, lastTableY);
+        .text(palletsno.toFixed(3), lastTableX+150, lastTableY);
 
         doc.moveTo(lastTableX+105, lastTableY+10); // Move to the starting point
         doc.lineTo(lastTableX+210, lastTableY+10); // Draw a line to the ending point
@@ -2042,7 +2042,7 @@ router.get("/PDF_transferFinal/:id", auth, async (req, res) => {
 
         doc
         .fontSize(9)
-        .text(totalQTY, lastTableX+400, lastTableY);
+        .text(totalQTY.toFixed(3), lastTableX+400, lastTableY);
 
 
         doc
@@ -2055,7 +2055,7 @@ router.get("/PDF_transferFinal/:id", auth, async (req, res) => {
 
         doc
         .fontSize(9)
-        .text(TotalCBM, lastTableX+150, lastTableY);
+        .text(TotalCBM.toFixed(3), lastTableX+150, lastTableY);
 
         doc.moveTo(lastTableX+105, lastTableY+10); // Move to the starting point
         doc.lineTo(lastTableX+210, lastTableY+10); // Draw a line to the ending point
@@ -2075,7 +2075,7 @@ router.get("/PDF_transferFinal/:id", auth, async (req, res) => {
 
         doc
         .fontSize(9)
-        .text(totalSecondary, lastTableX+400, lastTableY);
+        .text(totalSecondary.toFixed(3), lastTableX+400, lastTableY);
 
 
         const StartUnloading = formatTime(user_id.TSU);
@@ -2739,12 +2739,12 @@ router.get("/PDF_adjustmentFinal/:id", auth, async (req, res) => {
           const rowData = {
             itemcode: ProductDetl.product_code,
             itemdescription: ProductDetl.product_name,
-            qty: totalPerUnit,
+            qty: totalPerUnit.toFixed(3),
             unit: Units,
             proddate: ProductDetl.production_date,
             batchno: ProductDetl.batch_code,
             binloc: ProductDetl.isle+ProductDetl.pallet,
-            CBM: cbm
+            CBM: cbm.toFixed(3)
           };
          
           if(ProductDetl.prod_cat == "S"){
@@ -2826,7 +2826,7 @@ router.get("/PDF_adjustmentFinal/:id", auth, async (req, res) => {
 
         doc
         .fontSize(9)
-        .text(palletsno, lastTableX+150, lastTableY);
+        .text(palletsno.toFixed(3), lastTableX+150, lastTableY);
 
         doc.moveTo(lastTableX+105, lastTableY+10); // Move to the starting point
         doc.lineTo(lastTableX+210, lastTableY+10); // Draw a line to the ending point
@@ -2843,7 +2843,7 @@ router.get("/PDF_adjustmentFinal/:id", auth, async (req, res) => {
 
         doc
         .fontSize(9)
-        .text(totalQTY, lastTableX+400, lastTableY);
+        .text(totalQTY.toFixed(3), lastTableX+400, lastTableY);
 
 
         doc
@@ -2857,7 +2857,7 @@ router.get("/PDF_adjustmentFinal/:id", auth, async (req, res) => {
 
         doc
         .fontSize(9)
-        .text(TotalCBM, lastTableX+150, lastTableY);
+        .text(TotalCBM.toFixed(3), lastTableX+150, lastTableY);
         
         doc.moveTo(lastTableX+105, lastTableY+10); // Move to the starting point
         doc.lineTo(lastTableX+210, lastTableY+10); // Draw a line to the ending point
@@ -2877,7 +2877,7 @@ router.get("/PDF_adjustmentFinal/:id", auth, async (req, res) => {
 
         doc
         .fontSize(9)
-        .text(totalSecondary, lastTableX+400, lastTableY);
+        .text(totalSecondary.toFixed(3), lastTableX+400, lastTableY);
 
         const StartUnloading = formatTime(user_id.TSU);
         const FinishUnloading = formatTime(user_id.TFU);
@@ -3330,9 +3330,9 @@ router.get("/pdf_puchases_fin/:id", auth, async (req, res) => {
           const rowData = {
             itemcode: ProductDetl.product_code,
             itemdescription: ProductDetl.product_name,
-            qty: totalPerUnit,
+            qty: totalPerUnit.toFixed(3),
             unit: Units,
-            CBM: cbm,
+            CBM: cbm.toFixed(3),
             expdate: ProductDetl.expiry_date,
             batchno: ProductDetl.batch_code,
             // binloc: ProductDetl.storage+ProductDetl.rack+ProductDetl.bay+ProductDetl.bin+ProductDetl.type[0]+ProductDetl.floorlevel,
@@ -3425,7 +3425,7 @@ router.get("/pdf_puchases_fin/:id", auth, async (req, res) => {
 
         doc
         .fontSize(9)
-        .text(pallet, lastTableX+150, lastTableY);
+        .text(pallet.toFixed(3), lastTableX+150, lastTableY);
 
         doc.moveTo(lastTableX+105, lastTableY+10); // Move to the starting point
         doc.lineTo(lastTableX+210, lastTableY+10); // Draw a line to the ending point
@@ -3442,7 +3442,7 @@ router.get("/pdf_puchases_fin/:id", auth, async (req, res) => {
 
         doc
         .fontSize(9)
-        .text(totalQTY, lastTableX+400, lastTableY);
+        .text(totalQTY.toFixed(3), lastTableX+400, lastTableY);
 
 
         doc
@@ -3455,7 +3455,7 @@ router.get("/pdf_puchases_fin/:id", auth, async (req, res) => {
 
         doc
         .fontSize(9)
-        .text(TotalCBM, lastTableX+150, lastTableY);
+        .text(TotalCBM.toFixed(3), lastTableX+150, lastTableY);
 
         
 
@@ -3477,7 +3477,7 @@ router.get("/pdf_puchases_fin/:id", auth, async (req, res) => {
 
         doc
         .fontSize(9)
-        .text(totalSecondary, lastTableX+400, lastTableY);
+        .text(totalSecondary.toFixed(3), lastTableX+400, lastTableY);
 
 
 
