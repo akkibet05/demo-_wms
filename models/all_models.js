@@ -132,7 +132,7 @@ const product_data = new mongoose.Schema({
     },
     product_code: {
         type: String,
-        unique: true
+        // unique: true
     },
     warehouse: {
         type: String

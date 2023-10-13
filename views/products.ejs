@@ -267,7 +267,7 @@
 
                                                         
 
-                                        <button type="submit" class="btn btn-primary w-100"><%= language.submit %></button>
+                                        <button type="submit" class="btn btn-primary w-100" onclick="saveContinue();"><%= language.submit %></button>
 
                                     </div>
                                     <div class="modal-footer">
@@ -333,7 +333,16 @@
             })
 
         }
-
+        function saveContinue(){
+            var modal = document.getElementById("exampleModal");
+            modal.style.display = "none";
+            Swal.fire({
+            title: "Loading...",
+            html: "Please wait a moment",
+            allowOutsideClick: false, 
+            })
+            Swal.showLoading()
+        }
 
         $('#Searchbut').click(function(){
             var data_choosing = $('#data_choosing').val();

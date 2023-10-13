@@ -954,7 +954,7 @@ router.post("/products_import_migrate_file", auth, uploadMigrate.single("migrate
           secondary_unit: units_data.secondary_unit,
           product_code: product_code
         });
-    
+        console.log(prduct_data.length + " <> " + categories_data.name + " <> "  + brands_data.name + " <> " +  units_data.secondary_unit + " <> " + product_code + " <> " + ProductName)
         if (prduct_data.length === 0) {
           const data5 = new product({
             image: "defaultProduct.avif",
