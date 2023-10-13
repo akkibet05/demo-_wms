@@ -246,6 +246,16 @@
         Scripts end
     ***********************************-->
 
+    <script>
+        $(document).on("click", "#categories_id", function () {
+        let dataId = $(this).attr("data-id");
+        let dataName = $(this).attr("data-name");
+
+        $("#edit_form").attr('action', '/products/categories/' + dataId);
+        $('#edit-name').attr('value', dataName);
+    });
+    </script>
+
 </body>
 
 </html>

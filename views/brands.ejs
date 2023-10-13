@@ -244,6 +244,17 @@
         <!--**********************************
         Scripts end
     ***********************************-->
+
+    <script>
+        $(document).on("click", "#brands_id", function () {
+        let dataId = $(this).attr("data-id");
+        let dataName = $(this).attr("data-name");
+
+        $("#edit_form").attr('action', '/products/brands/' + dataId);
+        $('#edit-name').attr('value', dataName);
+    });
+    </script>
+
 </body>
 
 </html>
