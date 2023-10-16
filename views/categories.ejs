@@ -81,7 +81,7 @@
                                                         <th><%= language.name %></th>
                                                         <!-- <th><%= language.products %></th> -->
                                                         <th><%= language.edit %></th>
-                                                        <!-- <th><%= language.delete %></th> -->
+                                                        <th><%= language.delete %></th>
                                                     </tr>
                                                 </thead>
 
@@ -107,7 +107,7 @@
                                                                         <%= language.edit %></a>
                                                                 </td>
 
-                                                                <!-- <td>
+                                                                <td>
                                                                     <% if (user.products != 0) { %>
 
                                                                         <button type="button" class="btn btn-sm btn-danger" disabled><%= language.delete %></button>
@@ -116,7 +116,7 @@
                                                                         <a type="button" class="btn btn-sm btn-danger" href="/products/categories/delete/<%= user._id %>" id="procatid" data-id="<%= user._id %>">
                                                                             <%= language.delete %></a>
                                                                     <% } %>
-                                                                </td> -->
+                                                                </td>
                                                             </tr>
                                                         <% i++ %>
                                                         <% }) %>
