@@ -11,8 +11,22 @@ var session = require('express-session');
 const mongoDbsession = require('connect-mongodb-session')(session);
 const cookieParser = require('cookie-parser');
 
-// mongoose.set("strictQuery", false);
-mongoose.connect(process.env.DATABASE_STRING,
+let databaseString, sessionString, sessionCollection;
+
+if(process.env.NODE_ENV == "production"){
+   databaseString = process.env.DATABASE_STRING
+   sessionString = process.env.SESSION_STRING
+   sessionCollection = process.env.SESSION_COLLECTION
+
+}else if(process.env.NODE_ENV == "test"){
+   databaseString = process.env.DATABASE_STRING_TEST
+   sessionString = process.env.SESSION_STRING_TEST
+   sessionCollection = process.env.SESSION_COLLECTION_TEST
+}
+
+
+
+mongoose.connect(databaseString,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -26,8 +40,8 @@ mongoose.connect(process.env.DATABASE_STRING,
 
 //****setup for flash message */
 const store = new mongoDbsession({
-  uri: process.env.SESSION_STRING,
-  collection: process.env.SESSION_COLLECTION,
+  uri: sessionString,
+  collection: sessionCollection,
 });
 
 app.use(session({
