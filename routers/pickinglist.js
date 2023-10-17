@@ -1511,21 +1511,24 @@ router.get("/PDF_transfer/:id", auth, async (req, res) => {
       .fontSize(10)
       .text(SubTitle, x, y+=20);
 
-      doc
-      .fontSize(9)
-      .text('Warehouse ', x, y+=40);
 
       doc
       .fontSize(9)
-      .text(' : '+user_id.to_warehouse, x+63, y);
+      .text('From Warehouse ', x, y+=40);
+
+      doc
+      .fontSize(9)
+      .text('   : '+user_id.to_warehouse, x+63, y);
+
+      doc
+      .fontSize(9)
+      .text('To Warehouse ', x, y+=10);
+
+      doc
+      .fontSize(9)
+      .text('   : '+user_id.to_warehouse, x+63, y);
       
-      // doc
-      // .fontSize(9)
-      // .text('Customer : ' + user_id.customer, 400, 210, { underline: true });
-      // doc
-      // .fontSize(9)
-      // .text('Pick By : ', x, y+=11);
-
+  
       doc
       .fontSize(9)
       .text('Date ', x, y+=11);
@@ -1533,7 +1536,7 @@ router.get("/PDF_transfer/:id", auth, async (req, res) => {
 
       doc
       .fontSize(9)
-      .text(' : '+user_id.date, x+63, y);
+      .text('   : '+user_id.date, x+63, y);
 
       doc
       .fontSize(9)
@@ -1541,18 +1544,40 @@ router.get("/PDF_transfer/:id", auth, async (req, res) => {
 
       doc
       .fontSize(9)
-      .text(' : '+user_id.invoice, x+63, y);
+      .text('   : '+user_id.invoice, x+63, y);
+
+
+      const table1 = {
+        headers: [
+          { label: "", property: 'itemcode', width: 443, renderer: null, textCenter: true },
+          { label: "  FROM", property: 'itemcode', width: 63, renderer: null, textCenter: true },
+          { label: "  TO", property: 'itemdescription', width: 63, renderer: null, textCenter: true  },
+         
+        ],
+        datas: [],
+      };
+
+      doc.table(table1, {
+        x: 5,
+        y: 263,
+        prepareHeader: () => doc.font("Helvetica-Bold").fontSize(8),
+        prepareRow: (row, indexColumn, indexRow, rectRow) => doc.font("Helvetica").fontSize(8),
+        
+        
+       
+      });
 
 
       const table = {
           headers: [
             { label: "Item Code", property: 'itemcode', width: 60, renderer: null },
             { label: "Item Description", property: 'itemdescription', width: 150, renderer: null },
-            { label: "Quantity", property: 'qty', width: 60, renderer: null },
-            { label: "UOM", property: 'unit', width: 60, renderer: null },
+            { label: "Quantity", property: 'qty', width: 40, renderer: null },
+            { label: "UOM", property: 'unit', width: 55, renderer: null },
             // { label: "Quantity", property: 'unitConversion', width: 60, renderer: null },
-            { label: "Production Date", property: 'proddate', width: 80, renderer: null },
+            { label: "Production Date", property: 'proddate', width: 75, renderer: null },
             { label: "Batch No", property: 'batchno', width: 63, renderer: null },
+            { label: "Bin Location", property: 'Frombinloc', width: 63, renderer: null },
             { label: "Bin Location", property: 'binloc', width: 63, renderer: null },
           ],
           datas: [],
@@ -1585,6 +1610,7 @@ router.get("/PDF_transfer/:id", auth, async (req, res) => {
             proddate: ProductDetl.production_date,
             batchno: ProductDetl.batch_code,
             binloc: ProductDetl.to_isle+ProductDetl.to_pallet,
+            Frombinloc: ProductDetl.from_isle+ProductDetl.from_pallet
           };
           totalQTY += TotalQTYS
           
@@ -1594,7 +1620,7 @@ router.get("/PDF_transfer/:id", auth, async (req, res) => {
                   
 
       doc.table(table, {
-          x: 20,
+          x: 5,
           y: 280,
           prepareHeader: () => doc.font("Helvetica-Bold").fontSize(8),
           prepareRow: (row, indexColumn, indexRow, rectRow) => doc.font("Helvetica").fontSize(8),
