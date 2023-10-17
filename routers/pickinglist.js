@@ -2162,7 +2162,7 @@ router.get("/PDF_transferFinal/:id", auth, async (req, res) => {
 
         doc
         .fontSize(9)
-        .text('TIME START UNLOADING', lastTableX, lastTableY+=50);
+        .text('TIME START LOADING', lastTableX, lastTableY+=50);
 
         doc
         .fontSize(9)
@@ -2178,7 +2178,7 @@ router.get("/PDF_transferFinal/:id", auth, async (req, res) => {
 
         doc
         .fontSize(9)
-        .text('TIME FINISH UNLOADING', lastTableX, lastTableY+=20);
+        .text('TIME FINISH LOADING', lastTableX, lastTableY+=20);
 
         doc
         .fontSize(9)
