@@ -27,6 +27,15 @@ function formatTime(timeString) {
 }
 
 
+function formatNumber(number) {
+  if (Number.isInteger(number)) {
+    return number.toString(); // Convert whole number to a string
+  } else {
+    return number.toFixed(2); // Display number with 2 decimal places
+  }
+}
+
+
 // router.get("/PDF/:id", auth, async (req, res) => {
 //     try {
 //         const { username, email, role } = req.user;
@@ -1170,7 +1179,7 @@ router.get("/PDFFinal/:id", auth, async (req, res) => {
           const rowData = {
             itemcode: ProductDetl.product_code,
             itemdescription: ProductDetl.product_name,
-            qty: totalPerUnit.toFixed(3),
+            qty: formatNumber(totalPerUnit),
             unit: Units,
             proddate: ProductDetl.production_date,
             batchno: ProductDetl.batch_code,
@@ -1257,7 +1266,7 @@ router.get("/PDFFinal/:id", auth, async (req, res) => {
 
         doc
         .fontSize(9)
-        .text(palletsno.toFixed(3), lastTableX+150, lastTableY);
+        .text(formatNumber(palletsno), lastTableX+150, lastTableY);
 
         doc.moveTo(lastTableX+105, lastTableY+10); // Move to the starting point
         doc.lineTo(lastTableX+210, lastTableY+10); // Draw a line to the ending point
@@ -1274,7 +1283,7 @@ router.get("/PDFFinal/:id", auth, async (req, res) => {
 
         doc
         .fontSize(9)
-        .text(totalQTY.toFixed(3), lastTableX+400, lastTableY);
+        .text(formatNumber(totalQTY), lastTableX+400, lastTableY);
 
 
         doc
@@ -1307,7 +1316,7 @@ router.get("/PDFFinal/:id", auth, async (req, res) => {
 
         doc
         .fontSize(9)
-        .text(totalSecondary, lastTableX+400, lastTableY);
+        .text(formatNumber(totalSecondary), lastTableX+400, lastTableY);
 
 
         const StartUnloading = formatTime(user_id.TSU);
@@ -2006,7 +2015,7 @@ router.get("/PDF_transferFinal/:id", auth, async (req, res) => {
           const rowData = {
             itemcode: ProductDetl.product_code,
             itemdescription: ProductDetl.product_name,
-            qty: totalPerUnit.toFixed(3),
+            qty: formatNumber(totalPerUnit),
             unit: Units,
             proddate: ProductDetl.production_date,
             batchno: ProductDetl.batch_code,
@@ -2093,7 +2102,7 @@ router.get("/PDF_transferFinal/:id", auth, async (req, res) => {
 
         doc
         .fontSize(9)
-        .text(palletsno.toFixed(3), lastTableX+150, lastTableY);
+        .text(formatNumber(palletsno), lastTableX+150, lastTableY);
 
         doc.moveTo(lastTableX+105, lastTableY+10); // Move to the starting point
         doc.lineTo(lastTableX+210, lastTableY+10); // Draw a line to the ending point
@@ -2110,7 +2119,7 @@ router.get("/PDF_transferFinal/:id", auth, async (req, res) => {
 
         doc
         .fontSize(9)
-        .text(totalQTY.toFixed(3), lastTableX+400, lastTableY);
+        .text(formatNumber(totalQTY), lastTableX+400, lastTableY);
 
 
         doc
@@ -2143,7 +2152,7 @@ router.get("/PDF_transferFinal/:id", auth, async (req, res) => {
 
         doc
         .fontSize(9)
-        .text(totalSecondary.toFixed(3), lastTableX+400, lastTableY);
+        .text(formatNumber(totalSecondary), lastTableX+400, lastTableY);
 
 
         const StartUnloading = formatTime(user_id.TSU);
@@ -2839,7 +2848,7 @@ router.get("/PDF_adjustmentFinal/:id", auth, async (req, res) => {
           const rowData = {
             itemcode: ProductDetl.product_code,
             itemdescription: ProductDetl.product_name,
-            qty: totalPerUnit.toFixed(3),
+            qty: formatNumber(totalPerUnit),
             unit: Units,
             proddate: ProductDetl.production_date,
             batchno: ProductDetl.batch_code,
@@ -2926,7 +2935,7 @@ router.get("/PDF_adjustmentFinal/:id", auth, async (req, res) => {
 
         doc
         .fontSize(9)
-        .text(palletsno.toFixed(3), lastTableX+150, lastTableY);
+        .text(formatNumber(palletsno), lastTableX+150, lastTableY);
 
         doc.moveTo(lastTableX+105, lastTableY+10); // Move to the starting point
         doc.lineTo(lastTableX+210, lastTableY+10); // Draw a line to the ending point
@@ -2943,7 +2952,7 @@ router.get("/PDF_adjustmentFinal/:id", auth, async (req, res) => {
 
         doc
         .fontSize(9)
-        .text(totalQTY.toFixed(3), lastTableX+400, lastTableY);
+        .text(formatNumber(totalQTY), lastTableX+400, lastTableY);
 
 
         doc
@@ -2977,7 +2986,7 @@ router.get("/PDF_adjustmentFinal/:id", auth, async (req, res) => {
 
         doc
         .fontSize(9)
-        .text(totalSecondary.toFixed(3), lastTableX+400, lastTableY);
+        .text(formatNumber(totalSecondary), lastTableX+400, lastTableY);
 
         const StartUnloading = formatTime(user_id.TSU);
         const FinishUnloading = formatTime(user_id.TFU);
@@ -3461,7 +3470,7 @@ router.get("/pdf_puchases_fin/:id", auth, async (req, res) => {
           const rowData = {
             itemcode: ProductDetl.product_code,
             itemdescription: ProductDetl.product_name,
-            qty: totalPerUnit.toFixed(3),
+            qty: formatNumber(totalPerUnit) ,
             unit: Units,
             CBM: cbm.toFixed(3),
             expdate: ProductDetl.expiry_date,
@@ -3556,7 +3565,7 @@ router.get("/pdf_puchases_fin/:id", auth, async (req, res) => {
 
         doc
         .fontSize(9)
-        .text(pallet.toFixed(3), lastTableX+150, lastTableY);
+        .text(formatNumber(pallet), lastTableX+150, lastTableY);
 
         doc.moveTo(lastTableX+105, lastTableY+10); // Move to the starting point
         doc.lineTo(lastTableX+210, lastTableY+10); // Draw a line to the ending point
@@ -3573,7 +3582,7 @@ router.get("/pdf_puchases_fin/:id", auth, async (req, res) => {
 
         doc
         .fontSize(9)
-        .text(totalQTY.toFixed(3), lastTableX+400, lastTableY);
+        .text(formatNumber(totalQTY), lastTableX+400, lastTableY);
 
 
         doc
@@ -3608,7 +3617,7 @@ router.get("/pdf_puchases_fin/:id", auth, async (req, res) => {
 
         doc
         .fontSize(9)
-        .text(totalSecondary.toFixed(3), lastTableX+400, lastTableY);
+        .text(formatNumber(totalSecondary), lastTableX+400, lastTableY);
 
 
 
