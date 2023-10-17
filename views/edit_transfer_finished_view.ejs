@@ -364,25 +364,25 @@
                                                                         </td>
                                                                         
                                                                         
-                                                                        <% stock.forEach((stocks) => { %>
+                                                                        <% //stock.forEach((stocks) => { %>
                                                               
-                                                                                <% if(transfer1.product_name == stocks.name  &&  transfer1.from_level == stocks.level &&  transfer1.from_isle == stocks.isle &&  transfer1.from_pallet== stocks.pallet &&  transfer1.expiry_date == stocks.expiry_date && stocks.room == transfer1.from_room_name && transfer1.production_date == stocks.production_date && stocks.warehoue_name == transfer.from_warehouse) { %>
-                                                                                    <!-- <h3><%= transfer1.product_name + "==" + stocks.name  + "&&" +  transfer1.from_bay + "==" + stocks.bay + "&&" +  transfer1.expiry_date + "==" + stocks.expiry_date + "&&" + stocks.room + "==" + transfer1.from_room_name + "&&" + stocks.warehoue_name + "==" + transfer.from_warehouse %></h3> -->
+                                                                                <% //if(transfer1.product_name == stocks.name  &&  transfer1.from_level == stocks.level &&  transfer1.from_isle == stocks.isle &&  transfer1.from_pallet== stocks.pallet &&  transfer1.expiry_date == stocks.expiry_date && stocks.room == transfer1.from_room_name && transfer1.production_date == stocks.production_date && stocks.warehoue_name == transfer.from_warehouse) { %>
+                                                                                    
                                                                                     <td class="align-top">
                                                                                         <input type="text" name="from_prod_qty"
-                                                                                            id="from_prod_qty" value="<%= stocks.product_stock %>"
+                                                                                            id="from_prod_qty" value="<%= transfer1.from_quantity %>"
                                                                                             class="form-control from_prod_qty" style="width: 150px;" readonly>
                                                                                     </td>
 
                                                                                     <td class="align-top">
                                                                                         <input type="text" name="from_Room_assigned"
-                                                                                            id="from_Room_assigned" value="<%= stocks.room %>"
+                                                                                            id="from_Room_assigned" value="<%= transfer1.from_room_name %>"
                                                                                             class="form-control from_Room_assigned" style="width: 150px;" readonly>
                                                                                     </td>
 
                                                                                     <td class="align-top">
                                                                                         <input type="text" name="from_prod_level"
-                                                                                            id="from_prod_level" value="<%= stocks.level %>"
+                                                                                            id="from_prod_level" value="<%= transfer1.from_level %>"
                                                                                             class="form-control from_prod_level" style="width: 150px;" readonly>
                                                                                     </td>
                                                                                     
@@ -390,14 +390,14 @@
                                                                                     
                                                                                     <td class="align-top">
                                                                                         <input type="text" name="from_prod_level"
-                                                                                            id="from_prod_level" value="<%= stocks.isle+stocks.pallet %>"
+                                                                                            id="from_prod_level" value="<%= transfer1.from_isle+transfer1.from_pallet %>"
                                                                                             class="form-control from_prod_level" style="width: 150px;" readonly>
                                                                                     </td>
 
-                                                                                <% }%>
+                                                                                <% //}%>
                                                                     
                                                                         
-                                                                        <% })%>
+                                                                        <%// })%>
                                                                         
                                                                         
                                                                         <td class="align-top">
