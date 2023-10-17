@@ -200,7 +200,7 @@
         function clearModalContent() {
             document.getElementById("dateRec").innerHTML = "";
             document.getElementById("houseware").innerHTML = "";
-            document.getElementById("moor").innerHTML = "";
+            // document.getElementById("moor").innerHTML = "";
 
             // Clear the table inside the modal
             var modalTable = document.getElementById("purchases_tbl_modal");
@@ -227,6 +227,10 @@
             var expiry_date = document.getElementsByName("expiry_date");
 
 
+            var RoomAssigned = document.getElementsByName("RoomAssigned");
+            var ToRoomAssigned = document.getElementsByName("ToRoomAssigned");
+
+
             var nodeVal = '';
             var productName = '';
             var valprod_unit = '';
@@ -242,6 +246,8 @@
                 valbatch_code = batch_code[x].value;
                 valproduct_date = product_date[x].value;
                 valexpiry_date = expiry_date[x].value;
+                valRoomAssigned = RoomAssigned[x].value;
+                valToRoomAssigned = ToRoomAssigned[x].value;
                 
 
                 toqty = to_prod_qty[x].value;
@@ -264,6 +270,13 @@
                 html += '<td>';
                 html += prod_qty;
                 html += '</td>';
+
+
+                html += '<td>';
+                html += valRoomAssigned;
+                html += '</td>';
+
+                
 
                 html += '<td>';
                 html += frombay;
@@ -291,6 +304,12 @@
                 html += valexpiry_date;
                 html += '</td>';
 
+
+                html += '<td>';
+                html += valToRoomAssigned;
+                html += '</td>';
+
+
                 html += '<td>';
                 html += tobay;
                 html += '</td>';
@@ -304,19 +323,21 @@
             htmlfinal += '<tr>';
             htmlfinal += '<th scope="col">Item Code </th>';
             htmlfinal += '<th scope="col">Item Description </th>';
-            htmlfinal += '<th colspan="2"><center>FROM</center></th>';
-            htmlfinal += '<th colspan="7"><center>To</center></th>';
+            htmlfinal += '<th colspan="3"><center>FROM</center></th>';
+            htmlfinal += '<th colspan="8"><center>To</center></th>';
             htmlfinal += '</tr>';
             htmlfinal += '<tr>';
             htmlfinal += '<th scope="col"></th>';
             htmlfinal += '<th scope="col"></th>';
             htmlfinal += '<th scope="col">In Stock </th>';
+            htmlfinal += '<th scope="col">Room </th>';
             htmlfinal += '<th scope="col">Bin </th>';
             htmlfinal += '<th scope="col">Quantity </th>';
             htmlfinal += '<th scope="col">Unit of Measure</th>';
             htmlfinal += '<th scope="col">Batch Code</th>';
             htmlfinal += '<th scope="col">Production date</th>';
             htmlfinal += '<th scope="col">Expiry date</th>';
+            htmlfinal += '<th scope="col">Room</th>';
             htmlfinal += '<th scope="col">Bin </th>';
             htmlfinal += '</tr>';
             htmlfinal += '</thead>';
@@ -812,11 +833,7 @@
                                         <td>From Warehouse:</td>
                                         <td><b id="houseware"></b></td>
                                     </tr>
-        
-                                    <tr>
-                                        <td>From Room: </td>
-                                        <td><b id="moor"></b></td>
-                                    </tr>
+    
         
                                     
         
@@ -825,10 +842,6 @@
                                         <td><b id="to_houseware"></b></td>
                                     </tr>
         
-                                    <tr>
-                                        <td>To Room:</td>
-                                        <td><b id="to_moor"></b></td>
-                                    </tr>
                                 </thead>
                             </table>
                             
