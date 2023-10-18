@@ -1166,7 +1166,7 @@
             function ValidationForMaxQTY(i){
                 var prod_qty = document.getElementById("New_Qty_Converted"+i).value;
                 var stocks_qty = document.getElementById("MaxStocks_data"+i).value;
-                alert(prod_qty + " <> " + stocks_qty + " <> " + i)
+                // alert(prod_qty + " <> " + stocks_qty + " <> " + i)
                 if(parseInt(prod_qty) >  parseInt(stocks_qty)){
                     Swal.fire(
                     'Sorry',
@@ -1199,31 +1199,35 @@
             }
 
 
-            function checkingWarehouse(i){
+            function checkingWarehouse(i, productcode){
                 var Level = document.getElementById("to_prod_level"+i).value;
                 var warehouse = document.getElementById("to_warehouse").value;
-                var rooms = document.getElementById("ToRoom_name").value;
                 var Quanity = document.getElementById("to_prod_qty"+i);
                 var tempMaxStocks = document.getElementById("MaxStocks_data2"+i).value;
                 var productName = document.getElementById("prod_name"+i).value;
+        
+                var rooms = document.getElementById("ToRoomAssigned"+i).value;
+                var resultValueFloorLevel = Level.slice(1);
                 $.ajax({
                     url: '/transfer_finished/CheckingWarehouse', 
                     method: 'POST',
-                    data: {   bay: Level , warehouses: warehouse, room: rooms  }, 
+                    data: {   bay: resultValueFloorLevel , warehouses: warehouse, room: rooms  }, 
                     success: function(response) {
 
                         if(response.length > 0){
                             $.each(response, function(index, data) {
                             
-                                // alert(productName + '==' +  data.name + '&&' + Pallet + '==' + data.pallet)
-                                if(productName == data.name && Level == data.bay){
+                                // console.log(productName + " <> " +data.name )
+                                if(productName == data.name && resultValueFloorLevel == data.pallet){
 
                                     var valQty = Quanity.value
                                     if(isNaN(valQty)){
                                         valQty = 0
                                     }
-                                    // const stocksData = parseInt(data.product_stock) - parseInt(Quanity.value);
+                        
                                     var stocksData = parseInt(data.product_stock) - parseInt(data.maxProducts);
+
+                          
                                     document.getElementById("MaxStocks_data"+i).value = Math.abs(parseInt(stocksData));
                                     const newVal = document.getElementById("MaxStocks_data"+i).value;
                                     if(parseInt(Quanity.value) > parseInt(newVal)){
@@ -1852,7 +1856,7 @@
                         row.append($('<td>').html('<input type="text" class="form-control" style="width: 150px;" name="RoomAssigned" id="RoomAssigned'+x+'" value="'+data.roomNamed+'" readonly>'));
                         row.append($('<td>').html('<input type="text" class="form-control" style="width: 150px;" name="from_prod_leveling" value="' + data.level + '" readonly>'));
                         row.append($('<td>').html('<input type="text" class="form-control" style="width: 150px;" name="from_prod_level2" value="' + data.isle+data.pallet + '" readonly>'));
-                        row.append($('<td>').html('<input type="text" class="form-control" style="width: 150px;" name="to_prod_qty" id="to_prod_qty'+ x +'" onkeyup="ValidationForMaxQTY('+ x +'); ComputeConversionI('+x+', '+data.maxPerUnit+');"  >'));
+                        row.append($('<td>').html('<input type="text" class="form-control" style="width: 150px;" name="to_prod_qty" id="to_prod_qty'+ x +'" onkeyup="ComputeConversionI('+x+', '+data.maxPerUnit+'); ValidationForMaxQTY('+ x +'); checkingWarehouse('+x+','+data.product_code+');">'));
                         row.append($('<td>').html('<input type="text" class="form-control" style="width: 150px;" name="unit" id="unit'+x+'" value="" readonly>'));
                         row.append($('<td>').html('<input type="text" class="form-control" style="width: 150px;" name="Conver" id="Conver'+x+'" value=""  readonly>'));
                         row.append($('<td>').html('<input type="text" class="form-control" style="width: 125px;" name="batch_code" value="'+data.batch_code+'" readonly>'));
@@ -1860,7 +1864,7 @@
                         row.append($('<td>').html('<input type="date" class="form-control" style="width: 150px;" name="expiry_date" value="'+data.expiry_date+'" readonly>'));
                         row.append($('<td>').html('<select class="form-control" name="ToRoomAssigned" id="ToRoomAssigned' + x + '" onchange="roomdataselected('+x+'); TypeList('+x+');" style="width: 150px;"></select>'));
                         row.append($('<td>').html('<select class="form-control" name="type" level="type' + x + '" id="type' + x + '" style="width: 150px;" onchange="roomdataselected('+x+')"></select>'));
-                        row.append($('<td>').html('<select class="form-control" name="to_prod_level" level="levelOslie" id="to_prod_level' + x + '" style="width: 150px;" onchange="checkingWarehouse('+x+')"></select>'));
+                        row.append($('<td>').html('<select class="form-control" name="to_prod_level" level="levelOslie" id="to_prod_level' + x + '" style="width: 150px;" onchange="checkingWarehouse('+x+','+data.product_code+')"></select>'));
                         row.append($('<td>').html('<button type="button" class="btn btn-square btn-outline-danger" id="remove">Remove</button>'));
                         
 
@@ -1982,6 +1986,7 @@
                         
                         $('#tblPage_new').append(row);
                         ComputeConversion(x, data.maxPerUnit);
+                        checkingWarehouse(x, data.product_code)
                         
                         RoomProducts(x);
                         

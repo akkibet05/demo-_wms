@@ -451,48 +451,7 @@ router.get("/preview/:id", auth , async (req, res) => {
             },
         ])
 
-        // res.json(transfer_data)
-        // const RoomAll = transfer_data.product;
-        // const results = [];
-        // async function fetchStockData(value) {
-        //     const stock_data = await warehouse.aggregate([
-        //         {
-        //             $match: { 
-        //                 "name": transfer_data.from_warehouse,
-        //                 "room": value 
-        //             }
-        //         },
-        //         {
-        //             $unwind: "$product_details"
-        //         },
-        //         {
-        //             $group: {
-        //                 _id: "$product_details._id",
-        //                 name: { $first: "$product_details.product_name"},
-        //                 product_stock: { $first: "$product_details.product_stock" },
-        //                 bay: { $first: "$product_details.bay" },
-        //                 bin: { $first: "$product_details.bin" },
-        //                 type: { $first: "$product_details.type" },
-        //                 floorlevel: { $first: "$product_details.floorlevel" },
-        //                 primary_code: { $first: "$product_details.primary_code" },
-        //                 secondary_code: { $first: "$product_details.secondary_code" },
-        //                 product_code: { $first: "$product_details.product_code" },
-        //                 storage: { $first: "$product_details.storage" },
-        //                 rack: { $first: "$product_details.rack" },
-        //                 expiry_date: { $first: "$product_details.expiry_date"},
-        //                 from_room: { $first: "$room" }
-        //             }
-        //         },
-        //     ])
 
-        //     results.push(stock_data);
-
-        // }
-
-
-        // const promises = RoomAll.map((value) => fetchStockData(value.from_room_name));
-        // await Promise.all(promises);
-        
 
         const product_data = await product.find({})
   
@@ -1508,7 +1467,7 @@ router.post("/barcode_scanner3", async(req, res) => {
 router.post("/CheckingWarehouse", async (req, res) => {
 
     const { productCode, bay, warehouses, room } = req.body
-    console.log(req.body)
+    
     try{
         const stock_data = await warehouse.aggregate([
             {
@@ -1523,21 +1482,21 @@ router.post("/CheckingWarehouse", async (req, res) => {
             },
             {
                 $match: {
-                    "product_details.bay" : parseInt(bay),
+                    "product_details.pallet" : parseInt(bay),
                 }
             },
             {
                 $group: {
-                    _id: "$product_details._id",
+                    _id: "$product_details.product_name",
                     name: { $first: "$product_details.product_name"},
-                    product_stock: { $first: "$product_details.product_stock" },
-                    bay: { $first: "$product_details.bay" },
+                    product_stock: { $sum: "$product_details.product_stock" },
+                    pallet: { $first: "$product_details.pallet" },
                     maxProducts: { $first: "$product_details.maxProducts" }
                 }
             },
         ])
 
-
+        console.log(stock_data)
         res.status(200).json(stock_data)
     }catch(error){
         res.status(404).json({ message: error.message })
