@@ -143,13 +143,6 @@
             warehouse_name.style.borderColor = "";
         }
 
-        // if(Room_name.value.length == 0){
-        //     strTemp += "Room  is required. <br>"
-        //     Room_name.style.borderColor = "red";
-        //     Room_name.focus()
-        // }else{
-        //     Room_name.style.borderColor = "";
-        // }
 
 
 
@@ -200,7 +193,7 @@
         document.getElementById("customers").innerHTML = "";
         document.getElementById("dateRec").innerHTML = "";
         document.getElementById("houseware").innerHTML = "";
-        document.getElementById("moor").innerHTML = "";
+       
 
         // Clear the table inside the modal
         var modalTable = document.getElementById("purchases_tbl_modal");
@@ -235,7 +228,7 @@
             var delivery_code = document.getElementsByName("delivery_code");
 
 
-            
+            var RoomAssigned = document.getElementsByName("RoomAssigned");
             var nodeVal = '';
             var productName = '';
             var valprod_unit = '';
@@ -253,6 +246,7 @@
                 valexpiry_date = expiry_date[x].value;
        
                 vallevel = level[x].value;
+                valRoomAssigned = RoomAssigned[x].value;
                 // valisle = isle[x].value;
                 // valtype = type[x].value;
                 // valpallet = pallet[x].value;
@@ -304,20 +298,15 @@
                 html += '</td>';
 
                 html += '<td>';
+                html += valRoomAssigned;
+                html += '</td>';
+                
+
+                html += '<td>';
                 html += vallevel;
                 html += '</td>';
 
-                // html += '<td>';
-                // html += valisle;
-                // html += '</td>';
 
-                // html += '<td>';
-                // html += valtype;
-                // html += '</td>';
-
-                // html += '<td>';
-                // html += valpallet;
-                // html += '</td>';
 
                 html += '<td>';
                 html += valdelivery_date;
@@ -344,9 +333,7 @@
             htmlfinal += '<th scope="col">Requested Quantity </th>';
             htmlfinal += '<th scope="col">Quantity Issued</th>';
             htmlfinal += '<th scope="col">Unit of Measure </th>';
-            // htmlfinal += '<th scope="col">Bay</th>';
-            // htmlfinal += '<th scope="col">Bin</th>';
-            // htmlfinal += '<th scope="col">Type</th>';
+            htmlfinal += '<th scope="col">Room</th>';
             htmlfinal += '<th scope="col">Location</th>';
             htmlfinal += '<th scope="col">Delivery Date</th>';
             htmlfinal += '<th scope="col">Delivery Code</th>';
@@ -758,10 +745,6 @@
                                     <td><b id="houseware"></b></td>
                                 </tr>
     
-                                <tr>
-                                    <td>Room:</td>
-                                    <td><b id="moor"></b></td>
-                                </tr>
                             </thead>
                         </table>
                             

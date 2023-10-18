@@ -182,7 +182,7 @@
         function clearModalContent() {
             document.getElementById("dateRec").innerHTML = "";
             document.getElementById("houseware").innerHTML = "";
-            document.getElementById("moor").innerHTML = "";
+            // document.getElementById("moor").innerHTML = "";
 
             // Clear the table inside the modal
             var modalTable = document.getElementById("purchases_tbl_modal");
@@ -208,6 +208,7 @@
             var level = document.getElementsByName("level");
             var adjust_qty = document.getElementsByName("adjust_qty");
             var level2 = document.getElementsByName("level2");
+            var Rooms = document.getElementsByName("Rooms");
 
             var nodeVal = '';
             var productName = '';
@@ -228,6 +229,7 @@
                 vallevel = level[x].value;
                 valadjust_qty = adjust_qty[x].value;
                 vallevel2 = level2[x].value;
+                valRooms = Rooms[x].value;
 
                 html += '<tr>';
                 html += '<td>';
@@ -271,6 +273,12 @@
                 html += valprod_unit;
                 html += '</td>';
 
+
+                html += '<td>';
+                html += valRooms;
+                html += '</td>';
+                
+
                 html += '<td>';
                 html += vallevel2;
                 html += '</td>';
@@ -296,7 +304,8 @@
             htmlfinal += '<th scope="col">In Stock </th>';
             htmlfinal += '<th scope="col">Type</th>';
             htmlfinal += '<th scope="col">Unit of Measure</th>';
-            htmlfinal += '<th scope="col">Bin</th>';
+            htmlfinal += '<th scope="col">Room</th>';
+            htmlfinal += '<th scope="col">Location</th>';
             htmlfinal += '<th scope="col">Stock - After Adjust</th>';
             htmlfinal += '</tr>';
             htmlfinal += '</thead>';
@@ -744,10 +753,10 @@
                                         <td><b id="houseware"></b></td>
                                     </tr>
         
-                                    <tr>
+                                    <!-- <tr>
                                         <td>Room:</td>
                                         <td><b id="moor"></b></td>
-                                    </tr>
+                                    </tr> -->
                                 </thead>
                             </table>
                             

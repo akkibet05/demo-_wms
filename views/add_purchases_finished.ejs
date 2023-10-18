@@ -134,30 +134,7 @@
             warehouse_name.style.borderColor = "";
         }
 
-        // if(Room_name.value.length == 0){
-        //     strTemp += "Room  is required. <br>"
-        //     Room_name.style.borderColor = "red";
-        //     Room_name.focus()
-        // }else{
-        //     Room_name.style.borderColor = "";
-        // }
-
-    
-        // var product_date = document.getElementsByName("product_date");
-
-        // for (let index = 0; index < product_date.length; index++) {
-        //     const inputElement  = product_date[index];
-
-        //     if(inputElement.value.length == 0){
-        //         modal.style.display = "none";
-        //         strTemp += "Production date  is required. <br>"
-        //         inputElement.style.borderColor = "red";
-        //         inputElement.focus()
-        //     }else{
-        //         inputElement.style.borderColor = "";
-        //     }
-            
-        // }
+     
 
 
         var prod_qty = document.getElementsByName("prod_qty");
@@ -177,38 +154,6 @@
         }
 
 
-        // var expiry_date = document.getElementsByName("expiry_date");
-
-        // for (let index = 0; index < expiry_date.length; index++) {
-        //     const inputElement  = expiry_date[index];
-
-        //     if(inputElement.value.length == 0){
-        //         modal.style.display = "none";
-        //         strTemp += "Expiry date  is required. <br>"
-        //         inputElement.style.borderColor = "red";
-        //         inputElement.focus()
-        //     }else{
-        //         inputElement.style.borderColor = "";
-        //     }
-            
-        // }
-
-
-        // var batch_code = document.getElementsByName("batch_code");
-
-        // for (let index = 0; index < batch_code.length; index++) {
-        //     const inputElement  = batch_code[index];
-
-        //     if(inputElement.value.length == 0){
-        //         modal.style.display = "none";
-        //         strTemp += "Batch Code is required. <br>"
-        //         inputElement.style.borderColor = "red";
-        //         inputElement.focus()
-        //     }else{
-        //         inputElement.style.borderColor = "";
-        //     }
-            
-        // }
 
         var table = document.getElementById("purchases_tbl_new");
         var noofrow = table.rows.length -1;
@@ -232,22 +177,7 @@
         }
 
         
-        // Swal.fire({
-        //         icon: 'warning',
-        //         title: 'Are you sure want to finalize?',
-        //         text: 'Warning: After finalizing the data, it becomes locked and unmodifiable. ',
-        //         showDenyButton: true,
-        //         showCancelButton: false,
-        //         confirmButtonText: 'Save',
-        //         denyButtonText: `Don't save`,
-        //     }).then((result) => {
-           
-        //     if (result.isConfirmed) {
-        //         document.getElementById("form").submit();
-        //     } else if (result.isDenied) {
-        //         Swal.fire('Changes are not saved', '', 'info')
-        //     }
-        //     })
+    
 
         document.getElementById("form").submit();
     }
@@ -258,7 +188,7 @@
     document.getElementById("supplier").innerHTML = "";
     document.getElementById("dateRec").innerHTML = "";
     document.getElementById("houseware").innerHTML = "";
-    document.getElementById("moor").innerHTML = "";
+
 
     // Clear the table inside the modal
     var modalTable = document.getElementById("purchases_tbl_modal");
@@ -281,6 +211,7 @@
         var expiry_date = document.getElementsByName("expiry_date");
         var prod_level = document.getElementsByName("prod_level");
         var Conver = document.getElementsByName("test");
+        var type = document.getElementsByName("RoomAssign");
 
         var nodeVal = '';
         var productName = '';
@@ -301,6 +232,7 @@
             valproduct_date = product_date[x].value;
             valexpiry_date = expiry_date[x].value;
             valConver = Conver[x].value;
+            valtype = type[x].value;
 
             const selectedIndex = prod_level[x].selectedIndex;
             const selectedValue = prod_level[x].value;
@@ -340,6 +272,10 @@
             html += '</td>';
 
             html += '<td>';
+            html += valtype;
+            html += '</td>';
+
+            html += '<td>';
             html += valprod_level;
             html += '</td>';
 
@@ -357,7 +293,8 @@
         htmlfinal += '<th scope="col">Quantity </th>';
         htmlfinal += '<th scope="col">Unit of Measure </th>';
         htmlfinal += '<th scope="col">Conversion</th>';
-        htmlfinal += '<th scope="col">Bin </th>';
+        htmlfinal += '<th scope="col">Room </th>';
+        htmlfinal += '<th scope="col">Location </th>';
         htmlfinal += '</tr>';
         htmlfinal += '</thead>';
         htmlfinal += '<tbody id="tblPage_new_modal">';
@@ -384,18 +321,12 @@
         var modalContent = document.getElementById("purchases_tbl_modal");
         modalContent.innerHTML = "";
 
-        // document.getElementById("SRNC").innerHTML =  "&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp"+document.getElementById("SCRN").value;
-        // document.getElementById("PONumber").innerHTML = "&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp"+ document.getElementById("PO_number").value;
-        // document.getElementById("supplier").innerHTML = "&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp"+document.getElementById("suppliers").value;
-        // document.getElementById("dateRec").innerHTML = "&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp"+document.getElementById("date").value;
-        // document.getElementById("houseware").innerHTML = "&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp"+document.getElementById("warehouse_name").value;
-        // document.getElementById("moor").innerHTML = "&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp"+document.getElementById("Room_name").value;
+
         document.getElementById("SRNC").innerHTML = document.getElementById("SCRN").value;
         document.getElementById("PONumber").innerHTML =  document.getElementById("PO_number").value;
         document.getElementById("supplier").innerHTML = document.getElementById("suppliers").value;
         document.getElementById("dateRec").innerHTML =  document.getElementById("date").value;
         document.getElementById("houseware").innerHTML =  document.getElementById("warehouse_name").value;
-        // document.getElementById("moor").innerHTML =  document.getElementById("Room_name").value;
         document.getElementById("Inv").innerHTML = document.getElementById("invoice").value;
 
 
@@ -835,27 +766,6 @@
                           </div>
                           <div class="modal-body">
 
-                            <!-- <div>
-                                <span style="color:black;">Document Number: <b><%= invoice %></b></span>
-                            </div>
-                            <div>
-                                <span style="color:black;">Supplier/Client Ref Number: <b id="SRNC"></b></span>
-                            </div>
-                            <div>
-                                <span style="color:black;">PO number: <b id="PONumber"></b></span>
-                            </div>
-                            <div>
-                                <span style="color:black;">Supplier: <b id="supplier"></b></span>
-                            </div>
-                            <div>
-                                <span style="color:black;">Date received: <b id="dateRec"></b></span>
-                            </div>
-                            <div>
-                                <span style="color:black;">Warehouse: <b id="houseware"></b></span>
-                            </div>
-                            <div>
-                                <span style="color:black;">Room: <b id="moor"></b></span>
-                            </div> -->
                             
 
                             <table style="width:50%" >
@@ -890,10 +800,6 @@
                                         <td><b id="houseware"></b></td>
                                     </tr>
 
-                                    <tr>
-                                        <td>Room:</td>
-                                        <td><b id="moor"></b></td>
-                                    </tr>
                                 </thead>
                             </table>
                             

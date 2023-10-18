@@ -208,7 +208,7 @@
         document.getElementById("customers").innerHTML = "";
         document.getElementById("dateRec").innerHTML = "";
         document.getElementById("houseware").innerHTML = "";
-        document.getElementById("moor").innerHTML = "";
+       
 
         // Clear the table inside the modal
         var modalTable = document.getElementById("purchases_tbl_modal");
@@ -231,6 +231,7 @@
             var expiry_date = document.getElementsByName("expiry_date");
             var prod_level = document.getElementsByName("level2");
             var test = document.getElementsByName("test");
+            var RoomAssigned = document.getElementsByName("RoomAssigned");
             
             var nodeVal = '';
             var productName = '';
@@ -246,11 +247,10 @@
                 valbatch_code = batch_code[x].value;
                 valproduct_date = product_date[x].value;
                 valexpiry_date = expiry_date[x].value;
-                // const selectedIndex = prod_level[x].selectedIndex;
-                // const selectedValue = prod_level[x].value;
-                // valprod_level = prod_level[x].options[selectedIndex].text;
                 valprod_level = prod_level[x].value;
                 valConver = test[x].value;
+                valRoomAssigned = RoomAssigned[x].value;
+
                 html += '<tr>';
                 html += '<td>';
                 html += '<p>' + nodeVal + '</p>';
@@ -289,6 +289,10 @@
                 html += '</td>';
 
                 html += '<td>';
+                html += valRoomAssigned;
+                html += '</td>';
+
+                html += '<td>';
                 html += valprod_level;
                 html += '</td>';
 
@@ -307,7 +311,8 @@
             htmlfinal += '<th scope="col">Unit of Measure </th>';
             htmlfinal += '<th scope="col">Conversion </th>';
             htmlfinal += '<th scope="col">In Stock </th>';
-            htmlfinal += '<th scope="col">Bin </th>';
+            htmlfinal += '<th scope="col">Room</th>';
+            htmlfinal += '<th scope="col">Location </th>';
             htmlfinal += '</tr>';
             htmlfinal += '</thead>';
             htmlfinal += '<tbody id="tblPage_new_modal">';
@@ -812,10 +817,7 @@
                                 <td><b id="houseware"></b></td>
                             </tr>
 
-                            <tr>
-                                <td>Room:</td>
-                                <td><b id="moor"></b></td>
-                            </tr>
+                       
                         </thead>
                     </table>
                             
