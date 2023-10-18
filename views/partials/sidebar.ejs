@@ -463,7 +463,7 @@
                         <span class="nav-text ">Edit Transaction</span>
                     </a>
                 </li> -->
-
+                <% if(role.email == "admin@admin.com" || role.email == "allen.sederio@jakagroup.com"){%>
                 <li class="has-menu">
                     <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
                         <!-- <i class="menu-icon la la-money-check-alt"></i> -->
@@ -498,6 +498,8 @@
                         </li>
                     </ul>
                 </li>
+
+                <% } %>
 
             <% } %>
 

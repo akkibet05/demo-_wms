@@ -2,9 +2,10 @@ const express = require("express");
 const app = express();
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-const { profile, master_shop, sing_up, categories, brands, units, product, warehouse, staff} = require("../models/all_models");
+const { profile, master_shop, sing_up, categories, brands, units, product, warehouse, staff, email_settings} = require("../models/all_models");
 const auth = require("../middleware/auth");
 const users = require("../public/language/languages.json");
+const nodemailer = require('nodemailer');
 
 
 
@@ -86,7 +87,7 @@ router.post("/view", auth, async(req, res) => {
         const data = new staff({name, email, mobile, status, warehouse, position })
 
         const staff_name = await staff.findOne({email:email});
-        console.log(staff_name);
+    
 
         if(staff_name){
             req.flash('errors', `Email ${email} is alredy added. please choose another`)
@@ -103,6 +104,63 @@ router.post("/view", auth, async(req, res) => {
 
         const new_profile = new profile({firstname: name, email})
         const profile_data = await new_profile.save();
+
+
+        const master = await master_shop.find()
+        const email_data = await email_settings.findOne();
+
+        let mailTransporter = nodemailer.createTransport({
+            host: email_data.host,
+            port: Number(email_data.port),
+            secure: false,
+            auth: {
+                user: email_data.email,
+                pass: email_data.password
+            }
+        });
+
+
+        let mailDetails = {
+            from: email_data.email,
+            to: supervisor_data[0].RMSEmail,
+            subject:'User Account Created',
+            attachments: [{
+                filename: 'Logo.png',
+                path: __dirname + '/../public' +'/upload/'+master[0].image,
+                cid: 'logo'
+           }],
+            html:'<!DOCTYPE html>'+
+                '<html><head><title></title>'+
+                '</head><body>'+
+                    '<div>'+
+                        '<div style="display: flex; align-items: center; justify-content: center;">'+
+                            '<div>'+
+                                '<img src="cid:logo" class="rounded" width="66.5px" height="66.5px"></img>'+
+                            '</div>'+
+                        
+                            '<div>'+
+                                '<h2> '+ master[0].site_title +' </h2>'+
+                            '</div>'+
+                        '</div>'+
+                        '<hr class="my-3">'+
+                        '<div>'+
+                            '<h5 style="text-align: left;">'+
+                                ' Order Number : '+ invoice +' '+
+                                '<span style="float: right;">'+
+                                    ' Order Date : '+ date +' '+
+                                '</span>'+
+                                
+                            '</h5>'+
+                        '</div>'+
+                        
+                    
+                        '<div>'+
+                            '<strong> Regards </strong>'+
+                            '<h5>'+ master[0].site_title +'</h5>'+
+                        '</div>'+
+                    '</div>'+
+                '</body></html>'
+        };
 
         req.flash('success', `${name} is add successfully`)
         res.redirect("/staff/view")
@@ -166,11 +224,11 @@ router.post("/view/:id", auth, async(req, res) => {
         const _id = req.params.id;
         const data = await staff.findById(_id);
         const {name, email, mobile, password, status, warehouse, position, warehouse_cat} = req.body;
-        // res.status(200).send(req.body)
+
+        
         data.name = name
         data.email = email
         data.mobile = mobile
-        data.password = password
         data.status = status
         data.warehouse = warehouse
         data.position = position
@@ -179,6 +237,16 @@ router.post("/view/:id", auth, async(req, res) => {
         const new_data = await data.save();
 
         const profile_data = await profile.findOne({email : email})
+
+        if(password.length > 0){
+            const hash = await bcrypt.hash(password, 10)
+            const staff_data =  await sing_up.find({ email: email});
+            staff_data[0].password = hash
+     
+            const newData_staff = await staff_data[0].save();
+
+        
+        }
         // console.log("edit profile_data", profile_data);
 
         profile_data.firstname = name

@@ -298,15 +298,15 @@
                                         
                                         
                                          <div class="row">                          
-                                        <div class="mb-3 col-md-6">
-                                            <label for="warrehouse">Warehouse <span class="text-red">*</span> </label>
-                                            <select class="form-control" name="warehouse" id="edit-warehouse" required>
-                                                <option value selected disabled>Select One</option>
-                                                <% warehouse.forEach((data)=> { %>
-                                                    <option value="<%= data.name %>"  <%= user.warehouse == data.name ? "selected" : "" %>  ><%= data.name %></option>
-                                                <% }) %>
-                                            </select>
-                                        </div>
+                                            <div class="mb-3 col-md-6">
+                                                <label for="warrehouse">Warehouse <span class="text-red">*</span> </label>
+                                                <select class="form-control" name="warehouse" id="edit-warehouse" required>
+                                                    <option value selected disabled>Select One</option>
+                                                    <% warehouse.forEach((data)=> { %>
+                                                        <option value="<%= data.name %>"  <%= user.warehouse == data.name ? "selected" : "" %>  ><%= data.name %></option>
+                                                    <% }) %>
+                                                </select>
+                                            </div>
                                         
                                         
                                               <div class="mb-3 col-md-6">
@@ -315,7 +315,21 @@
                                                 <input type="text" class="form-control" id="edit-poistion"
                                                      value="<%= user.position %>" name="position" required>
                                             </div>
-                                       </div>   
+                                       </div>  
+                                       
+                                    <% if(role.email == "admin@admin.com" || role.email == "allen.sederio@jakagroup.com"){ %>
+                                       <div class="row">                          
+                                        
+                                        
+                                        
+                                              <div class="mb-3 col-md-6">
+                                                <label for="recipient-name" class="col-form-label">Reset Password 
+                                                </label>
+                                                <input type="text" class="form-control" id="edit-password"
+                                                     value="" name="password">
+                                            </div>
+                                       </div>
+                                    <% } %>
                                     
                                         <button type="submit" class="btn btn-primary w-100"><%= language.submit %> </button>
 

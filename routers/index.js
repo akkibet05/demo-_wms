@@ -11,14 +11,14 @@ router.get("/index", auth, async(req, res) => {
         
         const {username, email, role} = req.user
         const role_data = req.user
-        // console.log("role_data" , role_data);
+   
 
         const profile_data = await profile.findOne({email : role_data.email})
-        // console.log("profile_data" , profile_data);
+        
 
 
         const master = await master_shop.find()
-        // console.log("master" , master);
+        
 
         
         const sale_data = await sales_finished.aggregate([
@@ -43,7 +43,6 @@ router.get("/index", auth, async(req, res) => {
         ])
         
            
-        // console.log("11111", sale_data);
 
         const sales_return_data = await sales_return_finished.aggregate([
             {
@@ -66,7 +65,7 @@ router.get("/index", auth, async(req, res) => {
             }
           }
         ])
-// res.status(200).send(sales_return_data_QTY)
+
         const purchases_data = await purchases_finished.aggregate([
             {
                 $group: {
@@ -158,7 +157,7 @@ router.get("/index", auth, async(req, res) => {
             }
             
         ])
-// res.status(200).json(transfer_table_data)
+
         const categories_data = await categories.find()
 
         const product_data = await product.find()
@@ -166,11 +165,11 @@ router.get("/index", auth, async(req, res) => {
         const suppliers_data = await suppliers.find()
         
         const customer_data = await customer.find()
-        console.log(customer_data.length);
+      
 
         if (master[0].language == "English (US)") {
             var lan_data = users.English
-            console.log(lan_data);
+            
         } else if(master[0].language == "Hindi") {
             var lan_data = users.Hindi
 
