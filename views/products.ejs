@@ -393,6 +393,17 @@
                         dataItems += '</a>';
                         dataItems += '</td>';
 
+
+                        dataItems += '<td>';
+                        dataItems += '<a href="/products/barcode/'+id+'" id="barcode" data-id="'+id+'"';
+                        dataItems += 'class="btn btn-warning btn-sm">';
+                        dataItems += '<i class="feather icon-printer"></i>';
+                        dataItems += '</a>';
+                        dataItems += '</td>';
+
+
+                        
+
                         dataItems += '</tr>';
 
                         document.getElementById("tBodyRs").innerHTML = dataItems;
