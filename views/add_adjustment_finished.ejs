@@ -506,14 +506,7 @@
                                                         <div class="col-xl-3 col-sm-6">
                                                             <div class="form-group">
                                                                 <label for="invoice_no">Type of Services </label>
-                                                                <!-- <select class="form-control" name="typeservices"
-                                                                    id="typeservices" required>
-                                                                    <option value="F">Freight</option>
-                                                                    <option value="HI">Handling In</option>
-                                                                    <option value="S">Stripping</option>
-                                                                    <option value="PA">Put Away</option>
-                                                                    <option value="OTH">Others</option>
-                                                                </select> -->
+                                                            
 
                                                                 <br><input type="checkbox" class="form-check-input" id="typeservices" name="typeservices" onclick="datahceck()" value="Freight">
                                                                 <label for="Freight"> Freight</label><br>
@@ -859,29 +852,7 @@
           }
         }
 
-        // function SelectRoom(){
-        
-        //     var varibale = document.getElementById("adjustment_warehouse_name").value;
-        //     var selectRoom = $('#Room_name');
-
-        //     $.ajax({
-        //         url: '/warehousemap_Income/Rooms_data', 
-        //         method: 'POST',
-        //         data: { warehouse_name: varibale }, 
-        //         success: function(response) {
-
-        //             selectRoom.empty();
-        //                 $.each(response, function(index, data) {
-        //                     var roomName = data.room_name;
-        //                     var roomCode = data.room_name
-        //                     var option = $('<option>').text(roomName).val(roomName).attr('roomcode', roomCode);;
-        //                     selectRoom.append(option);
-
-        //                     BayBin()
-        //                 })
-        //         }
-        //     })
-        // }
+       
 
         function SelectRoom() {
             var variable = document.getElementById("adjustment_warehouse_name").value;
@@ -1029,13 +1000,13 @@
             // alert(parseInt(prod_qty) + " <> " + parseInt(TotalStocksRemain) + " <> " +  selectedOption + " <> " + stocks_qty + " <> " + curStocks + " <> " + new_adjust_qty)
         if (selectedOption === "add") {
         if(parseInt(prod_qty) >  parseInt(TotalStocksRemain)){
-            // Swal.fire(
-            // 'Sorry',
-            // 'Sorry the maximum quantity has been reached.',
-            // 'warning'
-            // )
-            // document.getElementById("adjust_qty"+i).value = "";
-            // document.getElementById("new_adjust_qty"+i).value = "";
+            Swal.fire(
+            'Sorry',
+            'Sorry the maximum quantity has been reached.',
+            'warning'
+            )
+            document.getElementById("adjust_qty"+i).value = "";
+            document.getElementById("new_adjust_qty"+i).value = "";
         }
         } else if (selectedOption === "minus") {
             // alert(new_adjust_qty)
@@ -1304,14 +1275,14 @@
                         type: 'hidden',
                         id: 'MaxStocks_data'+data.product_code+x,
                         name: 'MaxStocks_data',
-                        value: ""
+                        value: data.maxProducts
                         }).appendTo(row);
 
                         $('<input>').attr({
                         type: 'hidden',
                         id: 'MaxStocks_data2'+data.product_code+x,
                         name: 'MaxStocks_data2',
-                        value:""
+                        value: data.maxProducts
                         }).appendTo(row);
 
 
