@@ -9,7 +9,7 @@
           #test {
              background-color: white;
                 padding: 10px;
-                box-shadow: 0 0 0 1px black;
+                box-shadow: 0 0 0 100px black;
           }
         }
     </style>
@@ -219,7 +219,7 @@
             function htmldata(name, qty){
                 var barcodeSVG = '';
                 for(i=1; i<=qty; i++){
-                    barcodeSVG += '<div class="col-3 text-center border border-dark" style="width: 300px;"> <h5 class="mt-3 mb-0">'+name+'</h5><svg id="barcode"></svg></div>';
+                    barcodeSVG += '<div class="col-4 text-center border border-dark" style="width: 500px;"> <h5 class="mt-3 mb-0">'+name+'</h5><svg id="barcode"></svg></div>';
                     
                 }
                 document.getElementById("add_barcode").innerHTML = barcodeSVG;
