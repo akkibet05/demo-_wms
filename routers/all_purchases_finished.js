@@ -351,14 +351,40 @@ router.get("/view/add_purchases/:id", auth, async (req, res) => {
     }
 })
 
+
+async function InvoiceChecking(){
+    const purchases_data = await new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve(purchases_finished.find({}));
+        }, 1000); // Simulating a delay of 1 second
+    });
+
+    
+
+    const invoice_noint = purchases_data.length + 1
+    
+    const invoice_no = "INC-" + invoice_noint.toString().padStart(5, "0")
+    const dataChecking = await purchases_finished.find({ invoice: invoice_no });
+
+
+    var dataInvoice;
+    if(dataChecking.length == 0){
+        return invoice_no;
+    }else{
+        return InvoiceChecking();
+    }
+
+}
+
+
+
     
 router.post("/view/add_purchases", auth, async (req, res) => {
     try {
-        // console.log(req.body, "done");
+
         const { invoice, date, warehouse_name, prod_name, prod_code, prod_qty, prod_unit, prod_secondunit, prod_level, prod_isle, prod_pallet, note, expiry_date, batch_code,payable, due_amount, Room_name, primary_code, secondary_code, MaxStocks_data, PO_number, SCRN, JO_number, ReqBy, dateofreq,typeservicesData,  driver, plate, van, DRSI, typevehicle, TSU, TFU } = req.body
         
-    //    res.json(req.body)
-    //    return
+
         
         if(typeof prod_name == "string"){
             var product_name_array = [req.body.prod_name]
@@ -483,95 +509,65 @@ router.post("/view/add_purchases", auth, async (req, res) => {
 
         const Newnewproduct = newproduct.filter(obj => obj.quantity !== "0" && obj.quantity !== "");
 
+        const INV = InvoiceChecking();
+     
+        INV.then( async (result) => {
 
-        // Newnewproduct.map((dataChecking) => {
-        //     console.log(dataChecking)
-        // })
-        // res.json(Newnewproduct);
-        // return
-       
-        const data = new purchases_finished({ invoice, suppliers:req.body.suppliers, date, warehouse_name, product:Newnewproduct, note, due_amount, room: Room_name, POnumber: PO_number, SCRN, JO_number, RequestedBy: ReqBy, DateofRequest: dateofreq, typeservices: typeservicesData, driver, plate, van, DRSI, typevehicle:typevehicle, TSU, TFU })
-        const purchases_data = await data.save()
+            const data = new purchases_finished({ invoice : result, suppliers:req.body.suppliers, date, warehouse_name, product:Newnewproduct, note, due_amount, room: Room_name, POnumber: PO_number, SCRN, JO_number, RequestedBy: ReqBy, DateofRequest: dateofreq, typeservices: typeservicesData, driver, plate, van, DRSI, typevehicle:typevehicle, TSU, TFU })
+            const purchases_data = await data.save()
   
 
-        const new_purchase = await purchases_finished.findOne({ invoice: invoice });
+            const new_purchase = await purchases_finished.findOne({ invoice: result });
 
-        
-        // --------- warehouse ------- //
-        
-        
-        
-        // res.status(200).json(new_purchase)
-        // return;
-        const promises = new_purchase.product.map( async (product_details) => {
-            var warehouse_data = await warehouse.findOne({ name: warehouse_name, room: product_details.room_name });
-            var x = 0;
-            const match_data = warehouse_data.product_details.map((data) => {
-                if (data.product_name == product_details.product_name  && data.level == product_details.level && data.isle == product_details.isle && data.pallet == product_details.pallet && data.expiry_date == product_details.expiry_date && data.production_date == product_details.production_date && data.batch_code == product_details.batch_code && data.product_cat == product_details.product_cat) {
-                    data.product_stock = data.product_stock + product_details.quantity
-                    x++
-                }
-
-            })
-
-            if (x == "0") {
-                warehouse_data.product_details = warehouse_data.product_details.concat({ 
-                    product_name: product_details.product_name, 
-                    product_stock: product_details.quantity, 
-                    primary_code: product_details.primary_code, 
-                    secondary_code: product_details.secondary_code, 
-                    product_code: product_details.product_code,
-                    level: product_details.level, 
-                    isle: product_details.isle, 
-                    pallet: product_details.pallet,  
-                    maxProducts: product_details.maxStocks, 
-                    unit: product_details.standard_unit, 
-                    secondary_unit: product_details.secondary_unit, 
-                    expiry_date: product_details.expiry_date,
-                    production_date: product_details.production_date ,
-                    maxProducts: product_details.maxStocks,
-                    maxPerUnit: product_details.maxperunit,
-                    batch_code: product_details.batch_code,
-                    product_cat: product_details.product_cat,
-                    CBM: product_details.CBM
+       
+            const promises = new_purchase.product.map( async (product_details) => {
+                var warehouse_data = await warehouse.findOne({ name: warehouse_name, room: product_details.room_name });
+                var x = 0;
+                const match_data = warehouse_data.product_details.map((data) => {
+                    if (data.product_name == product_details.product_name  && data.level == product_details.level && data.isle == product_details.isle && data.pallet == product_details.pallet && data.expiry_date == product_details.expiry_date && data.production_date == product_details.production_date && data.batch_code == product_details.batch_code && data.product_cat == product_details.product_cat) {
+                        data.product_stock = data.product_stock + product_details.quantity
+                        x++
+                    }
+    
                 })
-            }
-            return warehouse_data;
-        })
-
-        // res.status(200).json(warehouse_data)
-        // return;
-        // await warehouse_data.save()
-
-
-        Promise.all(promises)
+    
+                if (x == "0") {
+                    warehouse_data.product_details = warehouse_data.product_details.concat({ 
+                        product_name: product_details.product_name, 
+                        product_stock: product_details.quantity, 
+                        primary_code: product_details.primary_code, 
+                        secondary_code: product_details.secondary_code, 
+                        product_code: product_details.product_code,
+                        level: product_details.level, 
+                        isle: product_details.isle, 
+                        pallet: product_details.pallet,  
+                        maxProducts: product_details.maxStocks, 
+                        unit: product_details.standard_unit, 
+                        secondary_unit: product_details.secondary_unit, 
+                        expiry_date: product_details.expiry_date,
+                        production_date: product_details.production_date ,
+                        maxProducts: product_details.maxStocks,
+                        maxPerUnit: product_details.maxperunit,
+                        batch_code: product_details.batch_code,
+                        product_cat: product_details.product_cat,
+                        CBM: product_details.CBM
+                    })
+                }
+                return warehouse_data;
+            })
+            Promise.all(promises)
             .then(async (updatedWarehouseDataArray) => {
-                // Now you have the updated warehouse data for each product in updatedWarehouseDataArray.
-                // You should save each warehouse_data separately in this block.
+            
                 try {
-                    // for (const warehouseData of updatedWarehouseDataArray) {
-                    //     await warehouseData.save();
-                    // }
-
-
                     for (const warehouseData of updatedWarehouseDataArray) {
                         await warehouse.updateOne({ _id: warehouseData._id }, {
                                 $addToSet: {
                                     product_details: { $each: warehouseData.product_details }
                                 }
                           });
-                        // res.json(warehouseData._id)
+                       
                     }
 
-                    
-
-                    // updatedWarehouseDataArray.map(async (warehouse) => {
-                    //     res.json(warehouse.product_details)
-                    //     // await warehouse.save();
-                    // });
-
-                    
-                    
                 } catch (error) {
                     console.error(error);
                     res.status(500).json({ error: 'An error occurred while saving data.', message: error.message });
@@ -583,141 +579,132 @@ router.post("/view/add_purchases", auth, async (req, res) => {
                 res.status(500).json({ error: 'An error occurred.' });
             });
 
-        // --------- warehouse end ------- //
 
+            const master = await master_shop.find()
+            const email_data = await email_settings.findOne()
+            const suppliers_data = await suppliers.findOne({name : req.body.suppliers})
+            const supervisor_data = await supervisor_settings.find();
 
-        // ------------- email ------------- //
-    
-        const master = await master_shop.find()
-        const email_data = await email_settings.findOne()
-        const suppliers_data = await suppliers.findOne({name : req.body.suppliers})
-        const supervisor_data = await supervisor_settings.find();
-
-        if (master[0].currency_placement == 1) {
-            right_currency = master[0].currency
-            left_currency = ""
-        } else {
-            right_currency = ""
-            left_currency = master[0].currency
-        }
-
-        var product_list = product_name_array
-        var quantity_list = quantity_array
-        var proudct_code_list = proudct_code_array
-        var prod_unit_list = prod_unit_array
-        var prod_secondunit_list = prod_secondunit_array
-        var prod_level_list = prod_level_array
-        var level_array_list = level_array
-        
-        
-
-        var arrayItems = "";
-        var n;
-
-        for (n in product_list) {
-            arrayItems +=  '<tr>'+
-                                '<td style="border: 1px solid black;">' + product_list[n] + '</td>' + 
-                                '<td style="border: 1px solid black;">' + proudct_code_list[n] + '</td>' +
-                                '<td style="border: 1px solid black;">' + quantity_list[n] + '</td>' +
-                                '<td style="border: 1px solid black;">' + prod_unit_list[n] + '</td>' +
-                                '<td style="border: 1px solid black;">' + prod_secondunit_list[n] + '</td>' +
-                                '<td style="border: 1px solid black;">' + level_array_list[n] + '</td>' +
-                                '<td style="border: 1px solid black;">' + prod_level_list[n] + '</td>' +
-                            '</tr>'
-        }
-        
-        console.log("product_list", arrayItems);
-        // res.json(email_data);
-        // return;
-
-        let mailTransporter = nodemailer.createTransport({
-            host: email_data.host,
-            port: Number(email_data.port),
-            secure: false,
-            auth: {
-                user: email_data.email,
-                pass: email_data.password
+            if (master[0].currency_placement == 1) {
+                right_currency = master[0].currency
+                left_currency = ""
+            } else {
+                right_currency = ""
+                left_currency = master[0].currency
             }
-        });
 
-        let mailDetails = {
-            from: email_data.email,
-            to: supervisor_data[0].RMSEmail,
-            subject:'Purchase Mail',
-            attachments: [{
-                filename: 'Logo.png',
-                path: __dirname + '/../public' +'/upload/'+master[0].image,
-                cid: 'logo'
-           }],
-            html:'<!DOCTYPE html>'+
-                '<html><head><title></title>'+
-                '</head><body>'+
-                    '<div>'+
-                        '<div style="display: flex; align-items: center; justify-content: center;">'+
-                            '<div>'+
-                                '<img src="cid:logo" class="rounded" width="66.5px" height="66.5px"></img>'+
+            var product_list = product_name_array
+            var quantity_list = quantity_array
+            var proudct_code_list = proudct_code_array
+            var prod_unit_list = prod_unit_array
+            var prod_secondunit_list = prod_secondunit_array
+            var prod_level_list = prod_level_array
+            var level_array_list = level_array
+            
+            
+
+            var arrayItems = "";
+            var n;
+
+            for (n in product_list) {
+                arrayItems +=  '<tr>'+
+                                    '<td style="border: 1px solid black;">' + product_list[n] + '</td>' + 
+                                    '<td style="border: 1px solid black;">' + proudct_code_list[n] + '</td>' +
+                                    '<td style="border: 1px solid black;">' + quantity_list[n] + '</td>' +
+                                    '<td style="border: 1px solid black;">' + prod_unit_list[n] + '</td>' +
+                                    '<td style="border: 1px solid black;">' + prod_secondunit_list[n] + '</td>' +
+                                    '<td style="border: 1px solid black;">' + level_array_list[n] + '</td>' +
+                                    '<td style="border: 1px solid black;">' + prod_level_list[n] + '</td>' +
+                                '</tr>'
+            }
+            
+        
+            let mailTransporter = nodemailer.createTransport({
+                host: email_data.host,
+                port: Number(email_data.port),
+                secure: false,
+                auth: {
+                    user: email_data.email,
+                    pass: email_data.password
+                }
+            });
+
+            let mailDetails = {
+                from: email_data.email,
+                to: supervisor_data[0].RMSEmail,
+                subject:'Purchase Mail',
+                attachments: [{
+                    filename: 'Logo.png',
+                    path: __dirname + '/../public' +'/upload/'+master[0].image,
+                    cid: 'logo'
+               }],
+                html:'<!DOCTYPE html>'+
+                    '<html><head><title></title>'+
+                    '</head><body>'+
+                        '<div>'+
+                            '<div style="display: flex; align-items: center; justify-content: center;">'+
+                                '<div>'+
+                                    '<img src="cid:logo" class="rounded" width="66.5px" height="66.5px"></img>'+
+                                '</div>'+
+                            
+                                '<div>'+
+                                    '<h2> '+ master[0].site_title +' </h2>'+
+                                '</div>'+
                             '</div>'+
+                            '<hr class="my-3">'+
+                            '<div>'+
+                                '<h5 style="text-align: left;">'+
+                                    ' Order Number : '+ invoice +' '+
+                                    '<span style="float: right;">'+
+                                        ' Order Date : '+ date +' '+
+                                    '</span>'+
+                                    
+                                '</h5>'+
+                            '</div>'+
+                            '<table style="width: 100% !important;">'+
+                                '<thead style="width: 100% !important;">'+
+                                    '<tr>'+
+                                        '<th style="border: 1px solid black;"> Product Name </th>'+
+                                        '<th style="border: 1px solid black;"> Product Code </th>'+
+                                        '<th style="border: 1px solid black;"> Product Quantity </th>'+
+                                        '<th style="border: 1px solid black;"> Unit </th>'+
+                                        '<th style="border: 1px solid black;"> Secondary Unit </th>'+
+                                        '<th style="border: 1px solid black;"> Level </th>'+
+                                        '<th style="border: 1px solid black;"> Location </th>'+
+                                    '</tr>'+
+                                '</thead>'+
+                                '<tbody style="text-align: center;">'+
+                                    ' '+ arrayItems +' '+
+                                '</tbody>'+
+                            '</table>'+
                         
                             '<div>'+
-                                '<h2> '+ master[0].site_title +' </h2>'+
+                                '<strong> Regards </strong>'+
+                                '<h5>'+ master[0].site_title +'</h5>'+
                             '</div>'+
                         '</div>'+
-                        '<hr class="my-3">'+
-                        '<div>'+
-                            '<h5 style="text-align: left;">'+
-                                ' Order Number : '+ invoice +' '+
-                                '<span style="float: right;">'+
-                                    ' Order Date : '+ date +' '+
-                                '</span>'+
-                                
-                            '</h5>'+
-                        '</div>'+
-                        '<table style="width: 100% !important;">'+
-                            '<thead style="width: 100% !important;">'+
-                                '<tr>'+
-                                    '<th style="border: 1px solid black;"> Product Name </th>'+
-                                    '<th style="border: 1px solid black;"> Product Code </th>'+
-                                    '<th style="border: 1px solid black;"> Product Quantity </th>'+
-                                    '<th style="border: 1px solid black;"> Unit </th>'+
-                                    '<th style="border: 1px solid black;"> Secondary Unit </th>'+
-                                    '<th style="border: 1px solid black;"> Level </th>'+
-                                    '<th style="border: 1px solid black;"> Location </th>'+
-                                '</tr>'+
-                            '</thead>'+
-                            '<tbody style="text-align: center;">'+
-                                ' '+ arrayItems +' '+
-                            '</tbody>'+
-                        '</table>'+
-                    
-                        '<div>'+
-                            '<strong> Regards </strong>'+
-                            '<h5>'+ master[0].site_title +'</h5>'+
-                        '</div>'+
-                    '</div>'+
-                '</body></html>'
-        };
-        
-        mailTransporter.sendMail(mailDetails, function(err, data) {
-            if(err) {
-                console.log(err);
-                console.log('Error Occurs');
-            } else {
-                console.log('Email sent successfully');
-            }
-        });
+                    '</body></html>'
+            };
+            
+            mailTransporter.sendMail(mailDetails, function(err, data) {
+                if(err) {
+                    console.log(err);
+                    console.log('Error Occurs');
+                } else {
+                    console.log('Email sent successfully');
+                }
+            });
+
+
+            req.flash('success', `purchase data add successfully`)
+            res.redirect("/all_purchases_finished/view");
+        })
+      
 
         
-        // ------------- email end ------------- //
+        
 
-
-        // -------- supplier payment ------- //
-
-        const s_payment = new s_payment_data({invoice : invoice, suppliers : req.body.suppliers , reason : "Purchase" })
-
-        await s_payment.save()
-        // -------- supplier payment end ------- //
-        req.flash('success', `purchase data add successfully`)
-        res.redirect("/all_purchases_finished/view");
+        
     } catch (error) {
         console.log(error);
     }
