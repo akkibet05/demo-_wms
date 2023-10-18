@@ -1648,7 +1648,7 @@ router.get("/barcode/:id", auth, async (req, res) => {
             master_shop : master,
             language : lan_data
         })
-        console.log(alldata)
+        // console.log(alldata)
     } catch (error) {
         console.log(error);
     }

@@ -179,6 +179,7 @@
                                                         <th><%= language.alert_qty %> </th>
                                                         <th><%= language.units %> </th>
                                                         <th><%= language.edit %> </th>
+                                                        <th>Barcode </th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="tBodyRs">
@@ -209,12 +210,12 @@
                                                                     <%= language.edit %> 
                                                                 </a>
                                                             </td>
-                                                            <!--<td>-->
-                                                            <!--    <a href="/products/barcode/<%= alldata._id %>" id="barcode" data-id="<%= alldata._id %>"-->
-                                                            <!--        class="btn btn-warning btn-sm">-->
-                                                            <!--        <i class="feather icon-printer"></i>-->
-                                                            <!--    </a>-->
-                                                            <!--</td>-->
+                                                            <td>
+                                                               <a href="/products/barcode/<%= alldata._id %>" id="barcode" data-id="<%= alldata._id %>"
+                                                                   class="btn btn-warning btn-sm">
+                                                                   <i class="feather icon-printer"></i>
+                                                               </a>
+                                                            </td>
                                                         </tr>
                                                         <% }) %>
                                                 </tbody>

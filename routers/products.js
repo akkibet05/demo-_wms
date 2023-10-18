@@ -804,11 +804,11 @@ router.get("/barcode/:id", auth, async (req, res) => {
         const profile_data = await profile.findOne({email : role_data.email})
 
         const master = await master_shop.find()
-        console.log("barcode Product master" , master);
+ 
 
         const _id = req.params.id
         const user_id = await product.findById(_id)
-        console.log("barcode user_id", user_id);
+        
 
         if (master[0].language == "English (US)") {
             var lan_data = users.English
@@ -954,7 +954,7 @@ router.post("/products_import_migrate_file", auth, uploadMigrate.single("migrate
           secondary_unit: units_data.secondary_unit,
           product_code: product_code
         });
-        console.log(prduct_data.length + " <> " + categories_data.name + " <> "  + brands_data.name + " <> " +  units_data.secondary_unit + " <> " + product_code + " <> " + ProductName)
+        // console.log(prduct_data.length + " <> " + categories_data.name + " <> "  + brands_data.name + " <> " +  units_data.secondary_unit + " <> " + product_code + " <> " + ProductName)
         if (prduct_data.length === 0) {
           const data5 = new product({
             image: "defaultProduct.avif",

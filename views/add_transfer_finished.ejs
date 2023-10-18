@@ -1166,7 +1166,7 @@
             function ValidationForMaxQTY(i){
                 var prod_qty = document.getElementById("New_Qty_Converted"+i).value;
                 var stocks_qty = document.getElementById("MaxStocks_data"+i).value;
-                // alert(prod_qty + " <> " + stocks_qty)
+                alert(prod_qty + " <> " + stocks_qty + " <> " + i)
                 if(parseInt(prod_qty) >  parseInt(stocks_qty)){
                     Swal.fire(
                     'Sorry',
