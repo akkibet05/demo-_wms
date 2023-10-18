@@ -1000,10 +1000,10 @@
     }
 
 
-    function checkingWarehouse(x, productcode){
+    function checkingWarehouse(x, productcode, rooms){
+       
         var Level = document.getElementById("prod_level"+x).value;
         var warehouse = document.getElementById("warehouse_name").value;
-        // alert(warehouse.length)
         if(warehouse.length <= 0){
             Swal.fire(
             'Sorry',
@@ -1012,30 +1012,33 @@
             )
             document.getElementById("warehouse_name").focus()
         }
-        var rooms = document.getElementById("Room_name").value;
         var productName = document.getElementById("prod_name"+x).value;
         var Quanity = document.getElementById("prod_qty"+x);
         var tempMaxStocks = document.getElementById("MaxStocks_data2"+x).value;
+
+        var resultValueFloorLevel = Level.slice(1);
+
+        // alert(x + " <> " + productcode + " <> " + rooms + " <> " + resultValueFloorLevel + " <> " + warehouse)
         $.ajax({
             url: '/all_purchases_finished/CheckingWarehouse', 
             method: 'POST',
-            data: {  productCode: productcode, bay: Level , warehouses: warehouse, room: rooms  }, 
+            data: {  productCode: productcode, bay: resultValueFloorLevel , warehouses: warehouse, room: rooms  }, 
             success: function(response) {
 
                 if(response.length > 0){
                     $.each(response, function(index, data) {
-                    
-                        if(productName == data.name && Level == data.bay){
+                        
+                        if(productName == data.name && resultValueFloorLevel == data.pallet){
                             var valQty = Quanity.value
                             if(isNaN(valQty)){
                                 valQty = 0
                             }
                             var stocksData = parseInt(data.product_stock) - parseInt(data.maxProducts);
-                            
-                            // alert(parseInt(stocksData) + " <> "  + parseInt(data.product_stock) + " <> "  + parseInt(data.maxProducts) ) 
+                            console.log(data.product_stock + " <> " + data.maxProducts)
+                          
                             document.getElementById("MaxStocks_data"+x).value = Math.abs(parseInt(stocksData));
                             const newVal = document.getElementById("MaxStocks_data"+x).value;
-                            alert(valQty + " <> "  + newVal + " <> " )
+                            
                             if(parseInt(valQty) > parseInt(newVal) ){
                             
                                 if(newVal == 0){
@@ -1602,12 +1605,12 @@
                             row.append($('<td>').html('<input type="text" class="form-control" style="width: 150px;" name="batch_code" value="">'));
                             row.append($('<td>').html('<input type="date" class="form-control" style="width: 150px;" name="product_date" value="" required>'));
                             row.append($('<td>').html('<input type="date" class="form-control" style="width: 150px;" name="expiry_date" id="expiry_date'+lastIncre+'" value="" required>'));
-                            row.append($('<td>').html('<input type="number" class="form-control" style="width: 150px;" name="prod_qty" id="prod_qty'+ lastIncre +'" onchange="ValidationForMaxQTY('+ lastIncre +')" onkeyup="ConversionKit('+lastIncre+', '+data.maxProdPerUnit+')" value="" >'));
+                            row.append($('<td>').html('<input type="number" class="form-control" style="width: 150px;" name="prod_qty" id="prod_qty'+ lastIncre +'" onkeyup="ValidationForMaxQTY('+ lastIncre +'); ConversionKit('+lastIncre+', '+data.maxProdPerUnit+'); checkingWarehouse('+lastIncre+','+ data.product_code +',\''+RoomAssign+'\');"  value="" >'));
                             row.append($('<td>').html('<input type="text" class="form-control" style="width: 150px;" name="prod_unit" id="prod_unit'+lastIncre+'" value="' + data.unit + '" readonly>'));
                             row.append($('<td>').html('<input type="text" class="form-control" style="width: 150px;" name="test" id="Conver'+lastIncre+'" value="" readonly>'));
                             row.append($('<td>').html('<input type="text" class="form-control" style="width: 150px;" name="RoomAssign" id="RoomAssign'+lastIncre+'" value="'+RoomAssign+'" readonly>'));
                             row.append($('<td>').html('<select class="form-control" name="type" level="type' + lastIncre + '" id="type' + lastIncre + '" style="width: 150px;" onchange="BayBin(' + lastIncre + ', \'' + RoomAssign + '\')"></select>'));
-                            row.append($('<td>').html('<select class="form-control" name="prod_level" level="levelOslie'+lastIncre+'" id="prod_level' + lastIncre + '" style="width: 150px;" onchange="checkingWarehouse('+lastIncre+','+ data.product_code +')"></select>'));
+                            row.append($('<td>').html('<select class="form-control" name="prod_level" level="levelOslie'+lastIncre+'" id="prod_level' + lastIncre + '" style="width: 150px;" onchange="checkingWarehouse('+lastIncre+','+ data.product_code +',\''+RoomAssign+'\') "></select>'));
                             row.append($('<td>').html('<button type="button" class="btn btn-square btn-outline-danger" id="remove">Remove</button>'));
                             
 
@@ -1637,14 +1640,14 @@
                                 type: 'hidden',
                                 id: 'MaxStocks_data'+lastIncre,
                                 name: 'MaxStocks_data',
-                                value: data.maxProdPerUnit
+                                value: data.maxStocks
                             }).appendTo(row);
 
                             $('<input>').attr({
                                 type: 'hidden',
                                 id: 'MaxStocks_data2'+lastIncre,
                                 name: 'MaxStocks_data2',
-                                value: ""
+                                value: data.maxStocks
                             }).appendTo(row);
 
 
@@ -1704,7 +1707,7 @@
                             $('#tblPage_new').append(row);
                             TypeList(lastIncre, RoomAssign);
                             BayBin(lastIncre, RoomAssign)
-               
+                            checkingWarehouse(lastIncre, data.product_code, RoomAssign)
                             lastIncre++;
 
                         }else if(data.product_cat == "S"){
@@ -1715,7 +1718,7 @@
                             row.append($('<td>').html('<input type="text" class="form-control" style="width: 150px;" name="batch_code" value="">'));
                             row.append($('<td>').html('<input type="date" class="form-control" style="width: 150px;" name="product_date" value="" required>'));
                             row.append($('<td>').html('<input type="date" class="form-control" style="width: 150px;" name="expiry_date" id="expiry_date'+lastIncre+'" value="" required>'));
-                            row.append($('<td>').html('<input type="number" class="form-control" style="width: 150px;" name="prod_qty" id="prod_qty'+ lastIncre +'" onchange="ValidationForMaxQTY('+ lastIncre +')" onkeyup="ConversionKit('+lastIncre+', '+data.maxProdPerUnit+')" value="" >'));
+                            row.append($('<td>').html('<input type="number" class="form-control" style="width: 150px;" name="prod_qty" id="prod_qty'+ lastIncre +'" onkeyup="ValidationForMaxQTY('+ lastIncre +'); checkingWarehouse('+lastIncre+','+ data.product_code +',\''+RoomAssign+'\');" onkeyup="ConversionKit('+lastIncre+', '+data.maxProdPerUnit+')" value="" >'));
                             row.append($('<td>').html('<input type="text" class="form-control" style="width: 150px;" name="prod_unit" id="prod_unit'+lastIncre+'" value="' + data.secondary_unit + '" readonly>'));
                             row.append($('<td>').html('<input type="text" class="form-control" style="width: 150px;" name="test" id="Conver'+lastIncre+'" value="" readonly>'));
                             row.append($('<td>').html('<input type="text" class="form-control" style="width: 150px;" name="RoomAssign" id="RoomAssign'+lastIncre+'" value="'+RoomAssign+'" readonly>'));
@@ -1750,14 +1753,14 @@
                                 type: 'hidden',
                                 id: 'MaxStocks_data'+lastIncre,
                                 name: 'MaxStocks_data',
-                                value: ""
+                                value: data.maxStocks*data.maxProdPerUnit
                             }).appendTo(row);
 
                             $('<input>').attr({
                                 type: 'hidden',
                                 id: 'MaxStocks_data2'+lastIncre,
                                 name: 'MaxStocks_data2',
-                                value: ""
+                                value: data.maxStocks*data.maxProdPerUnit
                             }).appendTo(row);
 
 
@@ -1817,8 +1820,12 @@
                             $('#tblPage_new').append(row);
                             TypeList(lastIncre, RoomAssign);
                             BayBin(lastIncre, RoomAssign)
+                            checkingWarehouse(lastIncre, data.product_code, RoomAssign)
                             lastIncre++;
                         }
+
+
+                        
                     }
 
                     

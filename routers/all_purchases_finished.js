@@ -482,6 +482,11 @@ router.post("/view/add_purchases", auth, async (req, res) => {
 
 
         const Newnewproduct = newproduct.filter(obj => obj.quantity !== "0" && obj.quantity !== "");
+
+
+        // Newnewproduct.map((dataChecking) => {
+        //     console.log(dataChecking)
+        // })
         // res.json(Newnewproduct);
         // return
        
@@ -1763,7 +1768,7 @@ router.post("/barcode_scanner", async (req, res) => {
 router.post("/CheckingWarehouse", async (req, res) => {
 
     const { productCode, bay, warehouses, room } = req.body
-    console.log(req.body)
+  console.log(req.body)
     try{
         const stock_data = await warehouse.aggregate([
             {
@@ -1778,20 +1783,20 @@ router.post("/CheckingWarehouse", async (req, res) => {
             },
             {
                 $match: {
-                    "product_details.bay" : parseInt(bay),
+                    "product_details.pallet" : parseInt(bay),
                 }
             },
             {
                 $group: {
-                    _id: "$product_details._id",
+                    _id: "$product_details.product_name",
                     name: { $first: "$product_details.product_name"},
-                    product_stock: { $first: "$product_details.product_stock" },
-                    bay: { $first: "$product_details.bay" },
+                    product_stock: { $sum: "$product_details.product_stock" },
+                    pallet: { $first: "$product_details.pallet" },
                     maxProducts: { $first: "$product_details.maxProducts" }
                 }
             },
         ])
-
+        console.log("data", stock_data)
 
         res.status(200).json(stock_data)
     }catch(error){
