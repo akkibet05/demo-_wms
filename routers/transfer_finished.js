@@ -93,7 +93,22 @@ router.get("/view", auth, async(req, res) => {
         console.log(error);
     }
 })
+async function getRandom8DigitNumber() {
+    const min = 10000000;
+    const max = 99999999; 
+    
+    const random = Math.floor(Math.random() * (max - min + 1)) + min;
+    var IDInvoice;
 
+
+    const new_purchase = await transfers_finished.findOne({ invoice: "TRF-"+random });
+    if (new_purchase && new_purchase.length > 0) {
+        IDInvoice = "TRF-"+random;
+    }else{
+        IDInvoice = "TRF-"+random; 
+    }
+    return IDInvoice ;
+}
 
 router.get("/view/add_transfer", auth, async(req, res) => {
     try{
@@ -171,17 +186,22 @@ router.get("/view/add_transfer", auth, async(req, res) => {
         }else if(master[0].language == "Arabic (ae)") {
             var lan_data = users.Arabic
         }
-
-        res.render("add_transfer_finished", {
-            success: req.flash('success'),
-            errors: req.flash('errors'),
-            role : role_data,
-            profile : profile_data,
-            master_shop : master,
-            warehouse: warehouse_data,
-            language : lan_data,
-            rooms_data,
-            invoice: invoice_no
+        const randominv = getRandom8DigitNumber();
+        randominv.then(invoicedata => {
+            res.render("add_transfer_finished", {
+                success: req.flash('success'),
+                errors: req.flash('errors'),
+                role : role_data,
+                profile : profile_data,
+                master_shop : master,
+                warehouse: warehouse_data,
+                language : lan_data,
+                rooms_data,
+                invoice: invoicedata
+            })
+        }).catch(error => {
+            req.flash('errors', `There's a error in this transaction`)
+            res.redirect("/transfer_finished/view");
         })
         
     }catch(error){

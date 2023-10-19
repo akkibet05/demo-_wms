@@ -249,7 +249,7 @@ async function getRandom8DigitNumber() {
         IDInvoice = "INC-"+random; 
     }
     return IDInvoice ;
-  }
+}
 
 router.get("/view/add_purchases", auth, async (req, res) => {
     try {

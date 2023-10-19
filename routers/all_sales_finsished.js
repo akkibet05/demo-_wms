@@ -180,7 +180,22 @@ router.get("/view", auth, async (req, res) => {
     }
 })
 
+async function getRandom8DigitNumber() {
+    const min = 10000000;
+    const max = 99999999; 
+    
+    const random = Math.floor(Math.random() * (max - min + 1)) + min;
+    var IDInvoice;
 
+
+    const new_purchase = await sales_finished.findOne({ invoice: "OUT-"+random });
+    if (new_purchase && new_purchase.length > 0) {
+        IDInvoice = "OUT-"+random;
+    }else{
+        IDInvoice = "OUT-"+random; 
+    }
+    return IDInvoice ;
+}
 
 
 router.get("/view/add_sales", auth, async (req, res) => {
@@ -275,18 +290,24 @@ router.get("/view/add_sales", auth, async (req, res) => {
             var lan_data = users.Arabic
         }
 
-        res.render("add_sales_finished", {
-            success: req.flash('success'),
-            errors: req.flash('errors'),
-            role : role_data,
-            profile : profile_data,
-            customer: customer_data,
-            warehouse: warehouse_data,
-            product: product_data,
-            invoice: invoice_no,
-            master_shop : master,
-            language : lan_data,
-            rooms_data : rooms 
+        const randominv = getRandom8DigitNumber();
+        randominv.then(invoicedata => {
+            res.render("add_sales_finished", {
+                success: req.flash('success'),
+                errors: req.flash('errors'),
+                role : role_data,
+                profile : profile_data,
+                customer: customer_data,
+                warehouse: warehouse_data,
+                product: product_data,
+                invoice: invoicedata,
+                master_shop : master,
+                language : lan_data,
+                rooms_data : rooms 
+            })
+        }).catch(error => {
+            req.flash('errors', `There's a error in this transaction`)
+            res.redirect("/all_sales_finished/view");
         })
     } catch (error) {
         console.log(error);
