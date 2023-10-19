@@ -234,6 +234,23 @@ function BayBinSelected(warehouse, room){
 }
 // ========= Add Purchase ========== //
 
+async function getRandom8DigitNumber() {
+    const min = 10000000;
+    const max = 99999999; 
+    
+    const random = Math.floor(Math.random() * (max - min + 1)) + min;
+    var IDInvoice;
+
+
+    const new_purchase = await purchases_finished.findOne({ invoice: "INC-"+random });
+    if (new_purchase && new_purchase.length > 0) {
+        IDInvoice = "INC-"+random;
+    }else{
+        IDInvoice = "INC-"+random; 
+    }
+    return IDInvoice ;
+  }
+
 router.get("/view/add_purchases", auth, async (req, res) => {
     try {
         const {username, email, role} = req.user
@@ -314,20 +331,30 @@ router.get("/view/add_purchases", auth, async (req, res) => {
             var lan_data = users.Arabic
         }
 
-        res.render("add_purchases_finished", {
-            success: req.flash('success'),
-            errors: req.flash('errors'),
-            role : role_data,
-            profile : profile_data,
-            suppliers: suppliers_data,
-            warehouse: warehouse_data,
-            product: product_data,
-            invoice: invoice_no,
-            master_shop : master,
-            language : lan_data,
-            find_data,
-            rooms_data
+
+        const randominv = getRandom8DigitNumber();
+
+        randominv.then(invoicedata => {
+            res.render("add_purchases_finished", {
+                success: req.flash('success'),
+                errors: req.flash('errors'),
+                role : role_data,
+                profile : profile_data,
+                suppliers: suppliers_data,
+                warehouse: warehouse_data,
+                product: product_data,
+                invoice: invoicedata,
+                master_shop : master,
+                language : lan_data,
+                find_data,
+                rooms_data
+            })
+        }).catch(error => {
+            req.flash('errors', `There's a error in this transaction`)
+            res.redirect("/all_purchases_finished/view");
         })
+
+        
     } catch (error) {
         console.log(error);
     }
@@ -351,30 +378,6 @@ router.get("/view/add_purchases/:id", auth, async (req, res) => {
     }
 })
 
-
-async function InvoiceChecking(){
-    const purchases_data = await new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve(purchases_finished.find({}));
-        }, 1000); // Simulating a delay of 1 second
-    });
-
-    
-
-    const invoice_noint = purchases_data.length + 1
-    
-    const invoice_no = "INC-" + invoice_noint.toString().padStart(5, "0")
-    const dataChecking = await purchases_finished.find({ invoice: invoice_no });
-
-
-    var dataInvoice;
-    if(dataChecking.length == 0){
-        return invoice_no;
-    }else{
-        return InvoiceChecking();
-    }
-
-}
 
 
 
@@ -509,15 +512,13 @@ router.post("/view/add_purchases", auth, async (req, res) => {
 
         const Newnewproduct = newproduct.filter(obj => obj.quantity !== "0" && obj.quantity !== "");
 
-        const INV = InvoiceChecking();
-     
-        INV.then( async (result) => {
+       
 
-            const data = new purchases_finished({ invoice : result, suppliers:req.body.suppliers, date, warehouse_name, product:Newnewproduct, note, due_amount, room: Room_name, POnumber: PO_number, SCRN, JO_number, RequestedBy: ReqBy, DateofRequest: dateofreq, typeservices: typeservicesData, driver, plate, van, DRSI, typevehicle:typevehicle, TSU, TFU })
+            const data = new purchases_finished({ invoice: invoice, suppliers:req.body.suppliers, date, warehouse_name, product:Newnewproduct, note, due_amount, room: Room_name, POnumber: PO_number, SCRN, JO_number, RequestedBy: ReqBy, DateofRequest: dateofreq, typeservices: typeservicesData, driver, plate, van, DRSI, typevehicle:typevehicle, TSU, TFU })
             const purchases_data = await data.save()
   
 
-            const new_purchase = await purchases_finished.findOne({ invoice: result });
+            const new_purchase = await purchases_finished.findOne({ invoice: invoice });
 
        
             const promises = new_purchase.product.map( async (product_details) => {
@@ -698,7 +699,7 @@ router.post("/view/add_purchases", auth, async (req, res) => {
 
             req.flash('success', `purchase data add successfully`)
             res.redirect("/all_purchases_finished/view");
-        })
+     
       
 
         
