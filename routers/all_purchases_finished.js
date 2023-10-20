@@ -387,7 +387,7 @@ router.post("/view/add_purchases", auth, async (req, res) => {
 
         const { invoice, date, warehouse_name, prod_name, prod_code, prod_qty, prod_unit, prod_secondunit, prod_level, prod_isle, prod_pallet, note, expiry_date, batch_code,payable, due_amount, Room_name, primary_code, secondary_code, MaxStocks_data, PO_number, SCRN, JO_number, ReqBy, dateofreq,typeservicesData,  driver, plate, van, DRSI, typevehicle, TSU, TFU } = req.body
         
-
+       
         
         if(typeof prod_name == "string"){
             var product_name_array = [req.body.prod_name]
@@ -407,7 +407,7 @@ router.post("/view/add_purchases", auth, async (req, res) => {
             var RoomAssign_array = [req.body.RoomAssign]
             var level_array = [req.body.type]
             var CBM_array = [req.body.CBM]
-            var prod_invoice_array = [...req.body.prod_invoice]
+            var prod_invoice_array = [req.body.prod_invoice]
             // console.log("if");
         }else{
             var product_name_array = [...req.body.prod_name]
@@ -514,7 +514,8 @@ router.post("/view/add_purchases", auth, async (req, res) => {
         })
 
 
-
+        res.json(newproduct)
+        return
 
         const Newnewproduct = newproduct.filter(obj => obj.quantity !== "0" && obj.quantity !== "");
 

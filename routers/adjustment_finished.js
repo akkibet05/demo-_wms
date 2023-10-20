@@ -223,8 +223,7 @@ router.get("/view/add_adjustment", auth, async (req, res) => {
 router.post("/view/add_adjustment", auth, async(req, res) => {
     try{
         const {warehouse_name, date, prod_name, level, isle, pallet, stock, types, adjust_qty, new_adjust_qty, note, Room_name, invoice, JO_number, expiry_date,PO_number, ReqBy, dateofreq,typeservicesData, destination, deliverydate, driver, plate, van, DRSI, typevehicle, TSU, TFU } = req.body
-        // res.json(req.body)
-        // return
+        
         if(typeof prod_name == "string"){
             var product_name_array = [req.body.prod_name]
             var level_array = [req.body.level]
@@ -245,6 +244,7 @@ router.post("/view/add_adjustment", auth, async(req, res) => {
             var primary_code_array = [req.body.primary_code]
             var secondary_code_array = [req.body.secondary_code]
             var CBM_array = [req.body.CBM]
+            var prod_invoice_array = [req.body.prod_invoice]
         }else{
             var product_name_array = [...req.body.prod_name]
             var level_array = [...req.body.level]
@@ -265,6 +265,7 @@ router.post("/view/add_adjustment", auth, async(req, res) => {
             var primary_code_array = [...req.body.primary_code]
             var secondary_code_array = [...req.body.secondary_code]
             var CBM_array = [...req.body.CBM]
+            var prod_invoice_array = [...req.body.prod_invoice]
         } 
         
         const newproduct = product_name_array.map((value)=>{
@@ -349,6 +350,11 @@ router.post("/view/add_adjustment", auth, async(req, res) => {
 
         CBM_array.forEach((value, i) => {
             newproduct[i].CBM = value
+        })
+
+
+        prod_invoice_array.forEach((value, i) =>{
+            newproduct[i].invoice = value
         })
 
 
@@ -548,12 +554,12 @@ router.post("/preview/:id", auth , async (req, res) => {
                 const match_data = warehouse_data.product_details.map((data) => {
                     console.log(product_details.types)
                     if (product_details.types == "minus") {
-                        if (data.product_name == product_details.product_name  && data.level == product_details.level && data.isle == product_details.isle && data.pallet == product_details.pallet && data.expiry_date == product_details.expiry_date  && data.production_date == product_details.production_date && data.batch_code == product_details.batch_code) {
+                        if (data.product_name == product_details.product_name  && data.level == product_details.level && data.isle == product_details.isle && data.pallet == product_details.pallet && data.expiry_date == product_details.expiry_date  && data.production_date == product_details.production_date && data.batch_code == product_details.batch_code && data.invoice == product_details.invoice) {
                             data.product_stock = data.product_stock - product_details.adjust_qty
                         }
                     } else if(product_details.types == "add") {
                         
-                        if (data.product_name == product_details.product_name && data.level == product_details.level && data.isle == product_details.isle && data.pallet == product_details.pallet && data.expiry_date == product_details.expiry_date  && data.production_date == product_details.production_date && data.batch_code == product_details.batch_code) {
+                        if (data.product_name == product_details.product_name && data.level == product_details.level && data.isle == product_details.isle && data.pallet == product_details.pallet && data.expiry_date == product_details.expiry_date  && data.production_date == product_details.production_date && data.batch_code == product_details.batch_code && data.invoice == product_details.invoice) {
                             data.product_stock = data.product_stock + product_details.adjust_qty
                         }
                     }
@@ -1181,7 +1187,8 @@ router.post("/barcode_scanner", async (req, res) => {
                     maxPerUnit: { $first: "$product_details.maxPerUnit"},
                     roomNamed : { $first: "$room" },
                     CBM : { $first: { $toDouble: "$product_details.CBM" } },
-                    maxProducts: { $first: "$product_details.maxProducts" }
+                    maxProducts: { $first: "$product_details.maxProducts" },
+                    invoice : { $first: "$product_details.invoice" }
                 }
             },
         ]);
@@ -1219,7 +1226,8 @@ router.post("/barcode_scanner", async (req, res) => {
                     maxPerUnit: { $first: "$product_details.maxPerUnit"},
                     roomNamed : { $first: "$room" },
                     CBM : { $first: { $toDouble: "$product_details.CBM" } },
-                    maxProducts: { $first: "$product_details.maxProducts" }
+                    maxProducts: { $first: "$product_details.maxProducts" },
+                    invoice : { $first: "$product_details.invoice" }
                 }
             },
         ]);

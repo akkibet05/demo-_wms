@@ -679,6 +679,9 @@ const purchases_data_finished = new mongoose.Schema({
         },
         CBM : {
             type: mongoose.Types.Decimal128
+        },
+        invoice:{
+            type: String
         }
     }],
     note: {

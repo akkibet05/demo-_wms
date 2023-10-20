@@ -1338,6 +1338,14 @@
                             value: data.CBM
                         }).appendTo(row);
 
+
+                        $('<input>').attr({
+                            type: 'hidden',
+                            id: 'prod_invoice'+x,
+                            name: 'prod_invoice',
+                            value: data.invoice
+                        }).appendTo(row);
+
                         
                         $('#tblPage_new').append(row);
 
