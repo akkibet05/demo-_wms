@@ -560,6 +560,9 @@ const purchases_data = new mongoose.Schema({
         },
         room_name: {
             type: String
+        },
+        invoice: {
+            type: String
         }
     }],
     note: {
@@ -1102,6 +1105,9 @@ const sales_data_finished = new mongoose.Schema({
         },
         CBM : {
             type: mongoose.Types.Decimal128
+        },
+        invoice: {
+            type: String
         }
     }],
     note: {
@@ -1605,6 +1611,12 @@ const transfers_data_finished = new mongoose.Schema({
         },
         CBM : {
             type: mongoose.Types.Decimal128
+        },
+        from_invoice: {
+            type: String
+        },
+        to_invoice: {
+            type: String
         }
     }],
     note: {
@@ -1872,6 +1884,9 @@ const adjustment_data_finished = new mongoose.Schema({
         },
         CBM : {
             type: mongoose.Types.Decimal128
+        },
+        invoice: {
+            type: String
         }
     }],
     note:{

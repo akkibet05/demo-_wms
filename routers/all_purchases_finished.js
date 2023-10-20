@@ -407,6 +407,7 @@ router.post("/view/add_purchases", auth, async (req, res) => {
             var RoomAssign_array = [req.body.RoomAssign]
             var level_array = [req.body.type]
             var CBM_array = [req.body.CBM]
+            var prod_invoice_array = [...req.body.prod_invoice]
             // console.log("if");
         }else{
             var product_name_array = [...req.body.prod_name]
@@ -426,6 +427,7 @@ router.post("/view/add_purchases", auth, async (req, res) => {
             var RoomAssign_array = [...req.body.RoomAssign]
             var level_array = [...req.body.type]
             var CBM_array = [...req.body.CBM]
+            var prod_invoice_array = [...req.body.prod_invoice]
         } 
         
         const newproduct = product_name_array.map((value)=>{
@@ -507,6 +509,10 @@ router.post("/view/add_purchases", auth, async (req, res) => {
             newproduct[i].CBM = value
         })
 
+        prod_invoice_array.forEach((value, i) => {
+            newproduct[i].invoice = value
+        })
+
 
 
 
@@ -525,7 +531,7 @@ router.post("/view/add_purchases", auth, async (req, res) => {
                 var warehouse_data = await warehouse.findOne({ name: warehouse_name, room: product_details.room_name });
                 var x = 0;
                 const match_data = warehouse_data.product_details.map((data) => {
-                    if (data.product_name == product_details.product_name  && data.level == product_details.level && data.isle == product_details.isle && data.pallet == product_details.pallet && data.expiry_date == product_details.expiry_date && data.production_date == product_details.production_date && data.batch_code == product_details.batch_code && data.product_cat == product_details.product_cat) {
+                    if (data.product_name == product_details.product_name  && data.level == product_details.level && data.isle == product_details.isle && data.pallet == product_details.pallet && data.expiry_date == product_details.expiry_date && data.production_date == product_details.production_date && data.batch_code == product_details.batch_code && data.product_cat == product_details.product_cat && data.invoice == new_purchase.invoice) {
                         data.product_stock = data.product_stock + product_details.quantity
                         x++
                     }

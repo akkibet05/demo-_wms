@@ -1596,6 +1596,7 @@
 
                     if(element.checked == true){
                         var RoomAssign = element.value;
+                        var Invoice_num = document.getElementById("invoice").value;
 
                         if(data.product_cat == "P"){
                             var row = $('<tr>');
@@ -1704,6 +1705,17 @@
                                 name: 'prod_Qty',
                                 value: ""
                             }).appendTo(row);
+
+
+
+                            $('<input>').attr({
+                                type: 'hidden',
+                                id: 'prod_invoice'+lastIncre,
+                                name: 'prod_invoice',
+                                value: Invoice_num
+                            }).appendTo(row);
+
+
                             $('#tblPage_new').append(row);
                             TypeList(lastIncre, RoomAssign);
                             BayBin(lastIncre, RoomAssign)
@@ -1817,6 +1829,15 @@
                                 name: 'prod_Qty',
                                 value: ""
                             }).appendTo(row);
+
+                            $('<input>').attr({
+                                type: 'hidden',
+                                id: 'prod_invoice'+lastIncre,
+                                name: 'prod_invoice',
+                                value: Invoice_num
+                            }).appendTo(row);
+
+                            
                             $('#tblPage_new').append(row);
                             TypeList(lastIncre, RoomAssign);
                             BayBin(lastIncre, RoomAssign)
