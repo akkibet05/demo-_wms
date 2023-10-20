@@ -514,8 +514,8 @@ router.post("/view/add_purchases", auth, async (req, res) => {
         })
 
 
-        res.json(newproduct)
-        return
+        // res.json(newproduct)
+        // return
 
         const Newnewproduct = newproduct.filter(obj => obj.quantity !== "0" && obj.quantity !== "");
 
