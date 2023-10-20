@@ -584,37 +584,41 @@
                               }
 
 
-                              const numberOfProducts = DataRes.prd_data_name[IsleData][i].length;
+                              const numberOfProducts = DataRes[IsleData][i].productData.length
+                              
 
                               if (!datahoverItem[IsleData]) {
                                 datahoverItem[IsleData] = {};
                               }
 
-                              if (!datahoverItem[IsleData][i]) {
-                                datahoverItem[IsleData][i] = {};
-                              }
-
                               datahoverItem[IsleData][i] = '';
-
                               for (var x = 0; x <= numberOfProducts - 1; x++) {
 
-                              
-                                if(DataRes && DataRes.prd_data_name &&  DataRes.prd_data_name[IsleData] && DataRes.prd_data_name[IsleData][i] && DataRes.prd_data_qty &&  DataRes.prd_data_qty[IsleData] && DataRes.prd_data_qty[IsleData][i]){
+                                if(DataRes && DataRes[IsleData][i].productData[x].product_name){
                                   
-                                  console.log(datahoverItem[IsleData][i])
                                   datahoverItem[IsleData][i] += '<tr>';
+
                                   datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_data_name[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_code;
+                                  datahoverItem[IsleData][i] += '</td>';
+
+                                  
+                                  
+                                  datahoverItem[IsleData][i]  += '<td>';
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_name;
                                   datahoverItem[IsleData][i] += '</td>';
 
                                   datahoverItem[IsleData][i] += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_data_qty[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_quantity;
                                   datahoverItem[IsleData][i]  += '</td>';
+
                                   datahoverItem[IsleData][i]  += '</tr>';
 
                                 }
                               }
-                              const NumTotal = Math.round(DataRes[IsleData][i] * 1000) / 1000;
+
+                                                          
+                              const NumTotal = Math.round(DataRes[IsleData][i].palletCount * 1000) / 1000;
 
                               dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + NumTotal + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
                             } else {
@@ -678,38 +682,41 @@
                               }
 
 
-                              const numberOfProducts = DataRes.prd_data_name[IsleData][i].length;
+                              const numberOfProducts = DataRes[IsleData][i].productData.length
+                              
 
                               if (!datahoverItem[IsleData]) {
                                 datahoverItem[IsleData] = {};
                               }
 
-                              if (!datahoverItem[IsleData][i]) {
-                                datahoverItem[IsleData][i] = {};
-                              }
-
                               datahoverItem[IsleData][i] = '';
-
                               for (var x = 0; x <= numberOfProducts - 1; x++) {
 
-                              
-                                if(DataRes && DataRes.prd_data_name &&  DataRes.prd_data_name[IsleData] && DataRes.prd_data_name[IsleData][i] && DataRes.prd_data_qty &&  DataRes.prd_data_qty[IsleData] && DataRes.prd_data_qty[IsleData][i]){
+                                if(DataRes && DataRes[IsleData][i].productData[x].product_name){
                                   
-                                  console.log(datahoverItem[IsleData][i])
                                   datahoverItem[IsleData][i] += '<tr>';
+
                                   datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_data_name[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_code;
+                                  datahoverItem[IsleData][i] += '</td>';
+
+                                  
+                                  
+                                  datahoverItem[IsleData][i]  += '<td>';
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_name;
                                   datahoverItem[IsleData][i] += '</td>';
 
                                   datahoverItem[IsleData][i] += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_data_qty[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_quantity;
                                   datahoverItem[IsleData][i]  += '</td>';
+
                                   datahoverItem[IsleData][i]  += '</tr>';
 
                                 }
                               }
 
-                              const NumTotal = Math.round(DataRes[IsleData][i] * 1000) / 1000;
+                                                          
+                              const NumTotal = Math.round(DataRes[IsleData][i].palletCount * 1000) / 1000;
                               dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + NumTotal+ '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
                             } else {
                               dataItems += '<td>&nbsp;</td>';
@@ -771,38 +778,41 @@
                               }
 
 
-                              const numberOfProducts = DataRes.prd_data_name[IsleData][i].length;
+                              const numberOfProducts = DataRes[IsleData][i].productData.length
+                              
 
                               if (!datahoverItem[IsleData]) {
                                 datahoverItem[IsleData] = {};
                               }
 
-                              if (!datahoverItem[IsleData][i]) {
-                                datahoverItem[IsleData][i] = {};
-                              }
-
                               datahoverItem[IsleData][i] = '';
-
                               for (var x = 0; x <= numberOfProducts - 1; x++) {
 
-                              
-                                if(DataRes && DataRes.prd_data_name &&  DataRes.prd_data_name[IsleData] && DataRes.prd_data_name[IsleData][i] && DataRes.prd_data_qty &&  DataRes.prd_data_qty[IsleData] && DataRes.prd_data_qty[IsleData][i]){
+                                if(DataRes && DataRes[IsleData][i].productData[x].product_name){
                                   
-                                  console.log(datahoverItem[IsleData][i])
                                   datahoverItem[IsleData][i] += '<tr>';
+
                                   datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_data_name[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_code;
+                                  datahoverItem[IsleData][i] += '</td>';
+
+                                  
+                                  
+                                  datahoverItem[IsleData][i]  += '<td>';
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_name;
                                   datahoverItem[IsleData][i] += '</td>';
 
                                   datahoverItem[IsleData][i] += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_data_qty[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_quantity;
                                   datahoverItem[IsleData][i]  += '</td>';
+
                                   datahoverItem[IsleData][i]  += '</tr>';
 
                                 }
                               }
 
-                              const NumTotal = Math.round(DataRes[IsleData][i] * 1000) / 1000;
+                                                          
+                              const NumTotal = Math.round(DataRes[IsleData][i].palletCount * 1000) / 1000;
                               dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + NumTotal + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
                                 } else {
                                   dataItems += '<td>&nbsp;</td>';
@@ -864,45 +874,41 @@
                               }
 
 
-                              const numberOfProducts = DataRes.prd_data_name[IsleData][i].length;
+                              const numberOfProducts = DataRes[IsleData][i].productData.length
+                              
 
                               if (!datahoverItem[IsleData]) {
                                 datahoverItem[IsleData] = {};
                               }
 
-                              if (!datahoverItem[IsleData][i]) {
-                                datahoverItem[IsleData][i] = {};
-                              }
-
                               datahoverItem[IsleData][i] = '';
-
                               for (var x = 0; x <= numberOfProducts - 1; x++) {
 
-                              
-                                if(DataRes && DataRes.prd_data_name &&  DataRes.prd_data_name[IsleData] && DataRes.prd_data_name[IsleData][i] && DataRes.prd_data_qty &&  DataRes.prd_data_qty[IsleData] && DataRes.prd_data_qty[IsleData][i]){
+                                if(DataRes && DataRes[IsleData][i].productData[x].product_name){
                                   
-                                  console.log(datahoverItem[IsleData][i])
                                   datahoverItem[IsleData][i] += '<tr>';
 
-
                                   datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_code[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_code;
                                   datahoverItem[IsleData][i] += '</td>';
 
-
+                                  
+                                  
                                   datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_data_name[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_name;
                                   datahoverItem[IsleData][i] += '</td>';
 
                                   datahoverItem[IsleData][i] += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_data_qty[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_quantity;
                                   datahoverItem[IsleData][i]  += '</td>';
+
                                   datahoverItem[IsleData][i]  += '</tr>';
 
                                 }
                               }
 
-                              const NumTotal = Math.round(DataRes[IsleData][i] * 1000) / 1000;
+                                                          
+                              const NumTotal = Math.round(DataRes[IsleData][i].palletCount * 1000) / 1000;
                               dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + NumTotal + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Item Code</td><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
                             } else {
                               dataItems += '<td>&nbsp;</td>';
@@ -966,49 +972,41 @@
                               }
 
 
-                              const numberOfProducts = DataRes.prd_data_name[IsleData][i].length;
+                              const numberOfProducts = DataRes[IsleData][i].productData.length
+                              
 
                               if (!datahoverItem[IsleData]) {
                                 datahoverItem[IsleData] = {};
                               }
 
-                              if (!datahoverItem[IsleData][i]) {
-                                datahoverItem[IsleData][i] = {};
-                              }
-
                               datahoverItem[IsleData][i] = '';
-
                               for (var x = 0; x <= numberOfProducts - 1; x++) {
 
-                              
-                                if(DataRes && DataRes.prd_data_name &&  DataRes.prd_data_name[IsleData] && DataRes.prd_data_name[IsleData][i] && DataRes.prd_data_qty &&  DataRes.prd_data_qty[IsleData] && DataRes.prd_data_qty[IsleData][i]){
+                                if(DataRes && DataRes[IsleData][i].productData[x].product_name){
                                   
-                                  console.log(datahoverItem[IsleData][i])
                                   datahoverItem[IsleData][i] += '<tr>';
 
                                   datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_code[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_code;
                                   datahoverItem[IsleData][i] += '</td>';
 
+                                  
+                                  
                                   datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_code[IsleData][i];
-                                  datahoverItem[IsleData][i] += '</td>';
-
-
-
-                                  datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_data_name[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_name;
                                   datahoverItem[IsleData][i] += '</td>';
 
                                   datahoverItem[IsleData][i] += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_data_qty[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_quantity;
                                   datahoverItem[IsleData][i]  += '</td>';
+
                                   datahoverItem[IsleData][i]  += '</tr>';
 
                                 }
                               }
 
-                              const NumTotal = Math.round(DataRes[IsleData][i] * 1000) / 1000;
+                                                          
+                              const NumTotal = Math.round(DataRes[IsleData][i].palletCount * 1000) / 1000;
                               dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + NumTotal + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Item Code</td><td>Item Code</td><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
                             } else {
                               dataItems += '<td>&nbsp;</td>';
@@ -1071,44 +1069,41 @@
                               }
 
 
-                              const numberOfProducts = DataRes.prd_data_name[IsleData][i].length;
+                              const numberOfProducts = DataRes[IsleData][i].productData.length
+                              
 
                               if (!datahoverItem[IsleData]) {
                                 datahoverItem[IsleData] = {};
                               }
 
-                              if (!datahoverItem[IsleData][i]) {
-                                datahoverItem[IsleData][i] = {};
-                              }
-
                               datahoverItem[IsleData][i] = '';
-
                               for (var x = 0; x <= numberOfProducts - 1; x++) {
 
-                              
-                                if(DataRes && DataRes.prd_data_name &&  DataRes.prd_data_name[IsleData] && DataRes.prd_data_name[IsleData][i] && DataRes.prd_data_qty &&  DataRes.prd_data_qty[IsleData] && DataRes.prd_data_qty[IsleData][i]){
+                                if(DataRes && DataRes[IsleData][i].productData[x].product_name){
                                   
-                                  console.log(datahoverItem[IsleData][i])
                                   datahoverItem[IsleData][i] += '<tr>';
 
-                                    datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_code[IsleData][i];
+                                  datahoverItem[IsleData][i]  += '<td>';
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_code;
                                   datahoverItem[IsleData][i] += '</td>';
 
-
+                                  
+                                  
                                   datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_data_name[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_name;
                                   datahoverItem[IsleData][i] += '</td>';
 
                                   datahoverItem[IsleData][i] += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_data_qty[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_quantity;
                                   datahoverItem[IsleData][i]  += '</td>';
+
                                   datahoverItem[IsleData][i]  += '</tr>';
 
                                 }
                               }
 
-                              const NumTotal = Math.round(DataRes[IsleData][i] * 1000) / 1000;
+                                                          
+                              const NumTotal = Math.round(DataRes[IsleData][i].palletCount * 1000) / 1000;
                               dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + NumTotal + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Item Code</td><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
                             } else {
                               dataItems += '<td>&nbsp;</td>';
@@ -1169,50 +1164,41 @@
                               }
 
 
-                              const numberOfProducts = DataRes.prd_data_name[IsleData][i].length;
+                              const numberOfProducts = DataRes[IsleData][i].productData.length
+                              
 
                               if (!datahoverItem[IsleData]) {
                                 datahoverItem[IsleData] = {};
                               }
 
-                              if (!datahoverItem[IsleData][i]) {
-                                datahoverItem[IsleData][i] = {};
-                              }
-
                               datahoverItem[IsleData][i] = '';
-
                               for (var x = 0; x <= numberOfProducts - 1; x++) {
 
-                              
-                                if(DataRes && DataRes.prd_data_name &&  DataRes.prd_data_name[IsleData] && DataRes.prd_data_name[IsleData][i] && DataRes.prd_data_qty &&  DataRes.prd_data_qty[IsleData] && DataRes.prd_data_qty[IsleData][i]){
+                                if(DataRes && DataRes[IsleData][i].productData[x].product_name){
                                   
-                                  console.log(datahoverItem[IsleData][i])
                                   datahoverItem[IsleData][i] += '<tr>';
 
-
                                   datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_code[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_code;
                                   datahoverItem[IsleData][i] += '</td>';
 
-
+                                  
+                                  
                                   datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_code[IsleData][i];
-                                  datahoverItem[IsleData][i] += '</td>';
-
-
-                                  datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_data_name[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_name;
                                   datahoverItem[IsleData][i] += '</td>';
 
                                   datahoverItem[IsleData][i] += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_data_qty[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_quantity;
                                   datahoverItem[IsleData][i]  += '</td>';
+
                                   datahoverItem[IsleData][i]  += '</tr>';
 
                                 }
                               }
 
-                              const NumTotal = Math.round(DataRes[IsleData][i] * 1000) / 1000;
+                                                          
+                              const NumTotal = Math.round(DataRes[IsleData][i].palletCount * 1000) / 1000;
                               dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + NumTotal + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Item Code</td><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
                             } else {
                               dataItems += '<td>&nbsp;</td>';
@@ -1284,45 +1270,41 @@
                               }
 
 
-                              const numberOfProducts = DataRes.prd_data_name[IsleData][i].length;
+                              const numberOfProducts = DataRes[IsleData][i].productData.length
+                              
 
                               if (!datahoverItem[IsleData]) {
                                 datahoverItem[IsleData] = {};
                               }
 
-                              if (!datahoverItem[IsleData][i]) {
-                                datahoverItem[IsleData][i] = {};
-                              }
-
                               datahoverItem[IsleData][i] = '';
-
                               for (var x = 0; x <= numberOfProducts - 1; x++) {
 
-                              
-                                if(DataRes && DataRes.prd_data_name &&  DataRes.prd_data_name[IsleData] && DataRes.prd_data_name[IsleData][i] && DataRes.prd_data_qty &&  DataRes.prd_data_qty[IsleData] && DataRes.prd_data_qty[IsleData][i]){
+                                if(DataRes && DataRes[IsleData][i].productData[x].product_name){
                                   
-                                  console.log(datahoverItem[IsleData][i])
                                   datahoverItem[IsleData][i] += '<tr>';
 
-
                                   datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_code[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_code;
                                   datahoverItem[IsleData][i] += '</td>';
 
-
+                                  
+                                  
                                   datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_data_name[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_name;
                                   datahoverItem[IsleData][i] += '</td>';
 
                                   datahoverItem[IsleData][i] += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_data_qty[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_quantity;
                                   datahoverItem[IsleData][i]  += '</td>';
+
                                   datahoverItem[IsleData][i]  += '</tr>';
 
                                 }
                               }
 
-                              const NumTotal = Math.round(DataRes[IsleData][i] * 1000) / 1000;
+                                                          
+                              const NumTotal = Math.round(DataRes[IsleData][i].palletCount * 1000) / 1000;
                               dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + NumTotal + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Item Code</td><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
                             } else {
                               dataItems += '<td>&nbsp;</td>';
@@ -1396,44 +1378,41 @@
                               }
 
 
-                              const numberOfProducts = DataRes.prd_data_name[IsleData][i].length;
+                              const numberOfProducts = DataRes[IsleData][i].productData.length
+                              
 
                               if (!datahoverItem[IsleData]) {
                                 datahoverItem[IsleData] = {};
                               }
 
-                              if (!datahoverItem[IsleData][i]) {
-                                datahoverItem[IsleData][i] = {};
-                              }
-
                               datahoverItem[IsleData][i] = '';
-
                               for (var x = 0; x <= numberOfProducts - 1; x++) {
 
-                              
-                                if(DataRes && DataRes.prd_data_name &&  DataRes.prd_data_name[IsleData] && DataRes.prd_data_name[IsleData][i] && DataRes.prd_data_qty &&  DataRes.prd_data_qty[IsleData] && DataRes.prd_data_qty[IsleData][i]){
+                                if(DataRes && DataRes[IsleData][i].productData[x].product_name){
                                   
-                                  console.log(datahoverItem[IsleData][i])
                                   datahoverItem[IsleData][i] += '<tr>';
 
-
                                   datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_code[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_code;
                                   datahoverItem[IsleData][i] += '</td>';
+
+                                  
                                   
                                   datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_data_name[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_name;
                                   datahoverItem[IsleData][i] += '</td>';
 
                                   datahoverItem[IsleData][i] += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_data_qty[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_quantity;
                                   datahoverItem[IsleData][i]  += '</td>';
+
                                   datahoverItem[IsleData][i]  += '</tr>';
 
                                 }
                               }
 
-                              const NumTotal = Math.round(DataRes[IsleData][i] * 1000) / 1000;
+                                                          
+                              const NumTotal = Math.round(DataRes[IsleData][i].palletCount * 1000) / 1000;
                               dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + NumTotal + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Item Code</td><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
                             } else {
                               dataItems += '<td>&nbsp;</td>';
@@ -1507,45 +1486,41 @@
                               }
 
 
-                              const numberOfProducts = DataRes.prd_data_name[IsleData][i].length;
+                              const numberOfProducts = DataRes[IsleData][i].productData.length
+                              
 
                               if (!datahoverItem[IsleData]) {
                                 datahoverItem[IsleData] = {};
                               }
 
-                              if (!datahoverItem[IsleData][i]) {
-                                datahoverItem[IsleData][i] = {};
-                              }
-
                               datahoverItem[IsleData][i] = '';
-
                               for (var x = 0; x <= numberOfProducts - 1; x++) {
 
-                              
-                                if(DataRes && DataRes.prd_data_name &&  DataRes.prd_data_name[IsleData] && DataRes.prd_data_name[IsleData][i] && DataRes.prd_data_qty &&  DataRes.prd_data_qty[IsleData] && DataRes.prd_data_qty[IsleData][i]){
+                                if(DataRes && DataRes[IsleData][i].productData[x].product_name){
                                   
-                                  console.log(datahoverItem[IsleData][i])
                                   datahoverItem[IsleData][i] += '<tr>';
 
-
                                   datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_code[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_code;
                                   datahoverItem[IsleData][i] += '</td>';
 
-
+                                  
+                                  
                                   datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_data_name[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_name;
                                   datahoverItem[IsleData][i] += '</td>';
 
                                   datahoverItem[IsleData][i] += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_data_qty[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_quantity;
                                   datahoverItem[IsleData][i]  += '</td>';
+
                                   datahoverItem[IsleData][i]  += '</tr>';
 
                                 }
                               }
 
-                              const NumTotal = Math.round(DataRes[IsleData][i] * 1000) / 1000;
+                                                          
+                              const NumTotal = Math.round(DataRes[IsleData][i].palletCount * 1000) / 1000;
                               dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + NumTotal + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Item Code</td><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
                             } else {
                               dataItems += '<td>&nbsp;</td>';
@@ -1621,44 +1596,41 @@
                               }
 
 
-                              const numberOfProducts = DataRes.prd_data_name[IsleData][i].length;
+                              const numberOfProducts = DataRes[IsleData][i].productData.length
+                              
 
                               if (!datahoverItem[IsleData]) {
                                 datahoverItem[IsleData] = {};
                               }
 
-                              if (!datahoverItem[IsleData][i]) {
-                                datahoverItem[IsleData][i] = {};
-                              }
-
                               datahoverItem[IsleData][i] = '';
-
                               for (var x = 0; x <= numberOfProducts - 1; x++) {
 
-                              
-                                if(DataRes && DataRes.prd_data_name &&  DataRes.prd_data_name[IsleData] && DataRes.prd_data_name[IsleData][i] && DataRes.prd_data_qty &&  DataRes.prd_data_qty[IsleData] && DataRes.prd_data_qty[IsleData][i]){
+                                if(DataRes && DataRes[IsleData][i].productData[x].product_name){
                                   
-                                  console.log(datahoverItem[IsleData][i])
                                   datahoverItem[IsleData][i] += '<tr>';
 
-
                                   datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_code[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_code;
                                   datahoverItem[IsleData][i] += '</td>';
 
+                                  
+                                  
                                   datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_data_name[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_name;
                                   datahoverItem[IsleData][i] += '</td>';
 
                                   datahoverItem[IsleData][i] += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_data_qty[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_quantity;
                                   datahoverItem[IsleData][i]  += '</td>';
+
                                   datahoverItem[IsleData][i]  += '</tr>';
 
                                 }
                               }
 
-                              const NumTotal = Math.round(DataRes[IsleData][i] * 1000) / 1000;
+                                                          
+                              const NumTotal = Math.round(DataRes[IsleData][i].palletCount * 1000) / 1000;
                               dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + NumTotal + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Item Code</td><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
                             } else {
                               dataItems += '<td>&nbsp;</td>';
@@ -1734,45 +1706,41 @@
                               }
 
 
-                              const numberOfProducts = DataRes.prd_data_name[IsleData][i].length;
+                              const numberOfProducts = DataRes[IsleData][i].productData.length
+                              
 
                               if (!datahoverItem[IsleData]) {
                                 datahoverItem[IsleData] = {};
                               }
 
-                              if (!datahoverItem[IsleData][i]) {
-                                datahoverItem[IsleData][i] = {};
-                              }
-
                               datahoverItem[IsleData][i] = '';
-
                               for (var x = 0; x <= numberOfProducts - 1; x++) {
 
-                              
-                                if(DataRes && DataRes.prd_data_name &&  DataRes.prd_data_name[IsleData] && DataRes.prd_data_name[IsleData][i] && DataRes.prd_data_qty &&  DataRes.prd_data_qty[IsleData] && DataRes.prd_data_qty[IsleData][i]){
+                                if(DataRes && DataRes[IsleData][i].productData[x].product_name){
                                   
-                                  console.log(datahoverItem[IsleData][i])
                                   datahoverItem[IsleData][i] += '<tr>';
 
-
                                   datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_code[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_code;
                                   datahoverItem[IsleData][i] += '</td>';
 
-
+                                  
+                                  
                                   datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_data_name[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_name;
                                   datahoverItem[IsleData][i] += '</td>';
 
                                   datahoverItem[IsleData][i] += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_data_qty[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_quantity;
                                   datahoverItem[IsleData][i]  += '</td>';
+
                                   datahoverItem[IsleData][i]  += '</tr>';
 
                                 }
                               }
 
-                              const NumTotal = Math.round(DataRes[IsleData][i] * 1000) / 1000;
+                                                          
+                              const NumTotal = Math.round(DataRes[IsleData][i].palletCount * 1000) / 1000;
                               dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + NumTotal + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Item Code</td><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
                             } else {
                               dataItems += '<td>&nbsp;</td>';
@@ -1847,44 +1815,41 @@
                               }
 
 
-                              const numberOfProducts = DataRes.prd_data_name[IsleData][i].length;
+                              const numberOfProducts = DataRes[IsleData][i].productData.length
+                              
 
                               if (!datahoverItem[IsleData]) {
                                 datahoverItem[IsleData] = {};
                               }
 
-                              if (!datahoverItem[IsleData][i]) {
-                                datahoverItem[IsleData][i] = {};
-                              }
-
                               datahoverItem[IsleData][i] = '';
-
                               for (var x = 0; x <= numberOfProducts - 1; x++) {
 
-                              
-                                if(DataRes && DataRes.prd_data_name &&  DataRes.prd_data_name[IsleData] && DataRes.prd_data_name[IsleData][i] && DataRes.prd_data_qty &&  DataRes.prd_data_qty[IsleData] && DataRes.prd_data_qty[IsleData][i]){
+                                if(DataRes && DataRes[IsleData][i].productData[x].product_name){
                                   
-                                  console.log(datahoverItem[IsleData][i])
                                   datahoverItem[IsleData][i] += '<tr>';
 
                                   datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_code[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_code;
                                   datahoverItem[IsleData][i] += '</td>';
 
-
+                                  
+                                  
                                   datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_data_name[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_name;
                                   datahoverItem[IsleData][i] += '</td>';
 
                                   datahoverItem[IsleData][i] += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_data_qty[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_quantity;
                                   datahoverItem[IsleData][i]  += '</td>';
+
                                   datahoverItem[IsleData][i]  += '</tr>';
 
                                 }
                               }
 
-                              const NumTotal = Math.round(DataRes[IsleData][i] * 1000) / 1000;
+                                                          
+                              const NumTotal = Math.round(DataRes[IsleData][i].palletCount * 1000) / 1000;
                               dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + NumTotal + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Item Code</td><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
                             } else {
                               dataItems += '<td>&nbsp;</td>';
@@ -1957,44 +1922,41 @@
                               }
 
 
-                              const numberOfProducts = DataRes.prd_data_name[IsleData][i].length;
+                              const numberOfProducts = DataRes[IsleData][i].productData.length
+                              
 
                               if (!datahoverItem[IsleData]) {
                                 datahoverItem[IsleData] = {};
                               }
 
-                              if (!datahoverItem[IsleData][i]) {
-                                datahoverItem[IsleData][i] = {};
-                              }
-
                               datahoverItem[IsleData][i] = '';
-
                               for (var x = 0; x <= numberOfProducts - 1; x++) {
 
-                              
-                                if(DataRes && DataRes.prd_data_name &&  DataRes.prd_data_name[IsleData] && DataRes.prd_data_name[IsleData][i] && DataRes.prd_data_qty &&  DataRes.prd_data_qty[IsleData] && DataRes.prd_data_qty[IsleData][i]){
+                                if(DataRes && DataRes[IsleData][i].productData[x].product_name){
                                   
-                                  console.log(datahoverItem[IsleData][i])
                                   datahoverItem[IsleData][i] += '<tr>';
-                                  
+
                                   datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_code[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_code;
                                   datahoverItem[IsleData][i] += '</td>';
 
-
+                                  
+                                  
                                   datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_data_name[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_name;
                                   datahoverItem[IsleData][i] += '</td>';
 
                                   datahoverItem[IsleData][i] += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_data_qty[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_quantity;
                                   datahoverItem[IsleData][i]  += '</td>';
+
                                   datahoverItem[IsleData][i]  += '</tr>';
 
                                 }
                               }
 
-                              const NumTotal = Math.round(DataRes[IsleData][i] * 1000) / 1000;
+                                                          
+                              const NumTotal = Math.round(DataRes[IsleData][i].palletCount * 1000) / 1000;
                               dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + NumTotal + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Item Code</td><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
                             } else {
                               dataItems += '<td>&nbsp;</td>';
