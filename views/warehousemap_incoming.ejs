@@ -315,74 +315,106 @@
    
     <%- include('./partials/script'); -%>
     <script>
-      function jsonToArray(jsonData) {
-        var data = [];
-        
-        jsonData.forEach((item) => {
+      // function jsonToArray(jsonData) {
+      //   console.log(jsonData)
+      //   var data = [];
+      //   jsonData.forEach((item) => {
           
+      //     var isle = item.isle;
+      //     var pallet = parseInt(item.pallet);
+      //     var count = item.totalQuantity;
+         
+      //   if (!data[isle]) {
+      //       data[isle] = {};
+      //     }
+      //     data[isle][pallet] = count;
+      //     // data[isle]['pallet'] = pallet;
+
+      //     item.products.forEach((items) => {
+            
+      //       if (!data["prd_data_name"]) {
+      //           data["prd_data_name"] = [];
+      //       }
+
+      //       if (!data["prd_data_qty"]) {
+      //           data["prd_data_qty"] = [];
+      //       }
+
+
+      //       if (!data["prd_code"]) {
+      //           data["prd_code"] = [];
+      //       }
+
+
+      //       if (!data["prd_data_name"][isle]) {
+      //           data["prd_data_name"][isle] = [];
+      //       }
+
+      //       if (!data["prd_data_qty"][isle]) {
+      //           data["prd_data_qty"][isle] = [];
+      //       }
+
+      //       if (!data["prd_code"][isle]) {
+      //           data["prd_code"][isle] = [];
+      //       }
+
+
+      //       if (!data["prd_data_name"][isle][pallet]) {
+      //           data["prd_data_name"][isle][pallet] = [];
+      //       }
+
+      //       if (!data["prd_data_qty"][isle][pallet]) {
+      //           data["prd_data_qty"][isle][pallet] = [];
+      //       }
+
+      //       if (!data["prd_code"][isle][pallet]) {
+      //           data["prd_code"][isle][pallet] = [];
+      //       }
+
+
+      //       data["prd_data_name"][isle][pallet].push(items.product_name);
+      //       data["prd_data_qty"][isle][pallet].push(items.product_quantity);
+      //       data["prd_code"][isle][pallet].push(items.product_code);
+            
+      //     })
+
+          
+      //   });
+
+      //   return data;
+      // }
+
+      function jsonToArray(jsonData) {
+        var data = {};
+
+        jsonData.forEach((item) => {
           var isle = item.isle;
           var pallet = parseInt(item.pallet);
           var count = item.totalQuantity;
-         
-        if (!data[isle]) {
+
+          if (!data[isle]) {
             data[isle] = {};
           }
-          data[isle][pallet] = count;
-          data[isle]['pallet'] = pallet;
 
-          item.products.forEach((items) => {
-            console.log(items)
-            if (!data["prd_data_name"]) {
-                data["prd_data_name"] = [];
-            }
+          if (!data[isle][pallet]) {
+            data[isle][pallet] = {
+              palletCount: count,
+              productData: [],
+            };
+          }
 
-            if (!data["prd_data_qty"]) {
-                data["prd_data_qty"] = [];
-            }
-
-
-            if (!data["prd_code"]) {
-                data["prd_code"] = [];
-            }
-
-
-            if (!data["prd_data_name"][isle]) {
-                data["prd_data_name"][isle] = [];
-            }
-
-            if (!data["prd_data_qty"][isle]) {
-                data["prd_data_qty"][isle] = [];
-            }
-
-            if (!data["prd_code"][isle]) {
-                data["prd_code"][isle] = [];
-            }
-
-
-            if (!data["prd_data_name"][isle][pallet]) {
-                data["prd_data_name"][isle][pallet] = [];
-            }
-
-            if (!data["prd_data_qty"][isle][pallet]) {
-                data["prd_data_qty"][isle][pallet] = [];
-            }
-
-            if (!data["prd_code"][isle][pallet]) {
-                data["prd_code"][isle][pallet] = [];
-            }
-
-
-            data["prd_data_name"][isle][pallet].push(items.product_name);
-            data["prd_data_qty"][isle][pallet].push(items.product_quantity);
-            data["prd_code"][isle][pallet].push(items.product_code);
-            
-          })
-
-          
+          item.products.forEach((product) => {
+            data[isle][pallet].productData.push({
+              product_name: product.product_name,
+              product_quantity: product.product_quantity,
+              product_code: product.product_code,
+            });
+          });
         });
 
         return data;
       }
+
 
 
       $(document).ready(function() {
@@ -442,7 +474,7 @@
 
                           for (let i = j; i < j + columnCount; i++) {
                             if (DataRes[IsleData] && DataRes[IsleData][i]) {
-
+                              
                               if(DataRes[IsleData][i] >= 500){
                                 color = "Tomato";
                               }else if(DataRes[IsleData][i] >= 250){
@@ -451,42 +483,43 @@
                                color = "white";
                               }
 
-                        
-                              const numberOfProducts = DataRes.prd_data_name[IsleData][i].length;
+                              // const numberOfProducts = DataRes.prd_data_name[IsleData][i].length;
+
+                              const numberOfProducts = DataRes[IsleData][i].productData.length
+                              
 
                               if (!datahoverItem[IsleData]) {
                                 datahoverItem[IsleData] = {};
                               }
 
-                              
                               datahoverItem[IsleData][i] = '';
                               for (var x = 0; x <= numberOfProducts - 1; x++) {
 
-                               
-                                if(DataRes && DataRes.prd_data_name &&  DataRes.prd_data_name[IsleData] && DataRes.prd_data_name[IsleData][i] && DataRes.prd_data_qty &&  DataRes.prd_data_qty[IsleData] && DataRes.prd_data_qty[IsleData][i]){
+                                if(DataRes && DataRes[IsleData][i].productData[x].product_name){
                                   
-                                  console.log(datahoverItem[IsleData][i])
                                   datahoverItem[IsleData][i] += '<tr>';
+
                                   datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_code[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_code;
                                   datahoverItem[IsleData][i] += '</td>';
 
-
-                                  // datahoverItem[IsleData][i] += '<tr>';
+                                  
+                                  
                                   datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_data_name[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_name;
                                   datahoverItem[IsleData][i] += '</td>';
 
                                   datahoverItem[IsleData][i] += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes.prd_data_qty[IsleData][i];
+                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_quantity;
                                   datahoverItem[IsleData][i]  += '</td>';
+
                                   datahoverItem[IsleData][i]  += '</tr>';
 
                                 }
                               }
 
-                              
-                              const NumTotal = Math.round(DataRes[IsleData][i] * 1000) / 1000;
+                                                          
+                              const NumTotal = Math.round(DataRes[IsleData][i].palletCount * 1000) / 1000;
                               dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + NumTotal + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Item Code</td><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
                              
                             } else {

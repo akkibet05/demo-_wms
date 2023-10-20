@@ -127,7 +127,8 @@ router.post('/MapData', async (req, res) => {
           _id: {
                 isle: "$product_details.isle",
                 pallet: "$product_details.pallet",
-                product_code: "$product_details.product_code"
+                product_code: "$product_details.product_code",
+                product_name: "$product_details.product_name",
           },
           products: {
             $push: {
