@@ -1849,6 +1849,7 @@
                         const levelData = data.level === null ? 0 : data.level;
                         const isleData =  data.isle === null ? 0 : data.isle;
                         const palletData =  data.pallet === null ? 0 : data.pallet;  
+                        var Invoice_num = document.getElementById("invoice").value;
                         
                         row.append($('<td>').html('<input type="text" class="form-control" style="width: 125px;" name="product_code3" id="product_code3'+ x +'" value="' + data.product_code + '" readonly>'));
                         row.append($('<td>').html('<input type="text" class="form-control" style="width: 355px;" name="prod_name" id="prod_name'+ x +'" value="' + data.name + '" readonly>'));
@@ -1979,6 +1980,22 @@
                             id: 'CBM',
                             name: 'CBM',
                             value: data.CBM
+                        }).appendTo(row);
+
+
+                        $('<input>').attr({
+                            type: 'hidden',
+                            id: 'from_invoice'+x,
+                            name: 'from_invoice',
+                            value: data.invoice
+                        }).appendTo(row);
+
+
+                        $('<input>').attr({
+                            type: 'hidden',
+                            id: 'to_invoice'+x,
+                            name: 'to_invoice',
+                            value: Invoice_num
                         }).appendTo(row);
                         
 

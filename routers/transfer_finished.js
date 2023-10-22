@@ -244,6 +244,8 @@ router.post("/view/add_transfer", auth, async(req, res) => {
             var RoomAssigned_array = [req.body.RoomAssigned]
             var ToRoomAssigned_array = [req.body.ToRoomAssigned]
             var CBM_array = [req.body.CBM]
+            var from_invoice_array = [req.body.from_invoice]
+            var to_invoice_array = [req.body.to_invoice]
             
         }else{
             var product_name_array = [...req.body.prod_name]
@@ -276,6 +278,9 @@ router.post("/view/add_transfer", auth, async(req, res) => {
             var ToRoomAssigned_array = [...req.body.ToRoomAssigned]
             var CBM_array = [...req.body.CBM]
 
+            var from_invoice_array = [...req.body.from_invoice]
+            var to_invoice_array = [...req.body.to_invoice]
+
         } 
         
         const newproduct = product_name_array.map((value)=>{
@@ -289,9 +294,12 @@ router.post("/view/add_transfer", auth, async(req, res) => {
             newproduct[i].from_quantity = value
         });
 
-        // from_level_array.forEach((value,i) => {
-        //     newproduct[i].from_bay = value
-        // });
+        from_invoice_array.forEach((value,i) => {
+            newproduct[i].from_invoice = value
+        });
+        to_invoice_array.forEach((value,i) => {
+            newproduct[i].to_invoice = value
+        });
 
         from_level_array.forEach((value,i) => {
             var resultValueFloorLevel = value.slice(1);
@@ -538,7 +546,7 @@ router.post("/preview/:id", auth , async (req, res) => {
             if(product_details.to_quantity > 0){
                 var from_warehouse_data = await warehouse.findOne({ name: from_warehouse, room: product_details.from_room_name});
                 const match_data = from_warehouse_data.product_details.map((data) => {
-                    if (data.product_name == product_details.product_name && data.level == product_details.from_level && data.isle == product_details.from_isle && data.pallet == product_details.from_pallet && data.expiry_date == product_details.expiry_date  && data.production_date == product_details.production_date && data.batch_code == product_details.batch_code) {
+                    if (data.product_name == product_details.product_name && data.level == product_details.from_level && data.isle == product_details.from_isle && data.pallet == product_details.from_pallet && data.expiry_date == product_details.expiry_date  && data.production_date == product_details.production_date && data.batch_code == product_details.batch_code && data.invoice == product_details.from_invoice) {
                         data.product_stock = data.product_stock - product_details.to_quantity
                         
                     }
@@ -567,7 +575,7 @@ router.post("/preview/:id", auth , async (req, res) => {
                         if(product_details.to_quantity > 0){
                             var x = 0;
                             const match_data = to_warehouse_data.product_details.map((data) => {
-                                    if (data.product_name == product_details.product_name && data.level == product_details.to_level && data.isle == product_details.to_isle && data.pallet == product_details.to_pallet && data.expiry_date == product_details.expiry_date  && data.production_date == product_details.production_date && data.batch_code == product_details.batch_code) {
+                                    if (data.product_name == product_details.product_name && data.level == product_details.to_level && data.isle == product_details.to_isle && data.pallet == product_details.to_pallet && data.expiry_date == product_details.expiry_date  && data.production_date == product_details.production_date && data.batch_code == product_details.batch_code && data.invoice == product_details.to_invoice) {
                                         data.product_stock = data.product_stock + product_details.to_quantity
                                         x++
                                     }
@@ -1284,7 +1292,8 @@ router.post("/barcode_scanner", async (req, res) => {
                     roomNamed : { $first: "$room" },
                     prod_cat: { $first: "P" },
                     maxProducts: { $first: "$product_details.maxProducts"},
-                    CBM : { $first: { $toDouble: "$product_details.CBM" } }
+                    CBM : { $first: { $toDouble: "$product_details.CBM" } },
+                    invoice: { $first: "$product_details.invoice" }
                 }
             },
         ]);
@@ -1322,7 +1331,8 @@ router.post("/barcode_scanner", async (req, res) => {
                     roomNamed : { $first: "$room" },
                     prod_cat: { $first: "S" },
                     maxProducts: { $first: "$product_details.maxProducts"},
-                    CBM : { $first: { $toDouble: "$product_details.CBM" } }
+                    CBM : { $first: { $toDouble: "$product_details.CBM" } },
+                    invoice: { $first: "$product_details.invoice" }
                 }
             },
         ]);
