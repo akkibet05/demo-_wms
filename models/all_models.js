@@ -22,6 +22,13 @@ const sing_up_data = new mongoose.Schema({
     role: {
         type: String,
         require: true
+    },
+    code: {
+        type: String
+    },
+    isUsed: {
+        type: String,
+        default: "False"
     }
 })
 

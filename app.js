@@ -95,11 +95,13 @@ const pdfOutReport = require("./routers/pickinglist");
 
 
 
-
+const passwordChanger = require("./routers/password_reset");
 
 
 
 // ========== define router =========== //
+
+app.use("/forgotPassword", passwordChanger);
 
 app.use("/edit_approval", edit_approver_router);
 
