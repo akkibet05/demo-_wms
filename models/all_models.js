@@ -269,6 +269,9 @@ const warehouse_data = new mongoose.Schema({
             },
             CBM : {
                 type: mongoose.Types.Decimal128
+            },
+            invoice: {
+                type: String
             }
         }
     ]
