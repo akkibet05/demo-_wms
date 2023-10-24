@@ -558,7 +558,8 @@ router.post("/view/add_purchases", auth, async (req, res) => {
                         maxPerUnit: product_details.maxperunit,
                         batch_code: product_details.batch_code,
                         product_cat: product_details.product_cat,
-                        CBM: product_details.CBM
+                        CBM: product_details.CBM,
+                        invoice: product_details.invoice
                     })
                 }
                 return warehouse_data;
