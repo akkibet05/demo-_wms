@@ -108,9 +108,13 @@ router.post("/view/edit_settings", auth, upload.single("image"), async(req, res)
                 const master_data = await data.save()
                 
             } else {
+                const image = req.file.filename;
+
+                
 
                 master_shop_data.site_title = site_title
                 master_shop_data.currency = currency
+                master_shop_data.image = image
                 master_shop_data.currency_placement = currency_placement
                 master_shop_data.timezone = timezone
                 await master_shop_data.save()      
@@ -118,7 +122,7 @@ router.post("/view/edit_settings", auth, upload.single("image"), async(req, res)
             
         } else {
             
-            const image = req.file.filename;
+           
             const master_shop_data = await master_shop.findOne()
             console.log("2nd master_shop_data" , master_shop_data);
             
