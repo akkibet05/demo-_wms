@@ -652,7 +652,7 @@ router.get("/view/add_products", auth, async (req, res) => {
 
 router.post("/view/add_products", auth, upload.single("image"), async (req, res) => {
     try {
-        const { name, category, brand, unit, alertquantity, stock, product_code,  warehouse, primary_ItemCode, second_ItemCode, second_unit, CBM } = req.body
+        const { name, category, brand, unit, alertquantity, stock, product_code,  warehouse, primary_ItemCode, second_ItemCode, second_unit, CBM, MaxPerProduct, maxPerUnit } = req.body
         const image = req.file.filename;
         
         const data = new product({ image, name, category, brand, unit, alertquantity, stock, product_code, warehouse, primary_code: primary_ItemCode, secondary_code: second_ItemCode, second_unit: second_unit, maxStocks: MaxPerProduct, maxProdPerUnit:maxPerUnit, CBM });
