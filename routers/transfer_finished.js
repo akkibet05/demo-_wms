@@ -724,7 +724,8 @@ router.post("/preview/:id", auth , async (req, res) => {
                                 });
 
                                 req.flash('success', `Transfer Finalize Successfully`);
-                                res.redirect("/picking_list/PDF_transferFinal/" + transfer_data._id );
+                                // res.redirect("/picking_list/PDF_transferFinal/" + transfer_data._id );
+                                res.redirect("/transfer_finished/view/")
 
                             } catch (error) {
                                 console.error(error);

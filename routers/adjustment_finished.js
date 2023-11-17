@@ -686,7 +686,8 @@ router.post("/preview/:id", auth , async (req, res) => {
                         });
 
                     req.flash('success', `Adjustment Finalize Successfully`)
-                    res.redirect("/picking_list/PDF_adjustmentFinal/" + adjustment_data._id )
+                    // res.redirect("/picking_list/PDF_adjustmentFinal/" + adjustment_data._id )
+                    res.redirect("/adjustment_finished/view/")
                 } catch (error) {
                     console.error(error);
                     res.status(500).json({ error: 'An error occurred while saving data.' });

@@ -912,7 +912,8 @@ router.post("/preview/:id", auth , async (req, res) => {
                             
                        
                         req.flash("success", `Sales Update successfully`)
-                        res.redirect("/picking_list/PDFFinal/"+_id)
+                        // res.redirect("/picking_list/PDFFinal/"+_id)
+                        res.redirect("/all_sales_finished/view/")
                     } catch (error) {
                         console.error(error);
                         res.status(500).json({ error: 'An error occurred while saving data.' });
