@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon",
     "prod:start": "pm2-runtime app.js",
-    "build": "pkg  --output your-output-file"
+    "build": "npm run obfuscate",
+    "obfuscate": "powershell -Command \"Get-ChildItem -Path .\\routers\\ -Filter *.js -Recurse | ForEach-Object { javascript-obfuscator $_.FullName --output .\\dist\\routers\\ }\" && \"Get-ChildItem -Path .\\middleware\\ -Filter *.js -Recurse | ForEach-Object { javascript-obfuscator $_.FullName --output .\\dist\\middleware\\ }\" && \"Get-ChildItem -Path .\\models\\ -Filter *.js -Recurse | ForEach-Object { javascript-obfuscator $_.FullName --output .\\dist\\models\\ }\""
   },
   "keywords": [],
   "author": "",
@@ -48,5 +49,8 @@
       "node14-linux-arm64"
     ],
     "outputPath": "dist"
+  },
+  "devDependencies": {
+    "javascript-obfuscator": "^4.1.0"
   }
 }
