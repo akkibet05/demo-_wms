@@ -222,50 +222,36 @@ router.get("/view/add_adjustment", auth, async (req, res) => {
 
 router.post("/view/add_adjustment", auth, async(req, res) => {
     try{
-        const {warehouse_name, date, prod_name, level, isle, pallet, stock, types, adjust_qty, new_adjust_qty, note, Room_name, invoice, JO_number, expiry_date,PO_number, ReqBy, dateofreq,typeservicesData, destination, deliverydate, driver, plate, van, DRSI, typevehicle, TSU, TFU } = req.body
+        const {warehouse_name, date, prod_name, note, invoice } = req.body
         
         if(typeof prod_name == "string"){
             var product_name_array = [req.body.prod_name]
             var level_array = [req.body.level]
+            var rack_array = [req.body.rack]
             var stock_array = [req.body.stock]
             var types_array = [req.body.types]
-            var adjust_qty_array = [req.body.New_Qty_Converted_adj]
-            var new_adjust_qty_array = [req.body.New_Qty_Converted]
-            var unit_units_array = [req.body.Primary_Units]
-            var Secondary_units_array = [req.body.Secondary_units]
+            var adjust_qty_array = [req.body.adjust_qty]
+            var new_adjust_qty_array = [req.body.new_adjust_qty]
+            var unit_units_array = [req.body.unit]
             var product_code_array = [req.body.prod_code]
-            var batch_code_array = [req.body.batch_code]
-            var expiry_date_array = [req.body.expiry_date]
-            var production_date_array = [req.body.product_date]
-            var prod_cat_array = [req.body.prod_cat]
             var Rooms_array = [req.body.Rooms]
-            var maxPerUnit_array = [req.body.maxPerUnit]
             var level_array1 = [req.body.type]
-            var primary_code_array = [req.body.primary_code]
-            var secondary_code_array = [req.body.secondary_code]
-            var CBM_array = [req.body.CBM]
             var prod_invoice_array = [req.body.prod_invoice]
+            var idfromtransaction_array = [req.body.idfromtransaction]
         }else{
             var product_name_array = [...req.body.prod_name]
             var level_array = [...req.body.level]
+            var rack_array = [...req.body.rack]
             var stock_array = [...req.body.stock]
             var types_array = [...req.body.types]
-            var adjust_qty_array = [...req.body.New_Qty_Converted_adj]
-            var new_adjust_qty_array = [...req.body.New_Qty_Converted]
-            var unit_units_array = [...req.body.Primary_Units]
-            var Secondary_units_array = [...req.body.Secondary_units]
+            var adjust_qty_array = [...req.body.adjust_qty]
+            var new_adjust_qty_array = [...req.body.new_adjust_qty]
+            var unit_units_array = [...req.body.unit]
             var product_code_array = [...req.body.prod_code]
-            var batch_code_array = [...req.body.batch_code]
-            var expiry_date_array = [...req.body.expiry_date]
-            var production_date_array = [...req.body.product_date]
-            var prod_cat_array = [...req.body.prod_cat]
             var Rooms_array = [...req.body.Rooms]
-            var maxPerUnit_array = [...req.body.maxPerUnit]
             var level_array1 = [...req.body.type]
-            var primary_code_array = [...req.body.primary_code]
-            var secondary_code_array = [...req.body.secondary_code]
-            var CBM_array = [...req.body.CBM]
             var prod_invoice_array = [...req.body.prod_invoice]
+            var idfromtransaction_array = [...req.body.idfromtransaction]
         } 
         
         const newproduct = product_name_array.map((value)=>{
@@ -275,21 +261,13 @@ router.post("/view/add_adjustment", auth, async(req, res) => {
                     } 
         })
         
-        primary_code_array.forEach((value,i) => {
-            newproduct[i].primary_code = value
+        
+
+        rack_array.forEach((value,i) => {
+            newproduct[i].rack = value
         });
 
-        secondary_code_array.forEach((value,i) => {
-            newproduct[i].secondary_code = value
-        });
-
-        level_array.forEach((value,i) => {
-            var resultValueFloorLevel = value.slice(1);
-            newproduct[i].isle = value[0]
-            newproduct[i].pallet = resultValueFloorLevel
-        });
-
-        level_array1.forEach((value, i) => {
+        level_array.forEach((value, i) => {
             newproduct[i].level = value
         })
 
@@ -357,7 +335,8 @@ router.post("/view/add_adjustment", auth, async(req, res) => {
             newproduct[i].invoice = value
         })
 
-
+        res.json(newproduct)
+        return
         const newFilter = newproduct.filter(obj => obj.new_adjust_qty !== "0" && obj.new_adjust_qty !== "");
         var error = 0
         newFilter.forEach(data => {
@@ -1013,7 +992,7 @@ router.post("/barcode_scanner", async (req, res) => {
                 $unwind: "$product_details"
             },
             {
-                $match: { "product_details.primary_code": primary_code }
+                $match: { "product_details.product_code": primary_code }
             },
             {
                 $group: {
@@ -1038,7 +1017,9 @@ router.post("/barcode_scanner", async (req, res) => {
                     roomNamed : { $first: "$room" },
                     CBM : { $first: { $toDouble: "$product_details.CBM" } },
                     maxProducts: { $first: "$product_details.maxProducts" },
-                    invoice : { $first: "$product_details.invoice" }
+                    invoice : { $first: "$product_details.invoice" },
+                    idfromtransaction : { $first : "$product_details.idfromtransaction"}
+
                 }
             },
         ]);
@@ -1077,7 +1058,8 @@ router.post("/barcode_scanner", async (req, res) => {
                     roomNamed : { $first: "$room" },
                     CBM : { $first: { $toDouble: "$product_details.CBM" } },
                     maxProducts: { $first: "$product_details.maxProducts" },
-                    invoice : { $first: "$product_details.invoice" }
+                    invoice : { $first: "$product_details.invoice" },
+                    idfromtransaction : { $first : "$product_details.idfromtransaction"}
                 }
             },
         ]);

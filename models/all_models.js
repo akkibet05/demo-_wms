@@ -120,55 +120,40 @@ const product_data = new mongoose.Schema({
         type: String,
         required: true
     },
-    sku: {
+    year_model: {
         type: String,
-        // required: true
     },
     unit: {
         type: String,
         required: true
     },
-    second_unit:{
-        type: String
-    },
-    stock: {
-        type: Number
-    },
-    alertquantity: {
-        type: Number
+    plate_number: {
+        type: String,
+       
     },
     product_code: {
         type: String,
-        // unique: true
+        unique: true
     },
-    warehouse: {
+    file_number:{
         type: String
     },
-    secondary_unit:{
+    chasis_number:{
         type: String
     },
-    sub_category:{
+    motor_number:{
         type: String
     },
-    primary_code:{
+    ORCR:{
         type: String
     },
-    secondary_code:{
+    make_series:{
         type: String
     },
-    maxStocks:{
-        type: Number,
-        default: 9999
-    },
-    maxProdPerUnit:{
-        type: Number
-    },
-    product_category:{
+    typeofunits:{
         type: String
     },
-    CBM : {
-        type: mongoose.Types.Decimal128
-    }
+    
     
 })
 
@@ -193,15 +178,6 @@ const warehouse_data = new mongoose.Schema({
         type: String,
         default: "Enabled"
     },
-    main_category:{
-        type: String
-    },
-    category: {
-        type: String
-    },
-    warehouse_category:{
-        type: String
-    },
     product_details: [
         {
             product_name: {
@@ -212,65 +188,25 @@ const warehouse_data = new mongoose.Schema({
                 type: Number,
                 default: 0
             },
-            primary_code: {
-                type: String
-            },
-            secondary_code: {
-                type: String
-            },
             product_code: {
                 type: String
             },
             level:{
                 type: Number
             },
-            isle:{
+            rack:{
                 type: String
-            },
-            pallet:{
-               type: Number 
-            },
-            maxProducts:{
-                type: Number,
-                default: 9999
             },
             unit:{
                 type: String
             },
-            secondary_unit: {
-                type: String
-            },
-            expiry_date:{
-                type: String
-            },
-            production_date: {
-                type: String
-            },
-            maxPerUnit:{
-                type: Number
-            },
-            batch_code: {
-                type: String
-            },
-            alertQTY:{
-                type: Number
-            },
-            production_date:{
-                type: String
-            },
-            delivery_date:{
-                type: String
-            },
-            delivery_code:{
-                type: String
-            },
-            product_cat:{
-                type: String
-            },
-            CBM : {
-                type: mongoose.Types.Decimal128
-            },
             invoice: {
+                type: String
+            },
+            idfromtransaction: {
+                type: String
+            },
+            images: {
                 type: String
             }
         }
@@ -529,49 +465,16 @@ const purchases_data = new mongoose.Schema({
         rack:{
             type: String
         },
-        bay:{
+        level:{
            type: Number 
-        },
-        bin:{
-            type: mongoose.Schema.Types.Mixed
-        },
-        type:{
-            type: String
-        },
-        floorlevel:{
-            type: Number
-        },
-        primary_code:{
-            type: String
-        },
-        secondary_code:{
-            type: String
-        },
-        maxStocks:{
-            type: Number
-        },
-        batch_code: {
-            type: String
-        },
-        expiry_date: {
-            type: String
-        },
-        maxperunit:{
-            type: Number
-        },
-        alertQTY:{
-            type: Number
-        },
-        production_date:{
-            type: String
-        },
-        product_cat:{
-            type: String
         },
         room_name: {
             type: String
         },
         invoice: {
+            type: String
+        },
+        idfromtransaction: {
             type: String
         }
     }],
@@ -645,67 +548,28 @@ const purchases_data_finished = new mongoose.Schema({
         standard_unit: {
             type: String
         },
-        secondary_unit:{
-            type: String
-        },
         level:{
             type: Number
         },
-        isle:{
-            type: String
-        },
-        pallet:{
-           type: Number 
-        },
-        primary_code:{
-            type: String
-        },
-        secondary_code:{
-            type: String
-        },
-        maxStocks:{
-            type: Number
-        },
-        batch_code: {
-            type: String
-        },
-        expiry_date: {
-            type: String
-        },
-        production_date: {
-            type: String
-        },
-        maxperunit:{
-            type: Number
-        },
-        alertQTY:{
-            type: Number
-        },
-        product_cat: {
+        rack:{
             type: String
         },
         room_name: {
             type: String
         },
-        CBM : {
-            type: mongoose.Types.Decimal128
-        },
+      
         invoice:{
+            type: String
+        },
+        idfromtransaction: {
+            type: String
+        },
+        images: {
             type: String
         }
     }],
     note: {
         type: String
-    },
-    batch_code: {
-        type: String
-    },
-    paid_amount: {
-        type: Number,
-        default: 0
-    },
-    due_amount: {
-        type: Number,
     },
     return_data: {
         type: String,
@@ -714,51 +578,8 @@ const purchases_data_finished = new mongoose.Schema({
     room:{
         type: String
     },
-    POnumber:{
-        type: String
-    },
-    SCRN: {
-        type: String
-    },
-    JO_number: {
-        type: String
-    },
-    RequestedBy: {
-        type: String
-    },
-    DateofRequest: {
-        type: String
-    },
-    typeservices: {
-        type: String
-    },
-    typevehicle: {
-        type: String
-    },
-    destination: {
-        type: String
-    },
-    deliverydate: {
-        type: String
-    },
-    driver: {
-        type: String
-    },
-    plate: {
-        type: String
-    },
-    van: {
-        type: String
-    },
-    DRSI: {
-        type: String
-    },
-    TSU: {
-        type: String
-    },
-    TFU: {
-        type: String
-    }
+    
+    
 })
 
 
@@ -1120,6 +941,9 @@ const sales_data_finished = new mongoose.Schema({
             type: mongoose.Types.Decimal128
         },
         invoice: {
+            type: String
+        },
+        images: {
             type: String
         }
     }],
@@ -1799,6 +1623,9 @@ const adjustment_data = new mongoose.Schema({
         },
         room_names:{
             type: String
+        },
+        images: {
+            type: String
         }
     }],
     note:{
@@ -1844,11 +1671,8 @@ const adjustment_data_finished = new mongoose.Schema({
         level:{
             type: Number
         },
-        isle:{
+        rack:{
             type: String
-        },
-        pallet:{
-           type: Number 
         },
         stockBefore:{
             type: Number
@@ -1862,41 +1686,11 @@ const adjustment_data_finished = new mongoose.Schema({
         new_adjust_qty:{
             type: Number
         },
-        unit:{
-            type: String
-        },
-        secondary_unit:{
-            type: String
-        },
-        batch_code:{
-            type: String
-        },
-        expiry_date: {
-            type: String
-        },
-        production_date: {
-            type: String
-        },
-        alertQTY:{
-            type: Number
-        },
-        prod_cat:{
-            type: String
-        },
         room_names:{
             type: String
         },
         maxPerUnit: {
             type: Number
-        },
-        primary_code:{
-            type: String
-        },
-        secondary_code:{
-            type: String
-        },
-        CBM : {
-            type: mongoose.Types.Decimal128
         },
         invoice: {
             type: String
@@ -1906,52 +1700,6 @@ const adjustment_data_finished = new mongoose.Schema({
         type: String,
     },
     invoice: {
-        type: String
-    },
-    JO_number:{
-        type: String
-    },
-    finalize:{
-        type: String,
-        default: "False"
-    },
-    RequestedBy: {
-        type: String
-    },
-    DateofRequest: {
-        type: String
-    },
-    typeservices: {
-        type: String
-    },
-    typevehicle: {
-        type: String
-    },
-    destination: {
-        type: String
-    },
-    deliverydate: {
-        type: String
-    },
-    driver: {
-        type: String
-    },
-    plate: {
-        type: String
-    },
-    van: {
-        type: String
-    },
-    DRSI: {
-        type: String
-    },
-    PO_number: {
-        type: String
-    },
-    TSU: {
-        type: String
-    },
-    TFU: {
         type: String
     },
     isAllowEdit: {

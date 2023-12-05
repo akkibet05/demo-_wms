@@ -652,23 +652,14 @@ router.get("/view/add_products", auth, async (req, res) => {
 
 router.post("/view/add_products", auth, upload.single("image"), async (req, res) => {
     try {
-        const { name, category, brand, unit, alertquantity, stock, product_code,  warehouse, primary_ItemCode, second_ItemCode, second_unit, CBM, MaxPerProduct, maxPerUnit } = req.body
+
+
+        
+        const { name, category, brand, year_model, unit, plate_number, product_code,  file_number, chasis_number, Motor_number, ORCR, make_series, TOU } = req.body
         const image = req.file.filename;
         
-        const data = new product({ image, name, category, brand, unit, alertquantity, stock, product_code, warehouse, primary_code: primary_ItemCode, secondary_code: second_ItemCode, second_unit: second_unit, maxStocks: MaxPerProduct, maxProdPerUnit:maxPerUnit, CBM });
+        const data = new product({ image, name, category, brand, year_model, unit, plate_number, product_code, file_number, chasis_number, motor_number: Motor_number, ORCR, make_series, typeofunits:TOU });
         const products_data = await data.save()
-
-        const categories_data = await categories.findOne({name : category});
-        categories_data.products = parseInt(categories_data.products) + 1
-        await categories_data.save()
-
-        const brands_data = await brands.findOne({name : brand});
-        brands_data.products = parseInt(brands_data.products) + 1
-        await brands_data.save()
-
-        const units_data = await units.findOne({name : unit});
-        units_data.products = parseInt(units_data.products) + 1
-        await units_data.save()
 
 
         req.flash('success', `product add successfully`)

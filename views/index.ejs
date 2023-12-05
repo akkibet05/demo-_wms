@@ -62,7 +62,7 @@
 
                             <div class="row">
 
-                                <div class="col-xl-3 col-xxl-6 col-lg-6 col-sm-6">
+                                <!-- <div class="col-xl-3 col-xxl-6 col-lg-6 col-sm-6">
                                     <div class="widget-stat card">
                                         <div class="card-body p-4">
                                             <div class="media ai-icon">
@@ -108,44 +108,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-xl-3 col-xxl-6 col-lg-6 col-sm-6">
-                                    <div class="widget-stat card">
-                                        <div class="card-body p-4">
-                                            <div class="media ai-icon">
-                                                <span class="me-3 bgl-warning text-warning">
-                                                    <i class="las la-undo"></i>
-                                                </span>
-                                                <div class="media-body">
-                                                    <p class="mb-1"><%= language.sales_return %></p>
-                                                    <% if( sales_return == undefined ) { %>
-
-                                                        <% if(master_shop[0].currency_placement == 1) { %>
-    
-                                                            <h4 class="mb-0"> 0 Qty </h4>
-                                                        <% } else { %>
-                                                                
-                                                            <h4 class="mb-0">  0 Qty </h4>
-                                                        <% } %>
-
-                                                    <% } else { %>
-                                                            
-                                                        <% if(master_shop[0].currency_placement == 1) { %>
-    
-                                                            <h4 class="mb-0"><%= //sales_return_QTY.totalQuantity.toLocaleString() %> Qty</h4>
-                                                        <% } else { %>
-                                                                
-                                                            <h4 class="mb-0">  <%= //sales_return_QTY.totalQuantity.toLocaleString() %> Qty </h4>
-                                                        <% } %>
-
-                                                    <% } %>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-3 col-xxl-6 col-lg-6 col-sm-6">
+                                </div> -->
+                                
+                                <div class="col-xl-4 col-xxl-6 col-lg-6 col-sm-6">
                                     <div class="widget-stat card">
                                         <div class="card-body  p-4">
                                             <div class="media ai-icon">
@@ -189,7 +154,45 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xl-3 col-xxl-6 col-lg-6 col-sm-6">
+                                
+                                <div class="col-xl-4 col-xxl-6 col-lg-6 col-sm-6">
+                                    <div class="widget-stat card">
+                                        <div class="card-body p-4">
+                                            <div class="media ai-icon">
+                                                <span class="me-3 bgl-warning text-warning">
+                                                    <i class="las la-undo"></i>
+                                                </span>
+                                                <div class="media-body">
+                                                    <p class="mb-1">Adjustment</p>
+                                                    <% if( sales_return == undefined ) { %>
+
+                                                        <% if(master_shop[0].currency_placement == 1) { %>
+    
+                                                            <h4 class="mb-0"> 0 Qty </h4>
+                                                        <% } else { %>
+                                                                
+                                                            <h4 class="mb-0">  0 Qty </h4>
+                                                        <% } %>
+
+                                                    <% } else { %>
+                                                            
+                                                        <% if(master_shop[0].currency_placement == 1) { %>
+    
+                                                            <h4 class="mb-0"><%= //sales_return_QTY.totalQuantity.toLocaleString() %> Qty</h4>
+                                                        <% } else { %>
+                                                                
+                                                            <h4 class="mb-0">  <%= //sales_return_QTY.totalQuantity.toLocaleString() %> Qty </h4>
+                                                        <% } %>
+
+                                                    <% } %>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                                
+                                <div class="col-xl-4 col-xxl-6 col-lg-6 col-sm-6">
                                     <div class="widget-stat card">
                                         <div class="card-body p-4">
                                             <div class="media ai-icon">
@@ -200,7 +203,7 @@
 
 
                                                 <div class="media-body">
-                                                    <p class="mb-1"><%= language.purchase_return %></p>
+                                                    <p class="mb-1">Transfer</p>
 
                                                     <% if( purchases_return == undefined ) { %>
 
@@ -275,10 +278,11 @@
                                     </div>
                                 </div>
 
+
                                 <div class="col-lg-4">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h4 class="card-title"><%= language.latest_sales %></h4>
+                                            <h4 class="card-title">Adjustment</h4>
                                         </div>
                                         <div class="card-body">
                                             <div class="table-responsive">
@@ -287,31 +291,30 @@
                                                         <tr>
                                                             <!--<th scope="col"><%= language.date %></th>-->
                                                             <th scope="col">Warehouse</th>
-                                                            <th scope="col"><%= language.customer %></th>
+                                                            <th scope="col"><%= language.supplier %></th>
                                                             <!-- <th scope="col">QTY</th> -->
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <% sales_table.forEach((user)=> { %>
+                                                        <% purchases_table.forEach((user)=> { %>
 
                                                             <% if(master_shop[0].currency_placement == 1) { %>
 
                                                                 <tr>
                                                                     <!--<th><%= user.date %></th>-->
-                                                                    <td><%= user.warehouse_name %></td>
-                                                                    <td><%= user.customer %></td>
-                                                                    <td>  <%= user.sale_product[0].quantity %></td>
+                                                                    <td><%= user.warehouse_name%></td>
+                                                                    <td><%= user.suppliers %></td>
+                                                                 
                                                                 </tr>
                                                             <% } else { %>
                                                                         
                                                                 <tr>
                                                                     <!--<th><%= user.date %></th>-->
-                                                                    <td><%= user.warehouse_name %></td>
-                                                                    <td><%= user.customer %></td>
-                                                                    <!-- <td>  <%= //user.sale_product[0].quantity %></td> -->
+                                                                    <td><%= user.warehouse_name%></td>
+                                                                    <td><%= user.suppliers %></td>
+                                                                    <!-- <td><%= console.log(user) %></td> -->
                                                                 </tr>
                                                             <% } %>
-
                                                         <% }) %>
                                                     </tbody>
                                                 </table>
@@ -319,9 +322,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                
-                                
-                                
+
+                  
                                  <div class="col-lg-4">
                                     <div class="card">
                                         <div class="card-header">

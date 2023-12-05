@@ -18,7 +18,7 @@ router.get("/view", auth, async (req, res) => {
         console.log("master" , master);
 
         const find_data = await warehouse.find();
-        var rooms_data = ["Ambient", "Enclosed"];
+        var rooms_data = ["Rack 1", "Rack 2", "Parts"];
         // console.log(find_data);
 
         if (master[0].language == "English (US)") {

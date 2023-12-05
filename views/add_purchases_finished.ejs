@@ -85,96 +85,96 @@
     <script>
     function saveAndContinue() {
 
-        var strTemp = '';
-        var Invoice = document.getElementById("invoice");
-        var SCRN = document.getElementById("SCRN");
-        var suppliers = document.getElementById("suppliers");
-        var date = document.getElementById("date");
-        var warehouse_name = document.getElementById("warehouse_name");
-        // var Room_name = document.getElementById("Room_name");
-        var modal = document.getElementById("myModal");
+        // var strTemp = '';
+        // var Invoice = document.getElementById("invoice");
+        // var SCRN = document.getElementById("SCRN");
+        // var suppliers = document.getElementById("suppliers");
+        // var date = document.getElementById("date");
+        // var warehouse_name = document.getElementById("warehouse_name");
+        // // var Room_name = document.getElementById("Room_name");
+        // var modal = document.getElementById("myModal");
 
-        if(Invoice.value.length == 0){
-            strTemp += "Document Number is required. <br>" 
-            Invoice.style.borderColor = "red";
-            Invoice.focus()
-        }else{
-            Invoice.style.borderColor = "";
-        }
+        // if(Invoice.value.length == 0){
+        //     strTemp += "Document Number is required. <br>" 
+        //     Invoice.style.borderColor = "red";
+        //     Invoice.focus()
+        // }else{
+        //     Invoice.style.borderColor = "";
+        // }
 
-        if(SCRN.value.length == 0){
-            strTemp += "Supplier/Client Ref Number is required. <br>"
-            SCRN.style.borderColor = "red";
-            SCRN.focus()
-        }else{
-            SCRN.style.borderColor = "";
-        }
+        // if(SCRN.value.length == 0){
+        //     strTemp += "Supplier/Client Ref Number is required. <br>"
+        //     SCRN.style.borderColor = "red";
+        //     SCRN.focus()
+        // }else{
+        //     SCRN.style.borderColor = "";
+        // }
 
-        if(suppliers.value.length == 0){
-            strTemp += "Supplier is required. <br>"
-            suppliers.style.borderColor = "red";
-            suppliers.focus()
-        }else{
-            suppliers.style.borderColor = "";
-        }
+        // if(suppliers.value.length == 0){
+        //     strTemp += "Supplier is required. <br>"
+        //     suppliers.style.borderColor = "red";
+        //     suppliers.focus()
+        // }else{
+        //     suppliers.style.borderColor = "";
+        // }
 
-        if(date.value.length == 0){
-            strTemp += "Date received is required. <br>"
-            date.style.borderColor = "red";
-            date.focus()
-        }else{
-            date.style.borderColor = "";
-        }
+        // if(date.value.length == 0){
+        //     strTemp += "Date received is required. <br>"
+        //     date.style.borderColor = "red";
+        //     date.focus()
+        // }else{
+        //     date.style.borderColor = "";
+        // }
 
-        if(warehouse_name.value.length == 0){
-            strTemp += "Warehouse is required. <br>"
-            warehouse_name.style.borderColor = "red";
-            warehouse_name.focus()
-        }else{
-            warehouse_name.style.borderColor = "";
-        }
+        // if(warehouse_name.value.length == 0){
+        //     strTemp += "Warehouse is required. <br>"
+        //     warehouse_name.style.borderColor = "red";
+        //     warehouse_name.focus()
+        // }else{
+        //     warehouse_name.style.borderColor = "";
+        // }
 
      
 
 
-        var prod_qty = document.getElementsByName("prod_qty");
+        // var prod_qty = document.getElementsByName("prod_qty");
 
-        for (let index = 0; index < prod_qty.length; index++) {
-            const inputElement  = prod_qty[index];
+        // for (let index = 0; index < prod_qty.length; index++) {
+        //     const inputElement  = prod_qty[index];
 
-            if(inputElement.value.length == 0){
-                modal.style.display = "none";
-                strTemp += "Quantity  is required. <br>"
-                inputElement.style.borderColor = "red";
-                inputElement.focus()
-            }else{
-                inputElement.style.borderColor = "";
-            }
+        //     if(inputElement.value.length == 0){
+        //         modal.style.display = "none";
+        //         strTemp += "Quantity  is required. <br>"
+        //         inputElement.style.borderColor = "red";
+        //         inputElement.focus()
+        //     }else{
+        //         inputElement.style.borderColor = "";
+        //     }
             
-        }
+        // }
 
 
 
-        var table = document.getElementById("purchases_tbl_new");
-        var noofrow = table.rows.length -1;
+        // var table = document.getElementById("purchases_tbl_new");
+        // var noofrow = table.rows.length -1;
 
-        if(noofrow == 0){
-            strTemp += "Product list is empty. <br>"
-            table.style.borderColor = "red";
-            document.getElementById("product_code").focus()
-        }else{
-            table.style.borderColor = "";
-        }
+        // if(noofrow == 0){
+        //     strTemp += "Product list is empty. <br>"
+        //     table.style.borderColor = "red";
+        //     document.getElementById("product_code").focus()
+        // }else{
+        //     table.style.borderColor = "";
+        // }
 
-        if(strTemp.length > 0){
-            modal.style.display = "none";
-            Swal.fire(
-            'Required ',
-            "<h5>" + strTemp + "</h5>",
-            'warning'
-            )
-            return;
-        }
+        // if(strTemp.length > 0){
+        //     modal.style.display = "none";
+        //     Swal.fire(
+        //     'Required ',
+        //     "<h5>" + strTemp + "</h5>",
+        //     'warning'
+        //     )
+        //     return;
+        // }
 
         
     
@@ -223,64 +223,64 @@
         var valprod_level = '';
         var valConver = '';
 
-        for (var x = 0; x < NodeList.length; x++) {
-            nodeVal = NodeList[x].value;
-            productName = NodeList2[x].value;
-            valprod_unit = prod_unit[x].value;
-            valprod_qty = prod_qty[x].value;
-            valbatch_code = batch_code[x].value;
-            valproduct_date = product_date[x].value;
-            valexpiry_date = expiry_date[x].value;
-            valConver = Conver[x].value;
-            valtype = type[x].value;
+        // for (var x = 0; x < NodeList.length; x++) {
+        //     nodeVal = NodeList[x].value;
+        //     productName = NodeList2[x].value;
+        //     valprod_unit = prod_unit[x].value;
+        //     valprod_qty = prod_qty[x].value;
+        //     valbatch_code = batch_code[x].value;
+        //     valproduct_date = product_date[x].value;
+        //     valexpiry_date = expiry_date[x].value;
+        //     valConver = Conver[x].value;
+        //     valtype = type[x].value;
 
-            const selectedIndex = prod_level[x].selectedIndex;
-            const selectedValue = prod_level[x].value;
-            valprod_level = prod_level[x].options[selectedIndex].text;
+        //     const selectedIndex = prod_level[x].selectedIndex;
+        //     const selectedValue = prod_level[x].value;
+        //     valprod_level = prod_level[x].options[selectedIndex].text;
             
-            html += '<tr>';
-            html += '<td>';
-            html += '<p>' + nodeVal + '</p>';
-            html += '</td>';
+        //     html += '<tr>';
+        //     html += '<td>';
+        //     html += '<p>' + nodeVal + '</p>';
+        //     html += '</td>';
 
-            html += '<td>';
-            html += productName;
-            html += '</td>';
+        //     html += '<td>';
+        //     html += productName;
+        //     html += '</td>';
 
-            html += '<td>';
-            html += valbatch_code;
-            html += '</td>';
+        //     html += '<td>';
+        //     html += valbatch_code;
+        //     html += '</td>';
 
-            html += '<td>';
-            html += valproduct_date;
-            html += '</td>';
+        //     html += '<td>';
+        //     html += valproduct_date;
+        //     html += '</td>';
 
-            html += '<td>';
-            html += valexpiry_date;
-            html += '</td>';
+        //     html += '<td>';
+        //     html += valexpiry_date;
+        //     html += '</td>';
 
-            html += '<td>';
-            html += valprod_qty;
-            html += '</td>';
+        //     html += '<td>';
+        //     html += valprod_qty;
+        //     html += '</td>';
 
-            html += '<td>';
-            html += valprod_unit;
-            html += '</td>';
+        //     html += '<td>';
+        //     html += valprod_unit;
+        //     html += '</td>';
             
-            html += '<td>';
-            html += valConver;
-            html += '</td>';
+        //     html += '<td>';
+        //     html += valConver;
+        //     html += '</td>';
 
-            html += '<td>';
-            html += valtype;
-            html += '</td>';
+        //     html += '<td>';
+        //     html += valtype;
+        //     html += '</td>';
 
-            html += '<td>';
-            html += valprod_level;
-            html += '</td>';
+        //     html += '<td>';
+        //     html += valprod_level;
+        //     html += '</td>';
 
-            html += '</tr>';
-        }
+        //     html += '</tr>';
+        // }
 
         var htmlfinal = "";
         htmlfinal += '<thead class="thead-primary">';
@@ -419,46 +419,7 @@
                                                         </div>
 
 
-
-                                                        <div class="col-xl-3 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label for="invoice_no"> Supplier/Client Ref Number <span
-                                                                        class="text-red"> *</span></label>
-                                                                <input type="text" name="SCRN" class="form-control" value=""
-                                                                    id="SCRN" required>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-xl-3 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label class="form-label">Requested By</label>
-                                                                <input type="text" class="form-control" name="ReqBy" id="ReqBy">
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="col-xl-3 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label class="form-label">Date of Request</label>
-                                                                <input type="date" class="form-control" name="dateofreq" id="dateofreq">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-xl-3 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label class="form-label">PO number</label>
-                                                                <input type="text" class="form-control" name="PO_number" id="PO_number">
-                                                            </div>
-                                                        </div>
-
-                                                        <!-- <div class="col-xl-3 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label class="form-label">Job Order number</label>
-                                                                <input type="text" class="form-control" name="JO_number">
-                                                            </div>
-                                                        </div> -->
-
-                                                        
+  
                                                         <div class="col-xl-3 col-sm-6">
                                                             <div class="form-group">
                                                                 <label for="invoice_no"><%= language.supplier %>  <span
@@ -501,152 +462,18 @@
                                                        
                                                         <div class="col-xl-3 col-sm-6">
                                                             <div class="form-group">
-                                                                <label for="invoice_no">Room  <span
-                                                                        class="text-red">*</span></label>
-                                                                <!-- <select class="form-control" name="Room_name"
-                                                                    id="Room_name" onchange="showTextbox(); BayBin();" required>
-                                          
-                                                                </select> -->
+                                                                <label for="invoice_no">Area  <span
+                                                                        class="text-red">*</span></label>                                     
 
                                                                 <div id="showRoom">
 
                                                                 </div>
                                                             </div>
                                                         </div>
-    
-                                                        
-
-
                                                         
                                                     </div>
 
-                                                    <div class="row mb-3">
-
-                                                        <div class="col-xl-3 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label for="invoice_no">Type of Services  </label><br>
-                                                                <!-- <select class="form-control" name="typeservices"
-                                                                    id="typeservices" required>
-                                                                    <option value="F">Freight</option>
-                                                                    <option value="HI">Handling In</option>
-                                                                    <option value="S">Stripping</option>
-                                                                    <option value="PA">Put Away</option>
-                                                                    <option value="OTH">Others</option>
-                                                                </select> -->
-
-                                                                <input type="checkbox" class="form-check-input" id="typeservices" name="typeservices" onclick="datahceck()" value="Freight">
-                                                                <label for="Freight"> Freight</label><br>
-                                                                <input type="checkbox" class="form-check-input" id="typeservices" name="typeservices" onclick="datahceck()" value="Handling In">
-                                                                <label for="HandlingIn"> Handling In</label><br>
-                                                                <input type="checkbox" class="form-check-input" id="typeservices" name="typeservices" onclick="datahceck()" value="Handling Out">
-                                                                <label for="HandlingOut"> Handling Out</label><br>
-                                                                <input type="checkbox" class="form-check-input" id="typeservices" name="typeservices" onclick="datahceck()" value="Stripping">
-                                                                <label for="Stripping"> Stripping</label><br>
-                                                                <input type="checkbox" class="form-check-input" id="typeservices" name="typeservices" onclick="datahceck()" value="Stuffing">
-                                                                <label for="Stuffing"> Stuffing</label><br>
-                                                                <input type="checkbox" class="form-check-input" id="typeservices" name="typeservices" onclick="datahceck()" value="Barcoding">
-                                                                <label for="Barcoding"> Barcoding</label><br>
-                                                                <input type="checkbox" class="form-check-input" id="typeservices" name="typeservices" onclick="datahceck()" value="Repacking">
-                                                                <label for="Repacking"> Repacking</label><br>
-                                                                <input type="checkbox" class="form-check-input" id="typeservices" name="typeservices" onclick="datahceck()" value="Reprocessing">
-                                                                <label for="Reprocessing"> Reprocessing</label><br>
-                                                                <input type="checkbox" class="form-check-input" id="typeservices" name="typeservices" onclick="datahceck()" value="Stickering">
-                                                                <label for="Stickering"> Stickering</label><br>
-                                                                <input type="checkbox" class="form-check-input" id="typeservices" name="typeservices" onclick="datahceck()" value="Sorting">
-                                                                <label for="Sorting"> Sorting</label><br>
-
-                                                                <input type="hidden" class="form-check-input" id="typeservicesData" name="typeservicesData">
-                                                                
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-xl-3 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label for="invoice_no">Type of Vehicle  <span
-                                                                        class="text-red">*</span></label>
-                                                                <select class="form-control" name="typevehicle"
-                                                                    id="typevehicle" required>
-                                                                    <option value="4WH">4 WHEELER</option>
-                                                                    <option value="6WH">6 WHEELER</option>
-                                                                    <option value="FWD">FORWARD</option>
-                                                                    <option value="10WH">10 WHEELER</option>
-                                                                    <option value="10FT">10 FOOTER</option>
-                                                                    <option value="20FT">20 FOOTER</option>
-                                                                    <option value="40FT">40 FOOTER</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-
-
-                                                        <!-- <div class="col-xl-3 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label class="form-label">Destination</label>
-                                                                <input type="text" class="form-control" name="destination" id="destination">
-                                                            </div>
-                                                        </div> -->
-
-
-                                                        <!-- <div class="col-xl-3 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label class="form-label">Pick Up/Delivery Date</label>
-                                                                <input type="date" class="form-control" name="deliverydate" id="deliverydate">
-                                                            </div>
-                                                        </div> -->
-
-                                                        <div class="col-xl-3 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label class="form-label">Name of trucker/Driver</label>
-                                                                <input type="text" class="form-control" name="driver" id="driver">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-xl-3 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label class="form-label">Plate Number</label>
-                                                                <input type="text" class="form-control" name="plate" id="plate">
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="col-xl-3 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label class="form-label">Van/Seal Number</label>
-                                                                <input type="text" class="form-control" name="van" id="can">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-xl-3 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label class="form-label">D.R. / S.I Number</label>
-                                                                <input type="text" class="form-control" name="DRSI" id="DRSI">
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="col-xl-3 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label class="form-label">TIME START UNLOADING</label>
-                                                                <input type="time" class="form-control" name="TSU" id="TSU">
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="col-xl-3 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label class="form-label">TIME FINISH UNLOADING</label>
-                                                                <input type="time" class="form-control" name="TFU" id="TFU">
-                                                            </div>
-                                                        </div>
-
-
-
-
-
-                                                    </div>
-
-                                                    
-                                                    
-                                                 
+                                             
 
 
                                                     
@@ -689,16 +516,11 @@
                                                             <table class="table primary-table-bordered" id="purchases_tbl_new">
                                                                 <thead class="thead-primary">
                                                                     <tr>
-                                                                        <th scope="col">Item Code </th>
+                                                                        <th scope="col">Item Code / Serial No. </th>
                                                                         <th scope="col">Item Description </th>
-                                                                        <th scope="col">Primary Barcode </th>
-                                                                        <th scope="col">Batch Code </th>
-                                                                        <th scope="col">Production date </th>
-                                                                        <th scope="col">Expiry date </th>
                                                                         <th scope="col"><%= language.quantity %> </th>
                                                                         <th scope="col">Unit of Measure </th>
-                                                                        <th scope="col">Conversion</th>
-                                                                        <th scope="col">Room</th>
+                                                                        <th scope="col">Area</th>
                                                                         <th scope="col">Level </th>
                                                                         <th scope="col">Location </th>
                                                                         <th scope="col">Action</th>
@@ -912,36 +734,7 @@
 
     
 
-    // function SelectRoom(){
-        
-    //     var varibale = document.getElementById("warehouse_name").value;
-    //     var selectRoom = $('#Room_name');
 
-    //     $.ajax({
-    //         url: '/warehousemap_Income/Rooms_data', 
-    //         method: 'POST',
-    //         data: { warehouse_name: varibale }, 
-    //         success: function(response) {
-
-            
-    //             selectRoom.empty();
-    //                 $.each(response, function(index, data) {
-    //                     var roomName = data.room_name;
-    //                     var roomCode = data.room_name
-    //                     var option = $('<option>').text(roomName).val(roomName).attr('roomcode', roomCode);;
-    //                     selectRoom.append(option);
-
-    //                     BayBin()
-    //                 })
-
-
-                
-    //         }
-    //     })
-
-        
-        
-    // }
     
     function showTextbox() {
       var dropdown = document.getElementById("choice-dropdown");
@@ -1120,14 +913,17 @@
         var warehouse = document.getElementById("warehouse_name").value;
         
         var Location;
-        if(warehouse == "Pasig"){
+        if(warehouse == "Main"){
             // alert(room)
             switch(room){
-                case "Ambient":
-                type = [1, 2 ,3, 4];
+                case "Rack 1":
+                type = [1, 2 ,3];
                 break;
-                case "Enclosed":
-                type = [1,2,3,4];
+                case "Rack 2":
+                type = [1,2,3];
+                break;
+                case "Parts":
+                type = [1,2,3];
                 break;
             }
 
@@ -1157,157 +953,88 @@
         var levelType = document.getElementById("type"+x);
         var levels = [];
         let outputArray = [];
-        if(warehouse == "Pasig"){
+        if(warehouse == "Main"){
             switch(room){
-                case "Ambient":
+                case "Rack 1":
 
-                    if(levelType.value == 1){   
+          
                         const letterRanges = [
-                            { letter: 'A', min: 1, max: 54 },
-                            { letter: 'B', min: 55, max: 108 },
-                            { letter: 'C', min: 109, max: 162 },
-                            { letter: 'D', min: 163, max: 216 },
-                            { letter: 'E', min: 217, max: 270 },
-                            { letter: 'F', min: 271, max: 324 },
-                            { letter: 'G', min: 325, max: 362 },
-                            { letter: 'H', min: 363, max: 400 },
-                            { letter: 'I', min: 401, max: 438 },
-                            { letter: 'J', min: 439, max: 476 }
+                            { letter: 'A' },
+                            { letter: 'B' },
+                            { letter: 'C' },
+                            { letter: 'D' },
+                            { letter: 'E' },
+                            { letter: 'F'},
+                            { letter: 'G' },
+                            { letter: 'H' },
+                            { letter: 'I' },
+                            { letter: 'J'},
+                            { letter: 'K'},
+                            { letter: 'L'},
+                            { letter: 'M'},
+                            { letter: 'N'},
+                            { letter: 'O'},
+                            { letter: 'P'},
+                            { letter: 'Q'},
+                            { letter: 'R'},
+                            { letter: 'S'},
+                            { letter: 'T'},
+                            { letter: 'U'},
+                            { letter: 'V'},
+                            { letter: 'W'},
+                            { letter: 'X'},
+                            { letter: 'Y'},
+                            { letter: 'Z'}
                         ];
 
                         for (const range of letterRanges) {
-                            const { letter, min, max } = range;
-                            for (let i = min; i <= max; i++) {
-                                levels.push(letter + i);
-                            }
+                            const { letter } = range;
+                            
+                                levels.push(letter );
+                            
                         }
-
-                    }else if(levelType.value == 2){
-                        const letterRanges = [
-                        { letter: 'A', min: 477, max: 530 },
-                        { letter: 'B', min: 531, max: 584 },
-                        { letter: 'C', min: 585, max: 638 },
-                        { letter: 'D', min: 639, max: 692 },
-                        { letter: 'E', min: 693, max: 746 },
-                        { letter: 'F', min: 747, max: 800 },
-                        { letter: 'G', min: 801, max: 838 },
-                        { letter: 'H', min: 839, max: 876 },
-                        { letter: 'I', min: 877, max: 914 },
-                        { letter: 'J', min: 915, max: 952 }
-                        ];
-
-                        for (const range of letterRanges) {
-                            const { letter, min, max } = range;
-                            for (let i = min; i <= max; i++) {
-                                levels.push(letter + i);
-                            }
-                        }
-                    }else if(levelType.value == 3){
-                        const letterRanges = [
-                        { letter: 'A', min: 953, max: 1006 },
-                        { letter: 'B', min: 1007, max: 1060 },
-                        { letter: 'C', min: 1061, max: 1114 },
-                        { letter: 'D', min: 1115, max: 1168 },
-                        { letter: 'E', min: 1169, max: 1222 },
-                        { letter: 'F', min: 1223, max: 1276 },
-                        { letter: 'G', min: 1277, max: 1314 },
-                        { letter: 'H', min: 1315, max: 1352 },
-                        { letter: 'I', min: 1353, max: 1390 },
-                        { letter: 'J', min: 1391, max: 1428 }
-                        ];
-
-                        for (const range of letterRanges) {
-                            const { letter, min, max } = range;
-                            for (let i = min; i <= max; i++) {
-                                levels.push(letter + i);
-                            }
-                        }
-                    }else if(levelType.value == 4){
-                        const letterRanges = [
-                        { letter: 'A', min: 1429, max: 1482 },
-                        { letter: 'B', min: 1483, max: 1536 },
-                        { letter: 'C', min: 1537, max: 1590 },
-                        { letter: 'D', min: 1591, max: 1644 },
-                        { letter: 'E', min: 1645, max: 1698 },
-                        { letter: 'F', min: 1699, max: 1752 },
-                        { letter: 'G', min: 1753, max: 1790 },
-                        { letter: 'H', min: 1791, max: 1828 },
-                        { letter: 'I', min: 1829, max: 1868 },
-                        { letter: 'J', min: 1867, max: 1904 }
-                        ];
-
-                        for (const range of letterRanges) {
-                            const { letter, min, max } = range;
-                            for (let i = min; i <= max; i++) {
-                                levels.push(letter + i);
-                            }
-                        }
-                    }
 
                     
                 break;
-                case "Enclosed":
-                if(levelType.value == 1){   
-                        const letterRanges = [        
-                            { letter: 'G', min: 1, max: 13 },
-                            { letter: 'H', min: 14, max: 27 },
-                            { letter: 'I', min: 28, max: 41 },
-                            { letter: 'J', min: 42, max: 55 }
+                case "Rack 2":
+                const letterRanges1 = [
+                            { letter: 'A' },
+                            { letter: 'B' },
+                            { letter: 'C' },
+                            { letter: 'D' },
+                            { letter: 'E' },
+                            { letter: 'F'},
+                            { letter: 'G' },
+                            { letter: 'H' },
+                            { letter: 'I' },
+                            { letter: 'J'},
+                            { letter: 'K'},
+                            { letter: 'L'},
+                            { letter: 'M'},
+                            { letter: 'N'},
+                            { letter: 'O'},
+                            { letter: 'P'},
+                            { letter: 'Q'},
+                            { letter: 'R'},
+                            { letter: 'S'},
+                            { letter: 'T'},
+                            { letter: 'U'},
+                            { letter: 'V'},
+                            { letter: 'W'},
+                            { letter: 'X'},
+                            { letter: 'Y'},
+                            { letter: 'Z'}
                         ];
 
-                        for (const range of letterRanges) {
-                            const { letter, min, max } = range;
-                            for (let i = min; i <= max; i++) {
-                                levels.push(letter + i);
-                            }
+                        for (const range of letterRanges1) {
+                            const { letter } = range;
+                            
+                                levels.push(letter );
+                            
                         }
-
-                    }else if(levelType.value == 2){
-                        const letterRanges = [        
-                            { letter: 'G', min: 56, max: 68 },
-                            { letter: 'H', min: 69, max: 82 },
-                            { letter: 'I', min: 83, max: 96 },
-                            { letter: 'J', min: 97, max: 110 }
-                        ];
-
-                        for (const range of letterRanges) {
-                            const { letter, min, max } = range;
-                            for (let i = min; i <= max; i++) {
-                                levels.push(letter + i);
-                            }
-                        }
-                    }else if(levelType.value == 3){
-                        const letterRanges = [        
-                            { letter: 'G', min: 111, max: 123 },
-                            { letter: 'H', min: 124, max: 137 },
-                            { letter: 'I', min: 138, max: 151 },
-                            { letter: 'J', min: 152, max: 165 }
-                        ];
-
-                        for (const range of letterRanges) {
-                            const { letter, min, max } = range;
-                            for (let i = min; i <= max; i++) {
-                                levels.push(letter + i);
-                            }
-                        }
-                    }else if(levelType.value == 4){
-                        const letterRanges = [        
-                            { letter: 'G', min: 166, max: 178 },
-                            { letter: 'H', min: 179, max: 192 },
-                            { letter: 'I', min: 193, max: 206 },
-                            { letter: 'J', min: 207, max: 220 }
-                        ];
-
-                        for (const range of letterRanges) {
-                            const { letter, min, max } = range;
-                            for (let i = min; i <= max; i++) {
-                                levels.push(letter + i);
-                            }
-                        }
-                    }
                 break;
 
-                case "AISLE":
+                case "Parts":
                 levels = [0];
                 break;
             }
@@ -1320,214 +1047,7 @@
                  selectlevel[i].innerHTML = optionsHtml;
             }        
             
-        }else if(warehouse == "Iloilo"){
-            switch(room){
-                case "Ambient":
-                if(levelType.value == 1){   
-                        const letterRanges = [
-                            { letter: 'A', min: 1, max: 54 },
-                            { letter: 'B', min: 55, max: 108 },
-                            { letter: 'C', min: 109, max: 145 }
-                        ];
-
-                        for (const range of letterRanges) {
-                            const { letter, min, max } = range;
-                            for (let i = min; i <= max; i++) {
-                                levels.push(letter + i);
-                            }
-                        }
-
-                    }
-                break;
-                
-            }
-            
-            for (let i = 0; i < selectlevel.length; i++) {
-                var optionsHtml = '';
-                levels.forEach(function (num) {
-                     optionsHtml += '<option value="' + num + '">' + num + '</option>';
-                });
-                 selectlevel[i].innerHTML = optionsHtml;
-            }        
-            
-    }else if(warehouse == "Bacolod"){
-            switch(room){
-                case "Ambient":
-                if(levelType.value == 1){   
-                        const letterRanges = [
-                            { letter: 'A', min: 1, max: 54 },
-                            { letter: 'B', min: 55, max: 60 },
-                        ];
-
-                        for (const range of letterRanges) {
-                            const { letter, min, max } = range;
-                            for (let i = min; i <= max; i++) {
-                                levels.push(letter + i);
-                            }
-                        }
-
-                    }
-                break;
-                
-            }
-            
-            for (let i = 0; i < selectlevel.length; i++) {
-                var optionsHtml = '';
-                levels.forEach(function (num) {
-                     optionsHtml += '<option value="' + num + '">' + num + '</option>';
-                });
-                 selectlevel[i].innerHTML = optionsHtml;
-            }        
-            
-    }else if(warehouse == "Cebu"){
-            switch(room){
-                case "Ambient":
-                if(levelType.value == 1){   
-                        const letterRanges = [
-                            { letter: 'A', min: 1, max: 54 },
-                            { letter: 'B', min: 55, max: 108 },
-                            { letter: 'C', min: 109, max: 150 },
-                        ];
-
-                        for (const range of letterRanges) {
-                            const { letter, min, max } = range;
-                            for (let i = min; i <= max; i++) {
-                                levels.push(letter + i);
-                            }
-                        }
-
-                    }
-                break;
-                
-            }
-            
-            for (let i = 0; i < selectlevel.length; i++) {
-                var optionsHtml = '';
-                levels.forEach(function (num) {
-                     optionsHtml += '<option value="' + num + '">' + num + '</option>';
-                });
-                 selectlevel[i].innerHTML = optionsHtml;
-            }        
-            
-    }else if(warehouse == "Tacloban"){
-            switch(room){
-                case "Ambient":
-                if(levelType.value == 1){   
-                        const letterRanges = [
-                            { letter: 'A', min: 1, max: 54 },
-                            { letter: 'B', min: 55, max: 194 },
-                        ];
-
-                        for (const range of letterRanges) {
-                            const { letter, min, max } = range;
-                            for (let i = min; i <= max; i++) {
-                                levels.push(letter + i);
-                            }
-                        }
-
-                    }
-                break;
-                
-            }
-            
-            for (let i = 0; i < selectlevel.length; i++) {
-                var optionsHtml = '';
-                levels.forEach(function (num) {
-                     optionsHtml += '<option value="' + num + '">' + num + '</option>';
-                });
-                 selectlevel[i].innerHTML = optionsHtml;
-            }        
-            
-    }else if(warehouse == "Davao"){
-            switch(room){
-                case "Ambient":
-                if(levelType.value == 1){   
-                        const letterRanges = [
-                            { letter: 'A', min: 1, max: 54 },
-                            { letter: 'B', min: 55, max: 108 },
-                            { letter: 'C', min: 109, max: 150 },
-                        ];
-
-                        for (const range of letterRanges) {
-                            const { letter, min, max } = range;
-                            for (let i = min; i <= max; i++) {
-                                levels.push(letter + i);
-                            }
-                        }
-
-                    }
-                break;
-                
-            }
-            
-            for (let i = 0; i < selectlevel.length; i++) {
-                var optionsHtml = '';
-                levels.forEach(function (num) {
-                     optionsHtml += '<option value="' + num + '">' + num + '</option>';
-                });
-                 selectlevel[i].innerHTML = optionsHtml;
-            }        
-            
-    }else if(warehouse == "CDO"){
-            switch(room){
-                case "Ambient":
-                if(levelType.value == 1){   
-                        const letterRanges = [
-                            { letter: 'A', min: 1, max: 54 },
-                            { letter: 'B', min: 55, max: 108 },
-                            { letter: 'C', min: 109, max: 162 },
-                            { letter: 'D', min: 163, max: 200 },
-                        ];
-
-                        for (const range of letterRanges) {
-                            const { letter, min, max } = range;
-                            for (let i = min; i <= max; i++) {
-                                levels.push(letter + i);
-                            }
-                        }
-
-                    }
-                break;
-                
-            }
-            
-            for (let i = 0; i < selectlevel.length; i++) {
-                var optionsHtml = '';
-                levels.forEach(function (num) {
-                     optionsHtml += '<option value="' + num + '">' + num + '</option>';
-                });
-                 selectlevel[i].innerHTML = optionsHtml;
-            }        
-            
-    }else if(warehouse == "Zamboanga"){
-            switch(room){
-                case "Ambient":
-                if(levelType.value == 1){   
-                        const letterRanges = [
-                            { letter: 'A', min: 1, max: 50 },
-                        ];
-
-                        for (const range of letterRanges) {
-                            const { letter, min, max } = range;
-                            for (let i = min; i <= max; i++) {
-                                levels.push(letter + i);
-                            }
-                        }
-
-                    }
-                break;
-                
-            }
-            
-            for (let i = 0; i < selectlevel.length; i++) {
-                var optionsHtml = '';
-                levels.forEach(function (num) {
-                     optionsHtml += '<option value="' + num + '">' + num + '</option>';
-                });
-                 selectlevel[i].innerHTML = optionsHtml;
-            }        
-            
-    }
+        }
 }
 
     function ConversionKit(x,c){
@@ -1600,15 +1120,13 @@
 
                         if(data.product_cat == "P"){
                             var row = $('<tr>');
-                            row.append($('<td>').html('<input type="text" class="form-control" style="width: 125px;" name="prod_code" value="' + data.product_code + '" readonly>'));
+                            row.append($('<td>').html('<input type="text" class="form-control" style="width: 200px;" name="prod_code" value="' + data.product_code + '" readonly>'));
                             row.append($('<td>').html('<input type="text" class="form-control" style="width: 380px;" name="prod_name" id="prod_name'+ lastIncre +'" value="' + data.name + '" readonly>'));
-                            row.append($('<td>').html('<input type="text" class="form-control" style="width: 190px;" name="primary_code" value="' + data.primary_code + '" readonly>'));
-                            row.append($('<td>').html('<input type="text" class="form-control" style="width: 150px;" name="batch_code" value="">'));
-                            row.append($('<td>').html('<input type="date" class="form-control" style="width: 150px;" name="product_date" value="" required>'));
-                            row.append($('<td>').html('<input type="date" class="form-control" style="width: 150px;" name="expiry_date" id="expiry_date'+lastIncre+'" value="" required>'));
+                            
+                            
                             row.append($('<td>').html('<input type="number" class="form-control" style="width: 150px;" name="prod_qty" id="prod_qty'+ lastIncre +'" onkeyup="ValidationForMaxQTY('+ lastIncre +'); ConversionKit('+lastIncre+', '+data.maxProdPerUnit+'); checkingWarehouse('+lastIncre+','+ data.product_code +',\''+RoomAssign+'\');"  value="" >'));
                             row.append($('<td>').html('<input type="text" class="form-control" style="width: 150px;" name="prod_unit" id="prod_unit'+lastIncre+'" value="' + data.unit + '" readonly>'));
-                            row.append($('<td>').html('<input type="text" class="form-control" style="width: 150px;" name="test" id="Conver'+lastIncre+'" value="" readonly>'));
+                            
                             row.append($('<td>').html('<input type="text" class="form-control" style="width: 150px;" name="RoomAssign" id="RoomAssign'+lastIncre+'" value="'+RoomAssign+'" readonly>'));
                             row.append($('<td>').html('<select class="form-control" name="type" level="type' + lastIncre + '" id="type' + lastIncre + '" style="width: 150px;" onchange="BayBin(' + lastIncre + ', \'' + RoomAssign + '\')"></select>'));
                             row.append($('<td>').html('<select class="form-control" name="prod_level" level="levelOslie'+lastIncre+'" id="prod_level' + lastIncre + '" style="width: 150px;" onchange="checkingWarehouse('+lastIncre+','+ data.product_code +',\''+RoomAssign+'\') "></select>'));

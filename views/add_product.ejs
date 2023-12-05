@@ -127,26 +127,19 @@
                                                                     </select>
                                                                 </div>
 
-                                                                <!--<div class="mb-3 col-md-6">-->
-                                                                <!--    <label class="form-label"><%= language.sku %><span class="text-red">*</span></label>-->
-                                                                <!--    <input type="text" placeholder="SKU" class="form-control"-->
-                                                                <!--        name="sku" required>-->
-                                                                <!--</div>-->
+
                                                                 
-                                                                
+
+                                                           
                                                                
                                                                 
                                                                 
-                                                                
-                                                                <div class="mb-2 col-md-6">
-                                                                    <label class="form-label"><%= language.alert_qty %></label>
-                                                                    <input type="number" placeholder="Quantity" class="form-control"
-                                                                        name="alertquantity">
-                                                                </div>
+                                                              
 
                                                                 <div class="mb-3 col-md-6">
-                                                                    <input type="hidden" class="form-control"
-                                                                        name="stock" value="0">
+                                                                    <label class="form-label">Year Model <span class="text-red">*</span></label>
+                                                                    <input type="text" placeholder="Year Model" class="form-control"
+                                                                        name="year_model" required>
                                                                 </div>
 
                                                             </div>
@@ -162,63 +155,76 @@
                                                                     </select>
                                                                 </div>
                                                                 
-                                                                
-                                                                 <div class="mb-3 col-md-6">
-                                                                    <label class="form-label">Secondary <%= language.units %> <span class="text-red">*</span></label>
-                                                                    <select class="form-control" name="second_unit" id="second_unit" onchange="ChangedLabel()" required>
-                                                                        <option value selected disabled>Select One</option>
-                                                                        <% units.forEach((units) => { %>
-                                                                            <option value="<%= units.name %>"><%= units.name %></option>
-                                                                        <% }) %>
-                                                                    </select>
+
+                                                                <div class="mb-3 col-md-6">
+                                                                    <label class="form-label">Plate Number</label>
+                                                                    <input type="text" placeholder="Plate Number" class="form-control"
+                                                                        name="plate_number" >
                                                                 </div>
+                                                                
+                                                                
 
                                                                 
                                                             </div>
 
                                                             <div class="row">
                                                                 
-                                                                <div class="mb-2 col-md-3">
-                                                                    <label class="form-label">Primary Barcode</label>
-                                                                    <input type="number" placeholder="Primary Code" class="form-control"
-                                                                        name="primary_ItemCode">
-                                                                </div>
-                                                                
-                                                                
-                                                                <div class="mb-2 col-md-3">
-                                                                    <label class="form-label">Secondary Barcode</label>
-                                                                    <input type="number" placeholder="Secondary Code" class="form-control"
-                                                                        name="second_ItemCode">
-                                                                </div>
+                                                            
                                                                 
                                                                 <div class="mb-3 col-md-3">
-                                                                    <label class="form-label"><%= language.product_code %> / Item Code</label>
+                                                                    <label class="form-label"><%= language.product_code %> / Serial No. </label>
                                                                     <input type="text" placeholder="Product Code" class="form-control" name="product_code" id="product_code1" required>
                                                                 </div>
 
                                                                 <div class="mb-3 col-md-3">
-                                                                    <label class="form-label">No. of <b id="maxPerSecunit"></b> per <b id="maxPerunit"></b></label>
-                                                                    <input type="text" placeholder="" class="form-control" name="maxPerUnit" id="maxPerUnit" required>
+                                                                    <label class="form-label">File Number</label>
+                                                                    <input type="text" placeholder="File Number" class="form-control"
+                                                                        name="file_number" >
                                                                 </div>
 
                                                                 <div class="mb-3 col-md-3">
-                                                                    <label class="form-label">Maximum no. per pallet</label>
-                                                                    <input type="text" placeholder="" class="form-control" name="MaxPerProduct" id="MaxPerProduct" required>
+                                                                    <label class="form-label">Chasis Number</label>
+                                                                    <input type="text" placeholder="Chasis Number" class="form-control"
+                                                                        name="chasis_number" >
                                                                 </div>
 
                                                                 <div class="mb-3 col-md-3">
-                                                                    <label class="form-label">CBM</label>
-                                                                    <input type="number" placeholder="" class="form-control" name="CBM" id="CBM">
+                                                                    <label class="form-label">Motor Number</label>
+                                                                    <input type="text" placeholder="Motor Number" class="form-control"
+                                                                        name="Motor_number" >
                                                                 </div>
 
 
                                                                 
+                                                                
+                                                            </div>
 
-                                                                <!-- <div class="mb-3 col-md-3">
-                                                                    <button type="button" class="btn btn-primary btn-sm mt-4" id="gen_code" onclick="gfg_Run()"><i class="fa fa-refresh" aria-hidden="true" ></i> <%= language.generate_code %></button>
-                                                                </div> -->
+
+                                                            <div class="row">
                                                                 
+                                                            
                                                                 
+                                                                <div class="mb-3 col-md-3">
+                                                                    <label class="form-label">OR / CR </label>
+                                                                    <input type="text" placeholder="OR / CR" class="form-control" name="ORCR" id="ORCR" required>
+                                                                </div>
+
+                                                                <div class="mb-3 col-md-3">
+                                                                    <label class="form-label">Make/series</label>
+                                                                    <input type="text" placeholder="Make/series" class="form-control"
+                                                                        name="make_series" >
+                                                                </div>
+
+                                                                <div class="mb-3 col-md-6">
+                                                                    <label class="form-label">Type of Unit</label>
+                                                                    <select class="form-control" name="TOU" id="TOU" required>
+                                                                        <option value selected disabled>Select One</option>
+                                                                        <option value="C">Car</option>
+                                                                        <option value="MC">Motor Cycle</option>
+                                                                        <option value="P">Parts</option>
+                                                                    </select>
+                                                                </div>
+
                                                             </div>
                                                             
                                               
@@ -271,14 +277,7 @@
     ***********************************-->
 
         <%- include('./partials/script'); -%>
-        <script>
-            function ChangedLabel(){
-                var Primary = document.getElementById("unit").value;
-                var Secondary = document.getElementById("second_unit").value;
-                document.getElementById("maxPerSecunit").innerHTML = Secondary
-                document.getElementById("maxPerunit").innerHTML = Primary  
-            }
-        </script>
+      
 
     <!--**********************************
         Scripts end

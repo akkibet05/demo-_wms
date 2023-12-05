@@ -30,6 +30,8 @@
         }
     </style> -->
 
+    
+
 
     <style>
    
@@ -72,7 +74,7 @@
         margin: auto;
         padding: 0;
         border: 1px solid #888;
-        width: 50%;
+        width: 25%;
         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
         -webkit-animation-name: animatetop;
         -webkit-animation-duration: 0.4s;
@@ -154,7 +156,28 @@
       .button-text.contactme {
           position: relative;
           /* font-weight:50px; */
-}
+    }
+
+    th {
+      height: 70px;
+      width: 70px;
+      text-align: center; /* Center horizontally */
+      vertical-align: middle; /* Center vertically */
+    }
+
+    td {
+      height: 100px;
+      width: 70px;
+      text-align: center; /* Center horizontally */
+      vertical-align: middle; /* Center vertically */
+    }
+
+    .minimal {
+      height: 10px;
+      width: 70px;
+      text-align: center; /* Center horizontally */
+      vertical-align: middle; /* Center vertically */
+    }
 
   </style>
 </head>
@@ -217,7 +240,7 @@
                                 
                                 <div class="card-header" style="display: flex; flex-direction: column; align-items: center;">
                                 <div class="row">
-                                    <div class="mb-3 col-md-4">
+                                    <div class="mb-4 col-md-5">
                                         <label for="warrehouse">Warehouse <span class="text-red">*</span> </label>
                                         <select class="form-control" name="warehouse" id="warehouse" required>
                                            
@@ -228,23 +251,24 @@
                                     </div>
                                     
                                     
-                                    <div class="mb-3 col-md-4">
+                                    <div class="mb-4 col-md-5">
                                         <label for="warrehouse">Room <span class="text-red">*</span> </label>
                                         <select class="form-control" name="room" id="room" required>
-                                            <option value="Ambient" >Ambient</option>
-                                            <option value="Enclosed" >Enclosed</option>
+                                            <option value="Rack 1" >Rack 1</option>
+                                            <option value="Rack 2" >Rack 2</option>
+                                            <option value="Parts" >Parts</option>
                                         </select>
                                     </div>
                                     
                                   
-                                    <div class="mb-3 col-md-4">
+                                    <div class="mb-4 col-md-5">
                                         <label for="warrehouse">Level <span class="text-red">*</span> </label>
                                         <select class="form-control" name="level" id="level" required>
                                         
                                             <option value="1" >One</option>
                                             <option value="2" >Two</option>
                                             <option value="3" >Three</option>
-                                            <option value="4" >Four</option>
+                                      
                                         </select>
                                     </div>
 
@@ -292,6 +316,15 @@
                        </div>
                     </div>
 
+
+                    <div id="myModal" class="modal">
+                      <div class="modal-content">
+                        <!-- Content goes here -->
+                        <span class="close">&times;</span>
+                      </div>
+                    </div>
+                    
+
                     <!--**********************************
             Footer start
         ***********************************-->
@@ -315,96 +348,25 @@
    
     <%- include('./partials/script'); -%>
     <script>
-      // function jsonToArray(jsonData) {
-      //   console.log(jsonData)
-      //   var data = [];
-      //   jsonData.forEach((item) => {
-          
-      //     var isle = item.isle;
-      //     var pallet = parseInt(item.pallet);
-      //     var count = item.totalQuantity;
-         
-      //   if (!data[isle]) {
-      //       data[isle] = {};
-      //     }
-      //     data[isle][pallet] = count;
-      //     // data[isle]['pallet'] = pallet;
-
-      //     item.products.forEach((items) => {
-            
-      //       if (!data["prd_data_name"]) {
-      //           data["prd_data_name"] = [];
-      //       }
-
-      //       if (!data["prd_data_qty"]) {
-      //           data["prd_data_qty"] = [];
-      //       }
-
-
-      //       if (!data["prd_code"]) {
-      //           data["prd_code"] = [];
-      //       }
-
-
-      //       if (!data["prd_data_name"][isle]) {
-      //           data["prd_data_name"][isle] = [];
-      //       }
-
-      //       if (!data["prd_data_qty"][isle]) {
-      //           data["prd_data_qty"][isle] = [];
-      //       }
-
-      //       if (!data["prd_code"][isle]) {
-      //           data["prd_code"][isle] = [];
-      //       }
-
-
-      //       if (!data["prd_data_name"][isle][pallet]) {
-      //           data["prd_data_name"][isle][pallet] = [];
-      //       }
-
-      //       if (!data["prd_data_qty"][isle][pallet]) {
-      //           data["prd_data_qty"][isle][pallet] = [];
-      //       }
-
-      //       if (!data["prd_code"][isle][pallet]) {
-      //           data["prd_code"][isle][pallet] = [];
-      //       }
-
-
-      //       data["prd_data_name"][isle][pallet].push(items.product_name);
-      //       data["prd_data_qty"][isle][pallet].push(items.product_quantity);
-      //       data["prd_code"][isle][pallet].push(items.product_code);
-            
-      //     })
-
-          
-      //   });
-
-      //   return data;
-      // }
-
       function jsonToArray(jsonData) {
         var data = {};
 
         jsonData.forEach((item) => {
-          var isle = item.isle;
-          var pallet = parseInt(item.pallet);
+          var rack = item.rack;
           var count = item.totalQuantity;
-
-          if (!data[isle]) {
-            data[isle] = {};
-          }
-
-          if (!data[isle][pallet]) {
-            data[isle][pallet] = {
+          var image = item.image;
+          if (!data[rack]) {
+            data[rack] = {
               palletCount: count,
-              productData: [],
+              images: image,
+              productData: []
             };
           }
 
+          
+
           item.products.forEach((product) => {
-            data[isle][pallet].productData.push({
+            data[rack].productData.push({
               product_name: product.product_name,
               product_quantity: product.product_quantity,
               product_code: product.product_code,
@@ -415,8 +377,29 @@
         return data;
       }
 
+      var modal = $('#myModal');
+      function showModal(countQTY, i, ltter) {
+
+        
+        var Qty = document.getElementById("product_quantity"+i+ltter);
+        
+        var Code = document.getElementById("product_code"+i+ltter);
+        var name = document.getElementById("product_name"+i+ltter);
+        var images = document.getElementById("images"+i+ltter);
+        console.log(name.value)
+        modal.show();
+        modal.find('.modal-content').html('<div class="card" style="width: 20rem; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin: auto;"><img class="card-img-top" src="/upload/'+images.value+'" alt="Card image cap"><div class="card-body"><p class="card-text">Name: ' + name.value + '</p><p class="card-text">Product Code: ' + Code.value + '</p><p class="card-text">CountQTY: ' + Qty.value + '</p></div></div>');
+      }
 
 
+      $(document).on('click', function (event) {
+        if ($(event.target).is(modal)) {
+          modal.hide();
+        }
+      });
+
+      // Close the modal when clicking outside of it
+      
       $(document).ready(function() {
   // Initialize the DataTable
   dataBody = $('#dataTable tbody');
@@ -439,1557 +422,590 @@
         dataBody.empty();
         
         const DataRes = jsonToArray(response);
+        
         let dataIsle 
         let dataIsleHalf
-        isle_value = "ALL"
-        if(isle_value == "ALL"){
-          dataIsle = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
-          dataIsleHalf = ["G", "H", "I", "J"];
-        }else{
-          dataIsle = [isle_value];
-          dataIsleHalf = [isle_value];
-        }
-        
+        dataIsle = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
         switch(warehouse_value) {
-            case "Pasig":
-                if(room_value == "Ambient"){
+            case "Main":
+                if(room_value == "Rack 1"){
                     if(level_value == "1"){
                         
                         let j = 1;
                         let k = 54;
                         var datahoverItem = [];
-                        dataIsle.forEach(function(isleItem) {
-                          var dataItems = '';
-                          const IsleData = isleItem;
+                        //var dataItems = '';
+                        var dataItems = '';
+                          dataItems += '<tr style="border-bottom:1pt solid black;">';
+                        dataIsle.forEach(function(isleItem){
+                          
+                          dataItems += '<th><h1>'+isleItem +'</h1></th>';
+
+                          
+                        })
+                        dataItems += '</tr>';
                         
-                          dataItems = '<tr><td rowspan="3"><strong><h1>' + isleItem + '</h1></strong></td></tr>';
-                        
-                          let columnCount = (isleItem >= 'G' && isleItem <= 'J') ? 38 : 54;
-                        
-                          for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td><h4>' + i + '</h4></td>';
+                        dataItems += '<tr>';
+                        for(var i = 0; i < dataIsle.length; i++){
+
+                          
+                          if(DataRes[dataIsle[i]]){
+                            console.log(DataRes)
+                            var countQTY = DataRes[dataIsle[i]].palletCount;
+                            var productDataView = DataRes[dataIsle[i]].productData;
+                            dataItems += '<td onclick="showModal(' + countQTY + ', '+i+', \''+dataIsle[i]+'\')">'+countQTY;
+                              productDataView.forEach(function(dataval){
+                                dataItems += '<input type="hidden" id="product_code'+i+dataIsle[i]+'" value="'+dataval.product_code+'" />';
+                                dataItems += '<input type="hidden" id="product_quantity'+i+dataIsle[i]+'" value="'+dataval.product_quantity+'" />';
+                                dataItems += '<input type="hidden" id="product_name'+i+dataIsle[i]+'" value="'+dataval.product_name+'" />';
+                              })
+
+                              dataItems += '<input type="hidden" id="images'+i+dataIsle[i]+'" value="'+DataRes[dataIsle[i]].images+'" />';
+                            
+                            dataItems += '</td>';
+                            //console.log(DataRes[dataIsle[i]].palletCount)
+                          }else{
+                            dataItems += '<td>'+0+'</td>';
                           }
-                        
-                          dataItems += '</tr><tr>';
 
-                          for (let i = j; i < j + columnCount; i++) {
-                            if (DataRes[IsleData] && DataRes[IsleData][i]) {
-                              
-                              if(DataRes[IsleData][i] >= 500){
-                                color = "Tomato";
-                              }else if(DataRes[IsleData][i] >= 250){
-                                color = "yellow";
-                              }else{
-                               color = "white";
-                              }
-
-                              // const numberOfProducts = DataRes.prd_data_name[IsleData][i].length;
-
-                              const numberOfProducts = DataRes[IsleData][i].productData.length
-                              
-
-                              if (!datahoverItem[IsleData]) {
-                                datahoverItem[IsleData] = {};
-                              }
-
-                              datahoverItem[IsleData][i] = '';
-                              for (var x = 0; x <= numberOfProducts - 1; x++) {
-
-                                if(DataRes && DataRes[IsleData][i].productData[x].product_name){
-                                  
-                                  datahoverItem[IsleData][i] += '<tr>';
-
-                                  datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_code;
-                                  datahoverItem[IsleData][i] += '</td>';
-
-                                  
-                                  
-                                  datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_name;
-                                  datahoverItem[IsleData][i] += '</td>';
-
-                                  datahoverItem[IsleData][i] += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_quantity;
-                                  datahoverItem[IsleData][i]  += '</td>';
-
-                                  datahoverItem[IsleData][i]  += '</tr>';
-
-                                }
-                              }
-
-                                                          
-                              const NumTotal = Math.round(DataRes[IsleData][i].palletCount * 1000) / 1000;
-                              dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + NumTotal + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Item Code</td><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
-                             
-                            } else {
-                              dataItems += '<td>&nbsp;</td>';
-                            }
-                          }
-                          dataItems += '</tr>';
-                        
-                          // dataItems += '</tr><tr style="height: 5px;">';
-                        
-                          // for (let i = j; i < j + columnCount; i++) {
-                          //   dataItems += '<td>&nbsp;</td>';
-                          // }
-                        
-                          j += columnCount; // Update j based on the range
-                        
-                          // dataItems += "</tr>";
-
-                          $(document).ready(function () {
-                          $(".button-text.contactme").hover(function () {
-                                // alert($(this).data("has-data"))
-                                  if ($(this).data("has-data") === true) {
-                                      $(this).find('.emailcontainer').show('slow');
-                                  }
-                              }, function () {
-                                  $(this).find('.emailcontainer').hide('slow');
-                              });
-                          });
-                        
-                          dataBody.append(dataItems);
-                        });
-            
-                    }
-            
-                    if(level_value == "2"){
-                        let j = 477;
-                        let k = 531;
-                        var datahoverItem = [];
-                        dataIsle.forEach(function(isleItem) {
-                          var dataItems = '';
-                          const IsleData = isleItem;
-                        
-                          dataItems = '<tr><td rowspan="3"><strong><h1>' + isleItem + '</h1></strong></td></tr>';
-                        
-                          let columnCount = (isleItem >= 'G' && isleItem <= 'J') ? 38 : 54;
-                        
-                          for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td><h4>' + i + '</h4></td>';
-                          }
-                        
-                          dataItems += '</tr><tr>';
-                        
-                          for (let i = j; i < j + columnCount; i++) {
-                            if (DataRes[IsleData] && DataRes[IsleData][i]) {
-                     
-                              if(DataRes[IsleData][i] >= 500){
-                                color = "Tomato";
-                              }else if(DataRes[IsleData][i] >= 250){
-                                color = "yellow";
-                              }else{
-                               color = "white";
-                              }
-
-
-                              const numberOfProducts = DataRes[IsleData][i].productData.length
-                              
-
-                              if (!datahoverItem[IsleData]) {
-                                datahoverItem[IsleData] = {};
-                              }
-
-                              datahoverItem[IsleData][i] = '';
-                              for (var x = 0; x <= numberOfProducts - 1; x++) {
-
-                                if(DataRes && DataRes[IsleData][i].productData[x].product_name){
-                                  
-                                  datahoverItem[IsleData][i] += '<tr>';
-
-                                  datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_code;
-                                  datahoverItem[IsleData][i] += '</td>';
-
-                                  
-                                  
-                                  datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_name;
-                                  datahoverItem[IsleData][i] += '</td>';
-
-                                  datahoverItem[IsleData][i] += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_quantity;
-                                  datahoverItem[IsleData][i]  += '</td>';
-
-                                  datahoverItem[IsleData][i]  += '</tr>';
-
-                                }
-                              }
-
-                                                          
-                              const NumTotal = Math.round(DataRes[IsleData][i].palletCount * 1000) / 1000;
-
-                              dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + NumTotal + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
-                            } else {
-                              dataItems += '<td>&nbsp;</td>';
-                            }
-                          }
-                          dataItems += '</tr>';
-                          // dataItems += '</tr><tr style="height: 5px;">';
-                        
-                          // for (let i = j; i < j + columnCount; i++) {
-                          //   dataItems += '<td>&nbsp;</td>';
-                          // }
-                        
-                          j += columnCount; // Update j based on the range
-                        
-                          // dataItems += "</tr>";
-
-                          $(document).ready(function () {
-                          $(".button-text.contactme").hover(function () {
-                                // alert($(this).data("has-data"))
-                                  if ($(this).data("has-data") === true) {
-                                      $(this).find('.emailcontainer').show('slow');
-                                  }
-                              }, function () {
-                                  $(this).find('.emailcontainer').hide('slow');
-                              });
-                          });
-                        
-                          dataBody.append(dataItems);
-                        });
-                    }
-            
-                    if(level_value == "3"){
-                        
-                        
-                        let j = 953;
-                        let k = 1007;
-                        var datahoverItem = [];
-                        dataIsle.forEach(function(isleItem) {
-                          var dataItems = '';
-                          const IsleData = isleItem;
-                        
-                          dataItems = '<tr><td rowspan="3"><strong><h1>' + isleItem + '</h1></strong></td></tr>';
-                        
-                          let columnCount = (isleItem >= 'G' && isleItem <= 'J') ? 38 : 54;
-                        
-                          for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td><h4>' + i + '</h4></td>';
-                          }
-                        
-                          dataItems += '</tr><tr>';
-                        
-                          for (let i = j; i < j + columnCount; i++) {
-                            if (DataRes[IsleData] && DataRes[IsleData][i]) {
-                              if(DataRes[IsleData][i] >= 500){
-                                color = "Tomato";
-                              }else if(DataRes[IsleData][i] >= 250){
-                                color = "yellow";
-                              }else{
-                               color = "white";
-                              }
-
-
-                              const numberOfProducts = DataRes[IsleData][i].productData.length
-                              
-
-                              if (!datahoverItem[IsleData]) {
-                                datahoverItem[IsleData] = {};
-                              }
-
-                              datahoverItem[IsleData][i] = '';
-                              for (var x = 0; x <= numberOfProducts - 1; x++) {
-
-                                if(DataRes && DataRes[IsleData][i].productData[x].product_name){
-                                  
-                                  datahoverItem[IsleData][i] += '<tr>';
-
-                                  datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_code;
-                                  datahoverItem[IsleData][i] += '</td>';
-
-                                  
-                                  
-                                  datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_name;
-                                  datahoverItem[IsleData][i] += '</td>';
-
-                                  datahoverItem[IsleData][i] += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_quantity;
-                                  datahoverItem[IsleData][i]  += '</td>';
-
-                                  datahoverItem[IsleData][i]  += '</tr>';
-
-                                }
-                              }
-
-                                                          
-                              const NumTotal = Math.round(DataRes[IsleData][i].palletCount * 1000) / 1000;
-                              dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + NumTotal+ '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
-                            } else {
-                              dataItems += '<td>&nbsp;</td>';
-                            }
-                          }
-                          dataItems += "</tr>";
-                          // dataItems += '</tr><tr style="height: 5px;">';
-                        
-                          // for (let i = j; i < j + columnCount; i++) {
-                          //   dataItems += '<td>&nbsp;</td>';
-                          // }
-                        
-                          j += columnCount; // Update j based on the range
-                        
-                          // dataItems += "</tr>";
-
-                          $(document).ready(function () {
-                          $(".button-text.contactme").hover(function () {
-                                // alert($(this).data("has-data"))
-                                  if ($(this).data("has-data") === true) {
-                                      $(this).find('.emailcontainer').show('slow');
-                                  }
-                              }, function () {
-                                  $(this).find('.emailcontainer').hide('slow');
-                              });
-                          });
-                        
-                          dataBody.append(dataItems);
-                        });
-                    }
-            
-                    if(level_value == "4"){
-                            let j = 1429;
-                            let k = 1483;
-                            var datahoverItem = [];
-                            
-                            dataIsle.forEach(function(isleItem) {
-                              var dataItems = '';
-                              const IsleData = isleItem;
-                            
-                              dataItems = '<tr><td rowspan="3"><strong><h1>' + isleItem + '</h1></strong></td></tr>';
-                            
-                              let columnCount = (isleItem >= 'G' && isleItem <= 'J') ? 38 : 54;
-                            
-                              for (let i = j; i < j + columnCount; i++) {
-                                dataItems += '<td><h4>' + i + '</h4></td>';
-                              }
-                            
-                              dataItems += '</tr><tr>';
-                            
-                              for (let i = j; i < j + columnCount; i++) {
-                                if (DataRes[IsleData] && DataRes[IsleData][i]) {
-                                  if(DataRes[IsleData][i] >= 500){
-                                color = "Tomato";
-                              }else if(DataRes[IsleData][i] >= 250){
-                                color = "yellow";
-                              }else{
-                               color = "white";
-                              }
-
-
-                              const numberOfProducts = DataRes[IsleData][i].productData.length
-                              
-
-                              if (!datahoverItem[IsleData]) {
-                                datahoverItem[IsleData] = {};
-                              }
-
-                              datahoverItem[IsleData][i] = '';
-                              for (var x = 0; x <= numberOfProducts - 1; x++) {
-
-                                if(DataRes && DataRes[IsleData][i].productData[x].product_name){
-                                  
-                                  datahoverItem[IsleData][i] += '<tr>';
-
-                                  datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_code;
-                                  datahoverItem[IsleData][i] += '</td>';
-
-                                  
-                                  
-                                  datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_name;
-                                  datahoverItem[IsleData][i] += '</td>';
-
-                                  datahoverItem[IsleData][i] += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_quantity;
-                                  datahoverItem[IsleData][i]  += '</td>';
-
-                                  datahoverItem[IsleData][i]  += '</tr>';
-
-                                }
-                              }
-
-                                                          
-                              const NumTotal = Math.round(DataRes[IsleData][i].palletCount * 1000) / 1000;
-                              dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + NumTotal + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
-                                } else {
-                                  dataItems += '<td>&nbsp;</td>';
-                                }
-                              }
-                              dataItems += "</tr>";
-                              // dataItems += '</tr><tr style="height: 5px;">';
-                            
-                              // for (let i = j; i < j + columnCount; i++) {
-                              //   dataItems += '<td>&nbsp;</td>';
-                              // }
-                            
-                              j += columnCount; // Update j based on the range
-                            
-                              // dataItems += "</tr>";
-
-                              $(document).ready(function () {
-                              $(".button-text.contactme").hover(function () {
-                                    // alert($(this).data("has-data"))
-                                      if ($(this).data("has-data") === true) {
-                                          $(this).find('.emailcontainer').show('slow');
-                                      }
-                                  }, function () {
-                                      $(this).find('.emailcontainer').hide('slow');
-                                  });
-                              });
-                            
-                              dataBody.append(dataItems);
-                            });
+                          
                         }
-                }else if(room_value == "Enclosed"){
-                    if(level_value == "1"){
-                        
-                        let j = 1;
-                        let k = 13;
-                        var datahoverItem = [];
-                        dataIsleHalf.forEach(function(isleItem) {
-                          var dataItems = '';
-                          const IsleData = isleItem;
-                        
-                          dataItems = '<tr><td rowspan="3"><strong><h1>' + isleItem + '</h1></strong></td></tr>';
-                        
-                          let columnCount = (isleItem >= 'H' && isleItem <= 'J') ? 14 : 13;
-                        
-                          for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td><h4>' + i + '</h4></td>';
-                          }
-                        
-                          dataItems += '</tr><tr>';
-                        
-                          for (let i = j; i < j + columnCount; i++) {
-                            if (DataRes[IsleData] && DataRes[IsleData][i]) {
-                              if(DataRes[IsleData][i] >= 500){
-                                color = "Tomato";
-                              }else if(DataRes[IsleData][i] >= 250){
-                                color = "yellow";
-                              }else{
-                               color = "white";
-                              }
+                        dataItems += '</tr>';
 
 
-                              const numberOfProducts = DataRes[IsleData][i].productData.length
+                        dataItems += '<tr>';
+                        for(var i = 0; i < dataIsle.length; i++){
+                          dataItems += '<td class="minimal"></td>';
+                        }
+                        dataItems += '</tr>';
+
+                        //dataIsle.length
+                        dataBody.append(dataItems);
+
+      
+                        // dataIsle.forEach(function(isleItem) {
+                        //   var dataItems = '';
+                        //   const IsleData = isleItem;
+                        
+                        //   dataItems = '<tr><td rowspan="3"><strong><h1>' + isleItem + '</h1></strong></td></tr>';
+                        
+                        //   let columnCount = 54;
+                        
+                        //   for (let i = j; i < j + columnCount; i++) {
+                        //     dataItems += '<td><h4>' + i + '</h4></td>';
+                        //   }
+                        
+                        //   dataItems += '</tr><tr>';
+
+                        //   for (let i = j; i < j + columnCount; i++) {
+                        //     if (DataRes[IsleData] && DataRes[IsleData][i]) {
+                              
+                        //       if(DataRes[IsleData][i] >= 500){
+                        //         color = "Tomato";
+                        //       }else if(DataRes[IsleData][i] >= 250){
+                        //         color = "yellow";
+                        //       }else{
+                        //        color = "white";
+                        //       }
+
+                        //       // const numberOfProducts = DataRes.prd_data_name[IsleData][i].length;
+
+                        //       const numberOfProducts = DataRes[IsleData][i].productData.length
                               
 
-                              if (!datahoverItem[IsleData]) {
-                                datahoverItem[IsleData] = {};
-                              }
+                        //       if (!datahoverItem[IsleData]) {
+                        //         datahoverItem[IsleData] = {};
+                        //       }
 
-                              datahoverItem[IsleData][i] = '';
-                              for (var x = 0; x <= numberOfProducts - 1; x++) {
+                        //       datahoverItem[IsleData][i] = '';
+                        //       for (var x = 0; x <= numberOfProducts - 1; x++) {
 
-                                if(DataRes && DataRes[IsleData][i].productData[x].product_name){
+                        //         if(DataRes && DataRes[IsleData][i].productData[x].product_name){
                                   
-                                  datahoverItem[IsleData][i] += '<tr>';
+                        //           datahoverItem[IsleData][i] += '<tr>';
 
-                                  datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_code;
-                                  datahoverItem[IsleData][i] += '</td>';
+                        //           datahoverItem[IsleData][i]  += '<td>';
+                        //           datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_code;
+                        //           datahoverItem[IsleData][i] += '</td>';
 
                                   
                                   
-                                  datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_name;
-                                  datahoverItem[IsleData][i] += '</td>';
+                        //           datahoverItem[IsleData][i]  += '<td>';
+                        //           datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_name;
+                        //           datahoverItem[IsleData][i] += '</td>';
 
-                                  datahoverItem[IsleData][i] += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_quantity;
-                                  datahoverItem[IsleData][i]  += '</td>';
+                        //           datahoverItem[IsleData][i] += '<td>';
+                        //           datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_quantity;
+                        //           datahoverItem[IsleData][i]  += '</td>';
 
-                                  datahoverItem[IsleData][i]  += '</tr>';
+                        //           datahoverItem[IsleData][i]  += '</tr>';
 
-                                }
-                              }
+                        //         }
+                        //       }
 
                                                           
-                              const NumTotal = Math.round(DataRes[IsleData][i].palletCount * 1000) / 1000;
-                              dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + NumTotal + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Item Code</td><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
-                            } else {
-                              dataItems += '<td>&nbsp;</td>';
-                            }
-                          }
-                          dataItems += "</tr>";
+                        //       const NumTotal = Math.round(DataRes[IsleData][i].palletCount * 1000) / 1000;
+                        //       dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + NumTotal + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Item Code</td><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
+                             
+                        //     } else {
+                        //       dataItems += '<td>&nbsp;</td>';
+                        //     }
+                        //   }
+                        //   dataItems += '</tr>';
                         
-                          // dataItems += '</tr><tr style="height: 5px;">';
+                        //   // dataItems += '</tr><tr style="height: 5px;">';
                         
-                          // for (let i = j; i < j + columnCount; i++) {
-                          //   dataItems += '<td>&nbsp;</td>';
-                          // }
+                        //   // for (let i = j; i < j + columnCount; i++) {
+                        //   //   dataItems += '<td>&nbsp;</td>';
+                        //   // }
                         
-                          j += columnCount; // Update j based on the range
+                        //   j += columnCount; // Update j based on the range
                         
-                          // dataItems += "</tr>";
+                        //   // dataItems += "</tr>";
 
-                          $(document).ready(function () {
-                          $(".button-text.contactme").hover(function () {
-                                // alert($(this).data("has-data"))
-                                  if ($(this).data("has-data") === true) {
-                                      $(this).find('.emailcontainer').show('slow');
-                                  }
-                              }, function () {
-                                  $(this).find('.emailcontainer').hide('slow');
-                              });
-                          });
+                        //   $(document).ready(function () {
+                        //   $(".button-text.contactme").hover(function () {
+                        //         // alert($(this).data("has-data"))
+                        //           if ($(this).data("has-data") === true) {
+                        //               $(this).find('.emailcontainer').show('slow');
+                        //           }
+                        //       }, function () {
+                        //           $(this).find('.emailcontainer').hide('slow');
+                        //       });
+                        //   });
                         
-                          dataBody.append(dataItems);
-                        });
+                        //   dataBody.append(dataItems);
+                        // });
+            
+                    }else if(level_value == "2"){
+                        
+                        let j = 1;
+                        let k = 54;
+                        var datahoverItem = [];
+                        //var dataItems = '';
+                        var dataItems = '';
+                          dataItems += '<tr style="border-bottom:1pt solid black;">';
+                        dataIsle.forEach(function(isleItem){
+                          
+                          dataItems += '<th><h1>'+isleItem +'</h1></th>';
+
+                          
+                        })
+                        dataItems += '</tr>';
+                        
+                        dataItems += '<tr>';
+                        for(var i = 0; i < dataIsle.length; i++){
+
+                          
+                          if(DataRes[dataIsle[i]]){
+                            console.log(DataRes)
+                            var countQTY = DataRes[dataIsle[i]].palletCount;
+                            var productDataView = DataRes[dataIsle[i]].productData;
+                            dataItems += '<td onclick="showModal(' + countQTY + ', '+i+', \''+dataIsle[i]+'\')">'+countQTY;
+                              productDataView.forEach(function(dataval){
+                                dataItems += '<input type="hidden" id="product_code'+i+dataIsle[i]+'" value="'+dataval.product_code+'" />';
+                                dataItems += '<input type="hidden" id="product_quantity'+i+dataIsle[i]+'" value="'+dataval.product_quantity+'" />';
+                                dataItems += '<input type="hidden" id="product_name'+i+dataIsle[i]+'" value="'+dataval.product_name+'" />';
+                              })
+                            
+                            dataItems += '</td>';
+                            //console.log(DataRes[dataIsle[i]].palletCount)
+                          }else{
+                            dataItems += '<td>'+0+'</td>';
+                          }
+
+                          
+                        }
+                        dataItems += '</tr>';
+
+
+                        dataItems += '<tr>';
+                        for(var i = 0; i < dataIsle.length; i++){
+                          dataItems += '<td class="minimal"></td>';
+                        }
+                        dataItems += '</tr>';
+
+                        //dataIsle.length
+                        dataBody.append(dataItems);
+
+
+            
+                    }else if(level_value == "3"){
+                        
+                        let j = 1;
+                        let k = 54;
+                        var datahoverItem = [];
+                        //var dataItems = '';
+                        var dataItems = '';
+                          dataItems += '<tr style="border-bottom:1pt solid black;">';
+                        dataIsle.forEach(function(isleItem){
+                          
+                          dataItems += '<th><h1>'+isleItem +'</h1></th>';
+
+                          
+                        })
+                        dataItems += '</tr>';
+                        
+                        dataItems += '<tr>';
+                        for(var i = 0; i < dataIsle.length; i++){
+
+                          
+                          if(DataRes[dataIsle[i]]){
+                            console.log(DataRes)
+                            var countQTY = DataRes[dataIsle[i]].palletCount;
+                            var productDataView = DataRes[dataIsle[i]].productData;
+                            dataItems += '<td onclick="showModal(' + countQTY + ', '+i+', \''+dataIsle[i]+'\')">'+countQTY;
+                              productDataView.forEach(function(dataval){
+                                dataItems += '<input type="hidden" id="product_code'+i+dataIsle[i]+'" value="'+dataval.product_code+'" />';
+                                dataItems += '<input type="hidden" id="product_quantity'+i+dataIsle[i]+'" value="'+dataval.product_quantity+'" />';
+                                dataItems += '<input type="hidden" id="product_name'+i+dataIsle[i]+'" value="'+dataval.product_name+'" />';
+                              })
+                            
+                            dataItems += '</td>';
+                            //console.log(DataRes[dataIsle[i]].palletCount)
+                          }else{
+                            dataItems += '<td>'+0+'</td>';
+                          }
+
+                          
+                        }
+                        dataItems += '</tr>';
+
+
+                        dataItems += '<tr>';
+                        for(var i = 0; i < dataIsle.length; i++){
+                          dataItems += '<td class="minimal"></td>';
+                        }
+                        dataItems += '</tr>';
+
+                        //dataIsle.length
+                        dataBody.append(dataItems);
+
+
             
                     }
-                    
-                    if(level_value == "2"){
+                }else if(room_value == "Rack 2"){
+                  if(level_value == "1"){
                         
-                        let j = 56;
-                        let k = 68;
+                        let j = 1;
+                        let k = 54;
                         var datahoverItem = [];
-                        dataIsleHalf.forEach(function(isleItem) {
-                          var dataItems = '';
-                          const IsleData = isleItem;
+                        //var dataItems = '';
+                        var dataItems = '';
+                          dataItems += '<tr style="border-bottom:1pt solid black;">';
+                        dataIsle.forEach(function(isleItem){
+                          
+                          dataItems += '<th><h1>'+isleItem +'</h1></th>';
+
+                          
+                        })
+                        dataItems += '</tr>';
                         
-                          dataItems = '<tr><td rowspan="3"><strong><h1>' + isleItem + '</h1></strong></td></tr>';
-                        
-                          let columnCount = (isleItem >= 'H' && isleItem <= 'J') ? 14 : 13;
-                        
-                          for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td><h4>' + i + '</h4></td>';
+                        dataItems += '<tr>';
+                        for(var i = 0; i < dataIsle.length; i++){
+
+                          
+                          if(DataRes[dataIsle[i]]){
+                            console.log(DataRes)
+                            var countQTY = DataRes[dataIsle[i]].palletCount;
+                            var productDataView = DataRes[dataIsle[i]].productData;
+                            dataItems += '<td onclick="showModal(' + countQTY + ', '+i+', \''+dataIsle[i]+'\')">'+countQTY;
+                              productDataView.forEach(function(dataval){
+                                dataItems += '<input type="hidden" id="product_code'+i+dataIsle[i]+'" value="'+dataval.product_code+'" />';
+                                dataItems += '<input type="hidden" id="product_quantity'+i+dataIsle[i]+'" value="'+dataval.product_quantity+'" />';
+                                dataItems += '<input type="hidden" id="product_name'+i+dataIsle[i]+'" value="'+dataval.product_name+'" />';
+                              })
+                            
+                            dataItems += '</td>';
+                            //console.log(DataRes[dataIsle[i]].palletCount)
+                          }else{
+                            dataItems += '<td>'+0+'</td>';
                           }
+
+                          
+                        }
+                        dataItems += '</tr>';
+
+
+                        dataItems += '<tr>';
+                        for(var i = 0; i < dataIsle.length; i++){
+                          dataItems += '<td class="minimal"></td>';
+                        }
+                        dataItems += '</tr>';
+
+                        //dataIsle.length
+                        dataBody.append(dataItems);
+
+    
+                    }else if(level_value == "2"){
                         
-                          dataItems += '</tr><tr>';
+                        let j = 1;
+                        let k = 54;
+                        var datahoverItem = [];
+                        //var dataItems = '';
+                        var dataItems = '';
+                          dataItems += '<tr style="border-bottom:1pt solid black;">';
+                        dataIsle.forEach(function(isleItem){
+                          
+                          dataItems += '<th><h1>'+isleItem +'</h1></th>';
+
+                          
+                        })
+                        dataItems += '</tr>';
                         
-                          for (let i = j; i < j + columnCount; i++) {
-                            if (DataRes[IsleData] && DataRes[IsleData][i]) {
-                              if(DataRes[IsleData][i] >= 500){
-                                color = "Tomato";
-                              }else if(DataRes[IsleData][i] >= 250){
-                                color = "yellow";
-                              }else{
-                               color = "white";
-                              }
+                        dataItems += '<tr>';
+                        for(var i = 0; i < dataIsle.length; i++){
 
-
-                              const numberOfProducts = DataRes[IsleData][i].productData.length
-                              
-
-                              if (!datahoverItem[IsleData]) {
-                                datahoverItem[IsleData] = {};
-                              }
-
-                              datahoverItem[IsleData][i] = '';
-                              for (var x = 0; x <= numberOfProducts - 1; x++) {
-
-                                if(DataRes && DataRes[IsleData][i].productData[x].product_name){
-                                  
-                                  datahoverItem[IsleData][i] += '<tr>';
-
-                                  datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_code;
-                                  datahoverItem[IsleData][i] += '</td>';
-
-                                  
-                                  
-                                  datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_name;
-                                  datahoverItem[IsleData][i] += '</td>';
-
-                                  datahoverItem[IsleData][i] += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_quantity;
-                                  datahoverItem[IsleData][i]  += '</td>';
-
-                                  datahoverItem[IsleData][i]  += '</tr>';
-
-                                }
-                              }
-
-                                                          
-                              const NumTotal = Math.round(DataRes[IsleData][i].palletCount * 1000) / 1000;
-                              dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + NumTotal + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Item Code</td><td>Item Code</td><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
-                            } else {
-                              dataItems += '<td>&nbsp;</td>';
-                            }
+                          
+                          if(DataRes[dataIsle[i]]){
+                            console.log(DataRes)
+                            var countQTY = DataRes[dataIsle[i]].palletCount;
+                            var productDataView = DataRes[dataIsle[i]].productData;
+                            dataItems += '<td onclick="showModal(' + countQTY + ', '+i+', \''+dataIsle[i]+'\')">'+countQTY;
+                              productDataView.forEach(function(dataval){
+                                dataItems += '<input type="hidden" id="product_code'+i+dataIsle[i]+'" value="'+dataval.product_code+'" />';
+                                dataItems += '<input type="hidden" id="product_quantity'+i+dataIsle[i]+'" value="'+dataval.product_quantity+'" />';
+                                dataItems += '<input type="hidden" id="product_name'+i+dataIsle[i]+'" value="'+dataval.product_name+'" />';
+                              })
+                            
+                            dataItems += '</td>';
+                            //console.log(DataRes[dataIsle[i]].palletCount)
+                          }else{
+                            dataItems += '<td>'+0+'</td>';
                           }
-                          dataItems += "</tr>";
-                          // dataItems += '</tr><tr style="height: 5px;">';
-                        
-                          // for (let i = j; i < j + columnCount; i++) {
-                          //   dataItems += '<td>&nbsp;</td>';
-                          // }
-                        
-                          // j += columnCount; // Update j based on the range
-                        
-                          // dataItems += "</tr>";
 
-                          $(document).ready(function () {
-                          $(".button-text.contactme").hover(function () {
-                                // alert($(this).data("has-data"))
-                                  if ($(this).data("has-data") === true) {
-                                      $(this).find('.emailcontainer').show('slow');
-                                  }
-                              }, function () {
-                                  $(this).find('.emailcontainer').hide('slow');
-                              });
-                          });
+                          
+                        }
+                        dataItems += '</tr>';
+
+
+                        dataItems += '<tr>';
+                        for(var i = 0; i < dataIsle.length; i++){
+                          dataItems += '<td class="minimal"></td>';
+                        }
+                        dataItems += '</tr>';
+
+                        //dataIsle.length
+                        dataBody.append(dataItems);
+
+    
+                    }else if(level_value == "3"){
                         
-                          dataBody.append(dataItems);
-                        });
-            
+                        let j = 1;
+                        let k = 54;
+                        var datahoverItem = [];
+                        //var dataItems = '';
+                        var dataItems = '';
+                          dataItems += '<tr style="border-bottom:1pt solid black;">';
+                        dataIsle.forEach(function(isleItem){
+                          
+                          dataItems += '<th><h1>'+isleItem +'</h1></th>';
+
+                          
+                        })
+                        dataItems += '</tr>';
+                        
+                        dataItems += '<tr>';
+                        for(var i = 0; i < dataIsle.length; i++){
+
+                          
+                          if(DataRes[dataIsle[i]]){
+                            console.log(DataRes)
+                            var countQTY = DataRes[dataIsle[i]].palletCount;
+                            var productDataView = DataRes[dataIsle[i]].productData;
+                            dataItems += '<td onclick="showModal(' + countQTY + ', '+i+', \''+dataIsle[i]+'\')">'+countQTY;
+                              productDataView.forEach(function(dataval){
+                                dataItems += '<input type="hidden" id="product_code'+i+dataIsle[i]+'" value="'+dataval.product_code+'" />';
+                                dataItems += '<input type="hidden" id="product_quantity'+i+dataIsle[i]+'" value="'+dataval.product_quantity+'" />';
+                                dataItems += '<input type="hidden" id="product_name'+i+dataIsle[i]+'" value="'+dataval.product_name+'" />';
+                              })
+                            
+                            dataItems += '</td>';
+                            //console.log(DataRes[dataIsle[i]].palletCount)
+                          }else{
+                            dataItems += '<td>'+0+'</td>';
+                          }
+
+                          
+                        }
+                        dataItems += '</tr>';
+
+
+                        dataItems += '<tr>';
+                        for(var i = 0; i < dataIsle.length; i++){
+                          dataItems += '<td class="minimal"></td>';
+                        }
+                        dataItems += '</tr>';
+
+                        //dataIsle.length
+                        dataBody.append(dataItems);
+
+    
                     }
-                    
-                    if(level_value == "3"){
+                }else if(room_value == "Parts"){
+
+                  if(level_value == "1"){
                         
-                        let j = 111;
-                        let k = 123;
+                        let j = 1;
+                        let k = 54;
                         var datahoverItem = [];
-                        dataIsleHalf.forEach(function(isleItem) {
-                          var dataItems = '';
-                          const IsleData = isleItem;
+                        //var dataItems = '';
+                        var dataItems = '';
+                          dataItems += '<tr style="border-bottom:1pt solid black;">';
+                        dataIsle.forEach(function(isleItem){
+                          
+                          dataItems += '<th><h1>'+isleItem +'</h1></th>';
+
+                          
+                        })
+                        dataItems += '</tr>';
                         
-                          dataItems = '<tr><td rowspan="3"><strong><h1>' + isleItem + '</h1></strong></td></tr>';
-                        
-                          let columnCount = (isleItem >= 'H' && isleItem <= 'J') ? 14 : 13;
-                        
-                          for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td><h4>' + i + '</h4></td>';
+                        dataItems += '<tr>';
+                        for(var i = 0; i < dataIsle.length; i++){
+
+                          
+                          if(DataRes[dataIsle[i]]){
+                            console.log(DataRes)
+                            var countQTY = DataRes[dataIsle[i]].palletCount;
+                            var productDataView = DataRes[dataIsle[i]].productData;
+                            dataItems += '<td onclick="showModal(' + countQTY + ', '+i+', \''+dataIsle[i]+'\')">'+countQTY;
+                              productDataView.forEach(function(dataval){
+                                dataItems += '<input type="hidden" id="product_code'+i+dataIsle[i]+'" value="'+dataval.product_code+'" />';
+                                dataItems += '<input type="hidden" id="product_quantity'+i+dataIsle[i]+'" value="'+dataval.product_quantity+'" />';
+                                dataItems += '<input type="hidden" id="product_name'+i+dataIsle[i]+'" value="'+dataval.product_name+'" />';
+                              })
+                            
+                            dataItems += '</td>';
+                            //console.log(DataRes[dataIsle[i]].palletCount)
+                          }else{
+                            dataItems += '<td>'+0+'</td>';
                           }
+
+                          
+                        }
+                        dataItems += '</tr>';
+
+
+                        dataItems += '<tr>';
+                        for(var i = 0; i < dataIsle.length; i++){
+                          dataItems += '<td class="minimal"></td>';
+                        }
+                        dataItems += '</tr>';
+
+                        //dataIsle.length
+                        dataBody.append(dataItems);
+
+    
+                    }else if(level_value == "2"){
                         
-                          dataItems += '</tr><tr>';
+                        let j = 1;
+                        let k = 54;
+                        var datahoverItem = [];
+                        //var dataItems = '';
+                        var dataItems = '';
+                          dataItems += '<tr style="border-bottom:1pt solid black;">';
+                        dataIsle.forEach(function(isleItem){
+                          
+                          dataItems += '<th><h1>'+isleItem +'</h1></th>';
+
+                          
+                        })
+                        dataItems += '</tr>';
                         
-                          for (let i = j; i < j + columnCount; i++) {
-                            if (DataRes[IsleData] && DataRes[IsleData][i]) {
-                              if(DataRes[IsleData][i] >= 500){
-                                color = "Tomato";
-                              }else if(DataRes[IsleData][i] >= 250){
-                                color = "yellow";
-                              }else{
-                               color = "white";
-                              }
+                        dataItems += '<tr>';
+                        for(var i = 0; i < dataIsle.length; i++){
 
-
-                              const numberOfProducts = DataRes[IsleData][i].productData.length
-                              
-
-                              if (!datahoverItem[IsleData]) {
-                                datahoverItem[IsleData] = {};
-                              }
-
-                              datahoverItem[IsleData][i] = '';
-                              for (var x = 0; x <= numberOfProducts - 1; x++) {
-
-                                if(DataRes && DataRes[IsleData][i].productData[x].product_name){
-                                  
-                                  datahoverItem[IsleData][i] += '<tr>';
-
-                                  datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_code;
-                                  datahoverItem[IsleData][i] += '</td>';
-
-                                  
-                                  
-                                  datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_name;
-                                  datahoverItem[IsleData][i] += '</td>';
-
-                                  datahoverItem[IsleData][i] += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_quantity;
-                                  datahoverItem[IsleData][i]  += '</td>';
-
-                                  datahoverItem[IsleData][i]  += '</tr>';
-
-                                }
-                              }
-
-                                                          
-                              const NumTotal = Math.round(DataRes[IsleData][i].palletCount * 1000) / 1000;
-                              dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + NumTotal + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Item Code</td><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
-                            } else {
-                              dataItems += '<td>&nbsp;</td>';
-                            }
+                          
+                          if(DataRes[dataIsle[i]]){
+                            console.log(DataRes)
+                            var countQTY = DataRes[dataIsle[i]].palletCount;
+                            var productDataView = DataRes[dataIsle[i]].productData;
+                            dataItems += '<td onclick="showModal(' + countQTY + ', '+i+', \''+dataIsle[i]+'\')">'+countQTY;
+                              productDataView.forEach(function(dataval){
+                                dataItems += '<input type="hidden" id="product_code'+i+dataIsle[i]+'" value="'+dataval.product_code+'" />';
+                                dataItems += '<input type="hidden" id="product_quantity'+i+dataIsle[i]+'" value="'+dataval.product_quantity+'" />';
+                                dataItems += '<input type="hidden" id="product_name'+i+dataIsle[i]+'" value="'+dataval.product_name+'" />';
+                              })
+                            
+                            dataItems += '</td>';
+                            //console.log(DataRes[dataIsle[i]].palletCount)
+                          }else{
+                            dataItems += '<td>'+0+'</td>';
                           }
-                          dataItems += "</tr>";
-                          // dataItems += '</tr><tr style="height: 5px;">';
+
+                          
+                        }
+                        dataItems += '</tr>';
+
+
+                        dataItems += '<tr>';
+                        for(var i = 0; i < dataIsle.length; i++){
+                          dataItems += '<td class="minimal"></td>';
+                        }
+                        dataItems += '</tr>';
+
+                        //dataIsle.length
+                        dataBody.append(dataItems);
+
+    
+                    }else if(level_value == "3"){
                         
-                          // for (let i = j; i < j + columnCount; i++) {
-                          //   dataItems += '<td>&nbsp;</td>';
-                          // }
+                        let j = 1;
+                        let k = 54;
+                        var datahoverItem = [];
+                        //var dataItems = '';
+                        var dataItems = '';
+                          dataItems += '<tr style="border-bottom:1pt solid black;">';
+                        dataIsle.forEach(function(isleItem){
+                          
+                          dataItems += '<th><h1>'+isleItem +'</h1></th>';
+
+                          
+                        })
+                        dataItems += '</tr>';
                         
-                          j += columnCount; // Update j based on the range
-                        
-                          // dataItems += "</tr>";
-                          $(document).ready(function () {
-                          $(".button-text.contactme").hover(function () {
-                                // alert($(this).data("has-data"))
-                                  if ($(this).data("has-data") === true) {
-                                      $(this).find('.emailcontainer').show('slow');
-                                  }
-                              }, function () {
-                                  $(this).find('.emailcontainer').hide('slow');
-                              });
-                          });
-                          dataBody.append(dataItems);
-                        });
-            
+                        dataItems += '<tr>';
+                        for(var i = 0; i < dataIsle.length; i++){
+
+                          
+                          if(DataRes[dataIsle[i]]){
+                            console.log(DataRes)
+                            var countQTY = DataRes[dataIsle[i]].palletCount;
+                            var productDataView = DataRes[dataIsle[i]].productData;
+                            dataItems += '<td onclick="showModal(' + countQTY + ', '+i+', \''+dataIsle[i]+'\')">'+countQTY;
+                              productDataView.forEach(function(dataval){
+                                dataItems += '<input type="hidden" id="product_code'+i+dataIsle[i]+'" value="'+dataval.product_code+'" />';
+                                dataItems += '<input type="hidden" id="product_quantity'+i+dataIsle[i]+'" value="'+dataval.product_quantity+'" />';
+                                dataItems += '<input type="hidden" id="product_name'+i+dataIsle[i]+'" value="'+dataval.product_name+'" />';
+                              })
+                            
+                            dataItems += '</td>';
+                            //console.log(DataRes[dataIsle[i]].palletCount)
+                          }else{
+                            dataItems += '<td>'+0+'</td>';
+                          }
+
+                          
+                        }
+                        dataItems += '</tr>';
+
+
+                        dataItems += '<tr>';
+                        for(var i = 0; i < dataIsle.length; i++){
+                          dataItems += '<td class="minimal"></td>';
+                        }
+                        dataItems += '</tr>';
+
+                        //dataIsle.length
+                        dataBody.append(dataItems);
+
+    
                     }
-                    
-                    if(level_value == "4"){
-                        
-                        let j = 166;
-                        let k = 178;
-                        var datahoverItem = [];
-                        dataIsleHalf.forEach(function(isleItem) {
-                          var dataItems = '';
-                          const IsleData = isleItem;
-                        
-                          dataItems = '<tr><td rowspan="3"><strong><h1>' + isleItem + '</h1></strong></td></tr>';
-                        
-                          let columnCount = (isleItem >= 'H' && isleItem <= 'J') ? 14 : 13;
-                        
-                          for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td><h4>' + i + '</h4></td>';
-                          }
-                        
-                          dataItems += '</tr><tr>';
-                        
-                          for (let i = j; i < j + columnCount; i++) {
-                            if (DataRes[IsleData] && DataRes[IsleData][i]) {
-                              if(DataRes[IsleData][i] >= 500){
-                                color = "Tomato";
-                              }else if(DataRes[IsleData][i] >= 250){
-                                color = "yellow";
-                              }else{
-                               color = "white";
-                              }
 
-
-                              const numberOfProducts = DataRes[IsleData][i].productData.length
-                              
-
-                              if (!datahoverItem[IsleData]) {
-                                datahoverItem[IsleData] = {};
-                              }
-
-                              datahoverItem[IsleData][i] = '';
-                              for (var x = 0; x <= numberOfProducts - 1; x++) {
-
-                                if(DataRes && DataRes[IsleData][i].productData[x].product_name){
-                                  
-                                  datahoverItem[IsleData][i] += '<tr>';
-
-                                  datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_code;
-                                  datahoverItem[IsleData][i] += '</td>';
-
-                                  
-                                  
-                                  datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_name;
-                                  datahoverItem[IsleData][i] += '</td>';
-
-                                  datahoverItem[IsleData][i] += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_quantity;
-                                  datahoverItem[IsleData][i]  += '</td>';
-
-                                  datahoverItem[IsleData][i]  += '</tr>';
-
-                                }
-                              }
-
-                                                          
-                              const NumTotal = Math.round(DataRes[IsleData][i].palletCount * 1000) / 1000;
-                              dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + NumTotal + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Item Code</td><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
-                            } else {
-                              dataItems += '<td>&nbsp;</td>';
-                            }
-                          }
-                          dataItems += "</tr>";
-                          // dataItems += '</tr><tr style="height: 5px;">';
-                        
-                          // for (let i = j; i < j + columnCount; i++) {
-                          //   dataItems += '<td>&nbsp;</td>';
-                          // }
-                        
-                          j += columnCount; // Update j based on the range
-                        
-                          // dataItems += "</tr>";
-
-                          $(document).ready(function () {
-                          $(".button-text.contactme").hover(function () {
-                                // alert($(this).data("has-data"))
-                                  if ($(this).data("has-data") === true) {
-                                      $(this).find('.emailcontainer').show('slow');
-                                  }
-                              }, function () {
-                                  $(this).find('.emailcontainer').hide('slow');
-                              });
-                          });
-                        
-                          dataBody.append(dataItems);
-                        });
-            
-                    }
                 }
             break
             
-            case "Iloilo":
-                if(room_value == "Ambient"){
-                   if(level_value == "1"){
-                        
-                        let j = 1;
-                        let k = 54;
-                        var datahoverItem = [];
-                        dataIsle.forEach(function(isleItem) {
-                          var dataItems = '';
-                          const IsleData = isleItem;
-                        
-                          dataItems = '<tr><td rowspan="3"><strong><h1>' + isleItem + '</h1></strong></td></tr>';
-                        
-                          let columnCount = (isleItem >= 'G' && isleItem <= 'J') ? 38 : 54;
-                          columnCount = Math.min(columnCount, 145 - j + 1); // Limit columnCount to remaining pallets
-                        
-                          if (j > 145) {
-                            return; // Skip rendering the remaining letters if j exceeds 145
-                          }
-                        
-                          for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td><h4>' + i + '</h4></td>';
-                          }
-                        
-                          dataItems += '</tr><tr>';
-                        
-                          for (let i = j; i < j + columnCount; i++) {
-                            if (DataRes[IsleData] && DataRes[IsleData][i]) {
-                              if(DataRes[IsleData][i] >= 500){
-                                color = "Tomato";
-                              }else if(DataRes[IsleData][i] >= 250){
-                                color = "yellow";
-                              }else{
-                               color = "white";
-                              }
-
-
-                              const numberOfProducts = DataRes[IsleData][i].productData.length
-                              
-
-                              if (!datahoverItem[IsleData]) {
-                                datahoverItem[IsleData] = {};
-                              }
-
-                              datahoverItem[IsleData][i] = '';
-                              for (var x = 0; x <= numberOfProducts - 1; x++) {
-
-                                if(DataRes && DataRes[IsleData][i].productData[x].product_name){
-                                  
-                                  datahoverItem[IsleData][i] += '<tr>';
-
-                                  datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_code;
-                                  datahoverItem[IsleData][i] += '</td>';
-
-                                  
-                                  
-                                  datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_name;
-                                  datahoverItem[IsleData][i] += '</td>';
-
-                                  datahoverItem[IsleData][i] += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_quantity;
-                                  datahoverItem[IsleData][i]  += '</td>';
-
-                                  datahoverItem[IsleData][i]  += '</tr>';
-
-                                }
-                              }
-
-                                                          
-                              const NumTotal = Math.round(DataRes[IsleData][i].palletCount * 1000) / 1000;
-                              dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + NumTotal + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Item Code</td><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
-                            } else {
-                              dataItems += '<td>&nbsp;</td>';
-                            }
-                          }
-                          dataItems += "</tr>";
-                          // dataItems += '</tr><tr style="height: 5px;">';
-                        
-                          // for (let i = j; i < j + columnCount; i++) {
-                          //   dataItems += '<td>&nbsp;</td>';
-                          // }
-                        
-                          j += columnCount; // Update j based on the range
-                        
-                          // dataItems += "</tr>";
-
-                          $(document).ready(function () {
-                          $(".button-text.contactme").hover(function () {
-                                // alert($(this).data("has-data"))
-                                  if ($(this).data("has-data") === true) {
-                                      $(this).find('.emailcontainer').show('slow');
-                                  }
-                              }, function () {
-                                  $(this).find('.emailcontainer').hide('slow');
-                              });
-                          });
-                        
-                          dataBody.append(dataItems);
-                        });
-
-            
-                    } 
-                }
-            break
-            
-            case "Bacolod":
-                
-                if(room_value == "Ambient"){
-                   if(level_value == "1"){
-                        
-                        let j = 1;
-                        let k = 54;
-                        var datahoverItem = [];
-                        dataIsle.forEach(function(isleItem) {
-                          var dataItems = '';
-                          const IsleData = isleItem;
-                        
-                          dataItems = '<tr><td rowspan="3"><strong><h2>' + isleItem + '</h2></strong></td></tr>';
-                        
-                          let columnCount = (isleItem >= 'G' && isleItem <= 'J') ? 38 : 54;
-                          columnCount = Math.min(columnCount, 60 - j + 1); // Limit columnCount to remaining pallets
-                        
-                          if (j > 60) {
-                            return; // Skip rendering the remaining letters if j exceeds 145
-                          }
-                        
-                          for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td><h4>' + i + '</h4></td>';
-                          }
-                        
-                          dataItems += '</tr><tr>';
-                        
-                          for (let i = j; i < j + columnCount; i++) {
-                            if (DataRes[IsleData] && DataRes[IsleData][i]) {
-                              if(DataRes[IsleData][i] >= 500){
-                                color = "Tomato";
-                              }else if(DataRes[IsleData][i] >= 250){
-                                color = "yellow";
-                              }else{
-                               color = "white";
-                              }
-
-
-                              const numberOfProducts = DataRes[IsleData][i].productData.length
-                              
-
-                              if (!datahoverItem[IsleData]) {
-                                datahoverItem[IsleData] = {};
-                              }
-
-                              datahoverItem[IsleData][i] = '';
-                              for (var x = 0; x <= numberOfProducts - 1; x++) {
-
-                                if(DataRes && DataRes[IsleData][i].productData[x].product_name){
-                                  
-                                  datahoverItem[IsleData][i] += '<tr>';
-
-                                  datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_code;
-                                  datahoverItem[IsleData][i] += '</td>';
-
-                                  
-                                  
-                                  datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_name;
-                                  datahoverItem[IsleData][i] += '</td>';
-
-                                  datahoverItem[IsleData][i] += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_quantity;
-                                  datahoverItem[IsleData][i]  += '</td>';
-
-                                  datahoverItem[IsleData][i]  += '</tr>';
-
-                                }
-                              }
-
-                                                          
-                              const NumTotal = Math.round(DataRes[IsleData][i].palletCount * 1000) / 1000;
-                              dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + NumTotal + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Item Code</td><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
-                            } else {
-                              dataItems += '<td>&nbsp;</td>';
-                            }
-                          }
-                          dataItems += "</tr>";
-                          // dataItems += '</tr><tr style="height: 5px;">';
-                        
-                          // for (let i = j; i < j + columnCount; i++) {
-                          //   dataItems += '<td>&nbsp;</td>';
-                          // }
-                        
-                          j += columnCount; // Update j based on the range
-                        
-                          // dataItems += "</tr>";
-
-                          $(document).ready(function () {
-                          $(".button-text.contactme").hover(function () {
-                                // alert($(this).data("has-data"))
-                                  if ($(this).data("has-data") === true) {
-                                      $(this).find('.emailcontainer').show('slow');
-                                  }
-                              }, function () {
-                                  $(this).find('.emailcontainer').hide('slow');
-                              });
-                          });
-                        
-                          dataBody.append(dataItems);
-                        });
-
-            
-                    } 
-                }
-            break
-            
-            case "Cebu":
-                
-                if(room_value == "Ambient"){
-                   if(level_value == "1"){
-                        
-                        let j = 1;
-                        let k = 54;
-                        var datahoverItem = [];
-                        dataIsle.forEach(function(isleItem) {
-                          var dataItems = '';
-                          const IsleData = isleItem;
-                        
-                          dataItems = '<tr><td rowspan="3"><strong><h2>' + isleItem + '</h2></strong></td></tr>';
-                        
-                          let columnCount = (isleItem >= 'G' && isleItem <= 'J') ? 38 : 54;
-                          columnCount = Math.min(columnCount, 150 - j + 1); // Limit columnCount to remaining pallets
-                        
-                          if (j > 150) {
-                            return; // Skip rendering the remaining letters if j exceeds 145
-                          }
-                        
-                          for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td><h4>' + i + '</h4></td>';
-                          }
-                        
-                          dataItems += '</tr><tr>';
-                        
-                          for (let i = j; i < j + columnCount; i++) {
-                            if (DataRes[IsleData] && DataRes[IsleData][i]) {
-                              if(DataRes[IsleData][i] >= 500){
-                                color = "Tomato";
-                              }else if(DataRes[IsleData][i] >= 250){
-                                color = "yellow";
-                              }else{
-                               color = "white";
-                              }
-
-
-                              const numberOfProducts = DataRes[IsleData][i].productData.length
-                              
-
-                              if (!datahoverItem[IsleData]) {
-                                datahoverItem[IsleData] = {};
-                              }
-
-                              datahoverItem[IsleData][i] = '';
-                              for (var x = 0; x <= numberOfProducts - 1; x++) {
-
-                                if(DataRes && DataRes[IsleData][i].productData[x].product_name){
-                                  
-                                  datahoverItem[IsleData][i] += '<tr>';
-
-                                  datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_code;
-                                  datahoverItem[IsleData][i] += '</td>';
-
-                                  
-                                  
-                                  datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_name;
-                                  datahoverItem[IsleData][i] += '</td>';
-
-                                  datahoverItem[IsleData][i] += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_quantity;
-                                  datahoverItem[IsleData][i]  += '</td>';
-
-                                  datahoverItem[IsleData][i]  += '</tr>';
-
-                                }
-                              }
-
-                                                          
-                              const NumTotal = Math.round(DataRes[IsleData][i].palletCount * 1000) / 1000;
-                              dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + NumTotal + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Item Code</td><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
-                            } else {
-                              dataItems += '<td>&nbsp;</td>';
-                            }
-                          }
-                          dataItems += "</tr>";
-                          // dataItems += '</tr><tr style="height: 5px;">';
-                        
-                          // for (let i = j; i < j + columnCount; i++) {
-                          //   dataItems += '<td>&nbsp;</td>';
-                          // }
-                        
-                          j += columnCount; // Update j based on the range
-                        
-                          // dataItems += "</tr>";
-
-                          $(document).ready(function () {
-                          $(".button-text.contactme").hover(function () {
-                                // alert($(this).data("has-data"))
-                                  if ($(this).data("has-data") === true) {
-                                      $(this).find('.emailcontainer').show('slow');
-                                  }
-                              }, function () {
-                                  $(this).find('.emailcontainer').hide('slow');
-                              });
-                          });
-                        
-                          dataBody.append(dataItems);
-                        });
-
-            
-                    } 
-                }
-                
-                
-            break
-            
-            case "Tacloban":
-                
-                if(room_value == "Ambient"){
-                   if(level_value == "1"){
-                        
-                        let j = 1;
-                        let k = 54;
-                        var datahoverItem = [];
-                        dataIsle.forEach(function(isleItem) {
-                          var dataItems = '';
-                          const IsleData = isleItem;
-                        
-                          dataItems = '<tr><td rowspan="3"><strong><h2>' + isleItem + '</h2></strong></td></tr>';
-                        
-                          let columnCount = (isleItem >= 'G' && isleItem <= 'J') ? 38 : 54;
-                          columnCount = Math.min(columnCount, 94 - j + 1); // Limit columnCount to remaining pallets
-                        
-                          if (j > 94) {
-                            return; // Skip rendering the remaining letters if j exceeds 145
-                          }
-                        
-                          for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td><h4>' + i + '</h4></td>';
-                          }
-                        
-                          dataItems += '</tr><tr>';
-                        
-                          for (let i = j; i < j + columnCount; i++) {
-                            if (DataRes[IsleData] && DataRes[IsleData][i]) {
-                              if(DataRes[IsleData][i] >= 500){
-                                color = "Tomato";
-                              }else if(DataRes[IsleData][i] >= 250){
-                                color = "yellow";
-                              }else{
-                               color = "white";
-                              }
-
-
-                              const numberOfProducts = DataRes[IsleData][i].productData.length
-                              
-
-                              if (!datahoverItem[IsleData]) {
-                                datahoverItem[IsleData] = {};
-                              }
-
-                              datahoverItem[IsleData][i] = '';
-                              for (var x = 0; x <= numberOfProducts - 1; x++) {
-
-                                if(DataRes && DataRes[IsleData][i].productData[x].product_name){
-                                  
-                                  datahoverItem[IsleData][i] += '<tr>';
-
-                                  datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_code;
-                                  datahoverItem[IsleData][i] += '</td>';
-
-                                  
-                                  
-                                  datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_name;
-                                  datahoverItem[IsleData][i] += '</td>';
-
-                                  datahoverItem[IsleData][i] += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_quantity;
-                                  datahoverItem[IsleData][i]  += '</td>';
-
-                                  datahoverItem[IsleData][i]  += '</tr>';
-
-                                }
-                              }
-
-                                                          
-                              const NumTotal = Math.round(DataRes[IsleData][i].palletCount * 1000) / 1000;
-                              dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + NumTotal + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Item Code</td><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
-                            } else {
-                              dataItems += '<td>&nbsp;</td>';
-                            }
-                          }
-                          dataItems += "</tr>";
-                          // dataItems += '</tr><tr style="height: 5px;">';
-                        
-                          // for (let i = j; i < j + columnCount; i++) {
-                          //   dataItems += '<td>&nbsp;</td>';
-                          // }
-                        
-                          j += columnCount; // Update j based on the range
-                        
-                          // dataItems += "</tr>";
-
-                          $(document).ready(function () {
-                          $(".button-text.contactme").hover(function () {
-                                // alert($(this).data("has-data"))
-                                  if ($(this).data("has-data") === true) {
-                                      $(this).find('.emailcontainer').show('slow');
-                                  }
-                              }, function () {
-                                  $(this).find('.emailcontainer').hide('slow');
-                              });
-                          });
-                       
-                        
-                          dataBody.append(dataItems);
-                        });
-
-            
-                    } 
-                }
-                
-                
-            break
-            
-            case "Davao":
-                if(room_value == "Ambient"){
-                   if(level_value == "1"){
-                        
-                        let j = 1;
-                        let k = 54;
-                        var datahoverItem = [];
-                        dataIsle.forEach(function(isleItem) {
-                          var dataItems = '';
-                          const IsleData = isleItem;
-                        
-                          dataItems = '<tr><td rowspan="3"><strong><h2>' + isleItem + '</h2></strong></td></tr>';
-                        
-                          let columnCount = (isleItem >= 'G' && isleItem <= 'J') ? 38 : 54;
-                          columnCount = Math.min(columnCount, 150 - j + 1); // Limit columnCount to remaining pallets
-                        
-                          if (j > 150) {
-                            return; // Skip rendering the remaining letters if j exceeds 145
-                          }
-                        
-                          for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td><h4>' + i + '</h4></td>';
-                          }
-                        
-                          dataItems += '</tr><tr>';
-                        
-                          for (let i = j; i < j + columnCount; i++) {
-                            if (DataRes[IsleData] && DataRes[IsleData][i]) {
-                              if(DataRes[IsleData][i] >= 500){
-                                color = "Tomato";
-                              }else if(DataRes[IsleData][i] >= 250){
-                                color = "yellow";
-                              }else{
-                               color = "white";
-                              }
-
-
-                              const numberOfProducts = DataRes[IsleData][i].productData.length
-                              
-
-                              if (!datahoverItem[IsleData]) {
-                                datahoverItem[IsleData] = {};
-                              }
-
-                              datahoverItem[IsleData][i] = '';
-                              for (var x = 0; x <= numberOfProducts - 1; x++) {
-
-                                if(DataRes && DataRes[IsleData][i].productData[x].product_name){
-                                  
-                                  datahoverItem[IsleData][i] += '<tr>';
-
-                                  datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_code;
-                                  datahoverItem[IsleData][i] += '</td>';
-
-                                  
-                                  
-                                  datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_name;
-                                  datahoverItem[IsleData][i] += '</td>';
-
-                                  datahoverItem[IsleData][i] += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_quantity;
-                                  datahoverItem[IsleData][i]  += '</td>';
-
-                                  datahoverItem[IsleData][i]  += '</tr>';
-
-                                }
-                              }
-
-                                                          
-                              const NumTotal = Math.round(DataRes[IsleData][i].palletCount * 1000) / 1000;
-                              dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + NumTotal + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Item Code</td><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
-                            } else {
-                              dataItems += '<td>&nbsp;</td>';
-                            }
-                          }
-                        
-                          // dataItems += '</tr><tr style="height: 5px;">';
-                        
-                          // for (let i = j; i < j + columnCount; i++) {
-                          //   dataItems += '<td>&nbsp;</td>';
-                          // }
-                        
-                          j += columnCount; // Update j based on the range
-                        
-                          dataItems += "</tr>";
-
-                          $(document).ready(function () {
-                          $(".button-text.contactme").hover(function () {
-                                // alert($(this).data("has-data"))
-                                  if ($(this).data("has-data") === true) {
-                                      $(this).find('.emailcontainer').show('slow');
-                                  }
-                              }, function () {
-                                  $(this).find('.emailcontainer').hide('slow');
-                              });
-                          });
-                        
-                          dataBody.append(dataItems);
-                        });
-
-            
-                    } 
-                }
-                
-                
-            break
-            
-            case "CDO":
-                if(room_value == "Ambient"){
-                   if(level_value == "1"){
-                        
-                        let j = 1;
-                        let k = 54;
-                        var datahoverItem = [];
-                        dataIsle.forEach(function(isleItem) {
-                          var dataItems = '';
-                          const IsleData = isleItem;
-                        
-                          dataItems = '<tr><td rowspan="3"><strong><h2>' + isleItem + '</h2></strong></td></tr>';
-                        
-                          let columnCount = (isleItem >= 'G' && isleItem <= 'J') ? 38 : 54;
-                          columnCount = Math.min(columnCount, 200 - j + 1); // Limit columnCount to remaining pallets
-                        
-                          if (j > 200) {
-                            return; // Skip rendering the remaining letters if j exceeds 145
-                          }
-                        
-                          for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td><h4>' + i + '</h4></td>';
-                          }
-                        
-                          dataItems += '</tr><tr>';
-                        
-                          for (let i = j; i < j + columnCount; i++) {
-                            if (DataRes[IsleData] && DataRes[IsleData][i]) {
-                              if(DataRes[IsleData][i] >= 500){
-                                color = "Tomato";
-                              }else if(DataRes[IsleData][i] >= 250){
-                                color = "yellow";
-                              }else{
-                               color = "white";
-                              }
-
-
-                              const numberOfProducts = DataRes[IsleData][i].productData.length
-                              
-
-                              if (!datahoverItem[IsleData]) {
-                                datahoverItem[IsleData] = {};
-                              }
-
-                              datahoverItem[IsleData][i] = '';
-                              for (var x = 0; x <= numberOfProducts - 1; x++) {
-
-                                if(DataRes && DataRes[IsleData][i].productData[x].product_name){
-                                  
-                                  datahoverItem[IsleData][i] += '<tr>';
-
-                                  datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_code;
-                                  datahoverItem[IsleData][i] += '</td>';
-
-                                  
-                                  
-                                  datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_name;
-                                  datahoverItem[IsleData][i] += '</td>';
-
-                                  datahoverItem[IsleData][i] += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_quantity;
-                                  datahoverItem[IsleData][i]  += '</td>';
-
-                                  datahoverItem[IsleData][i]  += '</tr>';
-
-                                }
-                              }
-
-                                                          
-                              const NumTotal = Math.round(DataRes[IsleData][i].palletCount * 1000) / 1000;
-                              dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + NumTotal + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Item Code</td><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
-                            } else {
-                              dataItems += '<td>&nbsp;</td>';
-                            }
-                          }
-                        
-                          // dataItems += '</tr><tr style="height: 5px;">';
-                        
-                          // for (let i = j; i < j + columnCount; i++) {
-                          //   dataItems += '<td>&nbsp;</td>';
-                          // }
-                        
-                          j += columnCount; // Update j based on the range
-                        
-                          dataItems += "</tr>";
-
-                          $(document).ready(function () {
-                          $(".button-text.contactme").hover(function () {
-                                // alert($(this).data("has-data"))
-                                  if ($(this).data("has-data") === true) {
-                                      $(this).find('.emailcontainer').show('slow');
-                                  }
-                              }, function () {
-                                  $(this).find('.emailcontainer').hide('slow');
-                              });
-                          });
-                        
-                          dataBody.append(dataItems);
-                        });
-
-            
-                    } 
-                }
-            break
-
-            case "Zamboanga":
-                if(room_value == "Ambient"){
-                   if(level_value == "1"){
-                        
-                        let j = 1;
-                        let k = 54;
-                        var datahoverItem = [];
-                        dataIsle.forEach(function(isleItem) {
-                          var dataItems = '';
-                          const IsleData = isleItem;
-                        
-                          dataItems = '<tr><td rowspan="3"><strong><h1>' + isleItem + '</h1></strong></td></tr>';
-                        
-                          let columnCount = (isleItem >= 'G' && isleItem <= 'J') ? 38 : 54;
-                          columnCount = Math.min(columnCount, 50 - j + 1); // Limit columnCount to remaining pallets
-                        
-                          if (j > 50) {
-                            return; // Skip rendering the remaining letters if j exceeds 145
-                          }
-                        
-                          for (let i = j; i < j + columnCount; i++) {
-                            dataItems += '<td><h4>' + i + '</h4></td>';
-                          }
-                        
-                          dataItems += '</tr><tr>';
-                        
-                          for (let i = j; i < j + columnCount; i++) {
-                            if (DataRes[IsleData] && DataRes[IsleData][i]) {
-                              if(DataRes[IsleData][i] >= 500){
-                                color = "Tomato";
-                              }else if(DataRes[IsleData][i] >= 250){
-                                color = "yellow";
-                              }else{
-                               color = "white";
-                              }
-
-
-                              const numberOfProducts = DataRes[IsleData][i].productData.length
-                              
-
-                              if (!datahoverItem[IsleData]) {
-                                datahoverItem[IsleData] = {};
-                              }
-
-                              datahoverItem[IsleData][i] = '';
-                              for (var x = 0; x <= numberOfProducts - 1; x++) {
-
-                                if(DataRes && DataRes[IsleData][i].productData[x].product_name){
-                                  
-                                  datahoverItem[IsleData][i] += '<tr>';
-
-                                  datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_code;
-                                  datahoverItem[IsleData][i] += '</td>';
-
-                                  
-                                  
-                                  datahoverItem[IsleData][i]  += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_name;
-                                  datahoverItem[IsleData][i] += '</td>';
-
-                                  datahoverItem[IsleData][i] += '<td>';
-                                  datahoverItem[IsleData][i]  += DataRes[IsleData][i].productData[x].product_quantity;
-                                  datahoverItem[IsleData][i]  += '</td>';
-
-                                  datahoverItem[IsleData][i]  += '</tr>';
-
-                                }
-                              }
-
-                                                          
-                              const NumTotal = Math.round(DataRes[IsleData][i].palletCount * 1000) / 1000;
-                              dataItems += '<td class="center button-text contactme"  data-has-data="' + (datahoverItem[IsleData][i]  ? true : false) + '" bgcolor="'+color+'"><b style="color:black">' + NumTotal + '</b><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Item Code</td><td>Product Name</td><td>Qty</td></tr></thead><tbody>'+datahoverItem[IsleData][i] +'</tbody></table></div></td>';
-                            } else {
-                              dataItems += '<td>&nbsp;</td>';
-                            }
-                          }
-                        
-                          // dataItems += '</tr><tr style="height: 5px;">';
-                        
-                          // for (let i = j; i < j + columnCount; i++) {
-                          //   dataItems += '<td>&nbsp;</td>';
-                          // }
-                        
-                          j += columnCount; // Update j based on the range
-                        
-                          dataItems += "</tr>";
-                          $(document).ready(function () {
-                          $(".button-text.contactme").hover(function () {
-                                // alert($(this).data("has-data"))
-                                  if ($(this).data("has-data") === true) {
-                                      $(this).find('.emailcontainer').show('slow');
-                                  }
-                              }, function () {
-                                  $(this).find('.emailcontainer').hide('slow');
-                              });
-                          });
-                          dataBody.append(dataItems);
-                        });
-
-            
-                    } 
-                }
-            break
-        }
+          }
         
         
         

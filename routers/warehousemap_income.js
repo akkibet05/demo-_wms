@@ -112,6 +112,7 @@ router.post('/MapData', async (req, res) => {
 
   
     const warehouse_data =  await warehouse.aggregate([
+      
       {
         $unwind: "$product_details" // Split the "product" array into separate documents
       },
@@ -125,8 +126,7 @@ router.post('/MapData', async (req, res) => {
       {
         $group: {
           _id: {
-                isle: "$product_details.isle",
-                pallet: "$product_details.pallet",
+                rack: "$product_details.rack",
                 product_code: "$product_details.product_code",
                 product_name: "$product_details.product_name",
           },
@@ -152,8 +152,7 @@ router.post('/MapData', async (req, res) => {
       {
         $project: {
           _id: 0,
-          isle: "$_id.isle",
-          pallet: "$_id.pallet",
+          rack: "$_id.rack",
           product_code: "$_id.product_code",
           products: {
             $filter: {
@@ -164,44 +163,38 @@ router.post('/MapData', async (req, res) => {
           },
           totalQuantity: 1
         }
+      },
+      {
+        $lookup: {
+          from: "products",
+          localField: "product_code",
+          foreignField: "product_code",
+          as: "productDetails"
+        }
+      },
+      {
+        $unwind: "$productDetails"
+      },
+      {
+        $project: {
+          _id: 0,
+          rack: 1,
+          product_code: 1,
+          products: 1,
+          totalQuantity: 1,
+          // Include fields from the joined collection
+          image: "$productDetails.image",
+          name: "$productDetails.name",
+          category: "$productDetails.category",
+          brand: "$productDetails.brand",
+          // Add more fields as needed
+        }
       }
     ]);
 
     // console.log(warehouse_data)
   res.json(warehouse_data);
 })
-
-//Original
-//   router.post('/MapData', async (req, res) => {
-//     const { warehouseNew, level, rooms } = req.body 
-
-  
-    
-//       const warehouse_data =  await warehouse.aggregate([
-//         {
-//           $unwind: "$product_details" // Split the "product" array into separate documents
-//         },
-//         {
-//           $match: {
-//             name: warehouseNew,
-//             "product_details.level": parseInt(level),
-//             room: rooms
-//           }
-//         },
-//         {
-//           $group: {
-//             _id: {
-//                   isle: "$product_details.isle",
-//                   pallet: "$product_details.pallet"
-//             },
-//             count: { $sum: "$product_details.product_stock" } // Count the occurrences of each group
-//           }
-//         }
-//       ]);
-
-//       // console.log(warehouse_data)
-//     res.json(warehouse_data);
-// })
 
 
 
@@ -609,49 +602,25 @@ router.post("/Rooms_data2", async (req, res) => {
 
 
 
-  router.post("/Rooms_dataStock", async (req, res) => {
+router.post("/Rooms_dataStock", async (req, res) => {
 
-    try{
-        const { warehouse_name, A, B } = req.body
-  
-  
-        var include = '';
-        if(warehouse_name == "All"){
-          
-            include = [
-              {
-                  $match: { 
-                      "status" : 'Enabled',
-                
-                  }
-              },
-              {
-                  $group: {
-                      _id: "$room",
-                      room_name: { $first: "$room"}
-                  }
-              },
-              {
-                $sort: {
-                    room_name: 1 // 1 for ascending order, -1 for descending order
-                }
-            }
-          ]
-          
-  
-        }else{
-          
+  try{
+      const { warehouse_name, A, B } = req.body
+
+
+      var include = '';
+      if(warehouse_name == "All"){
+        
           include = [
             {
                 $match: { 
-                    "name": warehouse_name,
                     "status" : 'Enabled',
               
                 }
             },
             {
                 $group: {
-                    _id: "$_id",
+                    _id: "$room",
                     room_name: { $first: "$room"}
                 }
             },
@@ -661,17 +630,41 @@ router.post("/Rooms_data2", async (req, res) => {
               }
           }
         ]
+        
+
+      }else{
+        
+        include = [
+          {
+              $match: { 
+                  "name": warehouse_name,
+                  "status" : 'Enabled',
+            
+              }
+          },
+          {
+              $group: {
+                  _id: "$_id",
+                  room_name: { $first: "$room"}
+              }
+          },
+          {
+            $sort: {
+                room_name: 1 // 1 for ascending order, -1 for descending order
+            }
         }
-        const warehouse_data = await warehouse.aggregate(include)
-          
-    
+      ]
+      }
+      const warehouse_data = await warehouse.aggregate(include)
+        
   
-        res.status(200).json(warehouse_data)
-    }catch(error){
-        res.status(400).json({ errorMessage: error.message })
-    }
-    
+
+      res.status(200).json(warehouse_data)
+  }catch(error){
+      res.status(400).json({ errorMessage: error.message })
+  }
   
-  })
+
+})
 
 module.exports = router

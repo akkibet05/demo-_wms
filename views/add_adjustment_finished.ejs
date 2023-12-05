@@ -84,46 +84,46 @@
     </style>
     <script>
         function saveAndContinue() {
-            var strTemp = '';
-        var Invoice = document.getElementById("invoice");
-        var date = document.getElementById("date");
-        var warehouse_name = document.getElementById("adjustment_warehouse_name");
-        // var Room_name = document.getElementById("Room_name");
-        var modal = document.getElementById("myModal");
+        //     var strTemp = '';
+        // var Invoice = document.getElementById("invoice");
+        // var date = document.getElementById("date");
+        // var warehouse_name = document.getElementById("adjustment_warehouse_name");
+        // // var Room_name = document.getElementById("Room_name");
+        // var modal = document.getElementById("myModal");
 
-        if(Invoice.value.length == 0){
-            strTemp += "Document Number is required. <br>" 
-            Invoice.style.borderColor = "red";
-            Invoice.focus()
-        }else{
-            Invoice.style.borderColor = "";
-        }
+        // if(Invoice.value.length == 0){
+        //     strTemp += "Document Number is required. <br>" 
+        //     Invoice.style.borderColor = "red";
+        //     Invoice.focus()
+        // }else{
+        //     Invoice.style.borderColor = "";
+        // }
 
     
 
-        if(date.value.length == 0){
-            strTemp += "Date is required. <br>"
-            date.style.borderColor = "red";
-            date.focus()
-        }else{
-            date.style.borderColor = "";
-        }
-
-        if(warehouse_name.value.length == 0){
-            strTemp += "Warehouse is required. <br>"
-            warehouse_name.style.borderColor = "red";
-            warehouse_name.focus()
-        }else{
-            warehouse_name.style.borderColor = "";
-        }
-
-        // if(Room_name.value.length == 0){
-        //     strTemp += "Room  is required. <br>"
-        //     Room_name.style.borderColor = "red";
-        //     Room_name.focus()
+        // if(date.value.length == 0){
+        //     strTemp += "Date is required. <br>"
+        //     date.style.borderColor = "red";
+        //     date.focus()
         // }else{
-        //     Room_name.style.borderColor = "";
+        //     date.style.borderColor = "";
         // }
+
+        // if(warehouse_name.value.length == 0){
+        //     strTemp += "Warehouse is required. <br>"
+        //     warehouse_name.style.borderColor = "red";
+        //     warehouse_name.focus()
+        // }else{
+        //     warehouse_name.style.borderColor = "";
+        // }
+
+        // // if(Room_name.value.length == 0){
+        // //     strTemp += "Room  is required. <br>"
+        // //     Room_name.style.borderColor = "red";
+        // //     Room_name.focus()
+        // // }else{
+        // //     Room_name.style.borderColor = "";
+        // // }
 
         
 
@@ -131,45 +131,45 @@
  
 
 
-        var prod_qty = document.getElementsByName("adjust_qty");
-        var x = 1;
-        for (let index = 0; index < prod_qty.length; index++) {
-            const inputElement  = prod_qty[index];
+        // var prod_qty = document.getElementsByName("adjust_qty");
+        // var x = 1;
+        // for (let index = 0; index < prod_qty.length; index++) {
+        //     const inputElement  = prod_qty[index];
 
-            if(inputElement.value.length == 0){
-                modal.style.display = "none";
-                strTemp += x + ". Adjust Quantity  is required. <br>"
-                inputElement.style.borderColor = "red";
-                inputElement.focus()
-            }else{
-                inputElement.style.borderColor = "";
-            }
-            x++;
-        }
-
-
+        //     if(inputElement.value.length == 0){
+        //         modal.style.display = "none";
+        //         strTemp += x + ". Adjust Quantity  is required. <br>"
+        //         inputElement.style.borderColor = "red";
+        //         inputElement.focus()
+        //     }else{
+        //         inputElement.style.borderColor = "";
+        //     }
+        //     x++;
+        // }
 
 
-        var table = document.getElementById("adjust_tbl_new");
-        var noofrow = table.rows.length -1;
 
-        if(noofrow == 0){
-            strTemp += "Product list is empty. <br>"
-            table.style.borderColor = "red";
-            document.getElementById("product_code").focus()
-        }else{
-            table.style.borderColor = "";
-        }
 
-        if(strTemp.length > 0){
-            modal.style.display = "none";
-            Swal.fire(
-            'Required ',
-            "<h5>" + strTemp + "</h5>",
-            'warning'
-            )
-            return;
-        }
+        // var table = document.getElementById("adjust_tbl_new");
+        // var noofrow = table.rows.length -1;
+
+        // if(noofrow == 0){
+        //     strTemp += "Product list is empty. <br>"
+        //     table.style.borderColor = "red";
+        //     document.getElementById("product_code").focus()
+        // }else{
+        //     table.style.borderColor = "";
+        // }
+
+        // if(strTemp.length > 0){
+        //     modal.style.display = "none";
+        //     Swal.fire(
+        //     'Required ',
+        //     "<h5>" + strTemp + "</h5>",
+        //     'warning'
+        //     )
+        //     return;
+        // }
          document.getElementById("form").submit();
          modal.style.display = "none";
         Swal.fire({
@@ -194,151 +194,151 @@
 
             clearModalContent();
             
-            var html = '';
-            var NodeList = document.getElementsByName("prod_code");
-            var NodeList2 = document.getElementsByName("prod_name");
-            var prod_unit = document.getElementsByName("unit");
-            var prod_qty = document.getElementsByName("new_adjust_qty");
-            var stock = document.getElementsByName("stock");
+            // var html = '';
+            // var NodeList = document.getElementsByName("prod_code");
+            // var NodeList2 = document.getElementsByName("prod_name");
+            // var prod_unit = document.getElementsByName("unit");
+            // var prod_qty = document.getElementsByName("new_adjust_qty");
+            // var stock = document.getElementsByName("stock");
 
-            var batch_code = document.getElementsByName("batch_code");
-            var product_date = document.getElementsByName("product_date");
-            var expiry_date = document.getElementsByName("expiry_date");
-            var types = document.getElementsByName("types");
-            var level = document.getElementsByName("level");
-            var adjust_qty = document.getElementsByName("adjust_qty");
-            var level2 = document.getElementsByName("level2");
-            var Rooms = document.getElementsByName("Rooms");
+            // var batch_code = document.getElementsByName("batch_code");
+            // var product_date = document.getElementsByName("product_date");
+            // var expiry_date = document.getElementsByName("expiry_date");
+            // var types = document.getElementsByName("types");
+            // var level = document.getElementsByName("level");
+            // var adjust_qty = document.getElementsByName("adjust_qty");
+            // var level2 = document.getElementsByName("level2");
+            // var Rooms = document.getElementsByName("Rooms");
 
-            var nodeVal = '';
-            var productName = '';
-            var valprod_unit = '';
-            var valprod_qty = '';
-            var valstock = '';
-            for (var x = 0; x < NodeList.length; x++) {
-                nodeVal = NodeList[x].value;
-                productName = NodeList2[x].value;
-                valprod_unit = prod_unit[x].value;
-                valprod_qty = prod_qty[x].value;
-                valstock = stock[x].value;
+            // var nodeVal = '';
+            // var productName = '';
+            // var valprod_unit = '';
+            // var valprod_qty = '';
+            // var valstock = '';
+            // for (var x = 0; x < NodeList.length; x++) {
+            //     nodeVal = NodeList[x].value;
+            //     productName = NodeList2[x].value;
+            //     valprod_unit = prod_unit[x].value;
+            //     valprod_qty = prod_qty[x].value;
+            //     valstock = stock[x].value;
 
-                valbatch_code = batch_code[x].value;
-                valproduct_date = product_date[x].value;
-                valexpiry_date = expiry_date[x].value;
-                valtypes = types[x].value;
-                vallevel = level[x].value;
-                valadjust_qty = adjust_qty[x].value;
-                vallevel2 = level2[x].value;
-                valRooms = Rooms[x].value;
+            //     valbatch_code = batch_code[x].value;
+            //     valproduct_date = product_date[x].value;
+            //     valexpiry_date = expiry_date[x].value;
+            //     valtypes = types[x].value;
+            //     vallevel = level[x].value;
+            //     valadjust_qty = adjust_qty[x].value;
+            //     vallevel2 = level2[x].value;
+            //     valRooms = Rooms[x].value;
 
-                html += '<tr>';
-                html += '<td>';
-                html += '<p>' + nodeVal + '</p>';
-                html += '</td>';
+            //     html += '<tr>';
+            //     html += '<td>';
+            //     html += '<p>' + nodeVal + '</p>';
+            //     html += '</td>';
 
-                html += '<td>';
-                html += productName;
-                html += '</td>';
+            //     html += '<td>';
+            //     html += productName;
+            //     html += '</td>';
 
 
-                html += '<td>';
-                html += valadjust_qty;
-                html += '</td>';
-
-                
-                
-                html += '<td>';
-                html += valbatch_code;
-                html += '</td>';
-
-                html += '<td>';
-                html += valproduct_date;
-                html += '</td>';
-
-                html += '<td>';
-                html += valexpiry_date;
-                html += '</td>';
+            //     html += '<td>';
+            //     html += valadjust_qty;
+            //     html += '</td>';
 
                 
-
-                html += '<td>';
-                html += valstock;
-                html += '</td>';
-
-                html += '<td>';
-                html += valtypes;
-                html += '</td>';
-
-                html += '<td>';
-                html += valprod_unit;
-                html += '</td>';
-
-
-                html += '<td>';
-                html += valRooms;
-                html += '</td>';
                 
+            //     html += '<td>';
+            //     html += valbatch_code;
+            //     html += '</td>';
 
-                html += '<td>';
-                html += vallevel2;
-                html += '</td>';
+            //     html += '<td>';
+            //     html += valproduct_date;
+            //     html += '</td>';
 
-                html += '<td>';
-                html += valprod_qty;
-                html += '</td>';
+            //     html += '<td>';
+            //     html += valexpiry_date;
+            //     html += '</td>';
 
                 
 
-                html += '</tr>';
-            }
+            //     html += '<td>';
+            //     html += valstock;
+            //     html += '</td>';
 
-            var htmlfinal = "";
-            htmlfinal += '<thead class="thead-primary">';
-            htmlfinal += '<tr>';
-            htmlfinal += '<th scope="col">Item Code </th>';
-            htmlfinal += '<th scope="col">Item Description </th>';
-            htmlfinal += '<th scope="col">Adjust Quantity </th>';
-            htmlfinal += '<th scope="col">Batch Code </th>';
-            htmlfinal += '<th scope="col">Production Date </th>';
-            htmlfinal += '<th scope="col">Expiry Date </th>';
-            htmlfinal += '<th scope="col">In Stock </th>';
-            htmlfinal += '<th scope="col">Type</th>';
-            htmlfinal += '<th scope="col">Unit of Measure</th>';
-            htmlfinal += '<th scope="col">Room</th>';
-            htmlfinal += '<th scope="col">Location</th>';
-            htmlfinal += '<th scope="col">Stock - After Adjust</th>';
-            htmlfinal += '</tr>';
-            htmlfinal += '</thead>';
-            htmlfinal += '<tbody id="tblPage_new_modal">';
-            htmlfinal += html;
-            htmlfinal += '</tbody>';
+            //     html += '<td>';
+            //     html += valtypes;
+            //     html += '</td>';
 
-            var modal = document.getElementById("myModal");
-            var span = document.getElementsByClassName("close")[0];
+            //     html += '<td>';
+            //     html += valprod_unit;
+            //     html += '</td>';
 
 
-            modal.style.display = "block";
-            span.onclick = function () {
-                modal.style.display = "none";
-            };
+            //     html += '<td>';
+            //     html += valRooms;
+            //     html += '</td>';
+                
 
-            window.onclick = function (event) {
-                if (event.target == modal) {
-                    modal.style.display = "block";
-                }
-            };
+            //     html += '<td>';
+            //     html += vallevel2;
+            //     html += '</td>';
+
+            //     html += '<td>';
+            //     html += valprod_qty;
+            //     html += '</td>';
+
+                
+
+            //     html += '</tr>';
+            // }
+
+            // var htmlfinal = "";
+            // htmlfinal += '<thead class="thead-primary">';
+            // htmlfinal += '<tr>';
+            // htmlfinal += '<th scope="col">Item Code </th>';
+            // htmlfinal += '<th scope="col">Item Description </th>';
+            // htmlfinal += '<th scope="col">Adjust Quantity </th>';
+            // htmlfinal += '<th scope="col">Batch Code </th>';
+            // htmlfinal += '<th scope="col">Production Date </th>';
+            // htmlfinal += '<th scope="col">Expiry Date </th>';
+            // htmlfinal += '<th scope="col">In Stock </th>';
+            // htmlfinal += '<th scope="col">Type</th>';
+            // htmlfinal += '<th scope="col">Unit of Measure</th>';
+            // htmlfinal += '<th scope="col">Room</th>';
+            // htmlfinal += '<th scope="col">Location</th>';
+            // htmlfinal += '<th scope="col">Stock - After Adjust</th>';
+            // htmlfinal += '</tr>';
+            // htmlfinal += '</thead>';
+            // htmlfinal += '<tbody id="tblPage_new_modal">';
+            // htmlfinal += html;
+            // htmlfinal += '</tbody>';
+
+            // var modal = document.getElementById("myModal");
+            // var span = document.getElementsByClassName("close")[0];
+
+
+            // modal.style.display = "block";
+            // span.onclick = function () {
+            //     modal.style.display = "none";
+            // };
+
+            // window.onclick = function (event) {
+            //     if (event.target == modal) {
+            //         modal.style.display = "block";
+            //     }
+            // };
 
   
 
-            var modalContent = document.getElementById("purchases_tbl_modal");
-            modalContent.innerHTML = "";
+            // var modalContent = document.getElementById("purchases_tbl_modal");
+            // modalContent.innerHTML = "";
 
         
-            document.getElementById("dateRec").innerHTML = document.getElementById("date").value;
-            document.getElementById("houseware").innerHTML = document.getElementById("adjustment_warehouse_name").value;
-            // document.getElementById("moor").innerHTML = document.getElementById("Room_name").value;
+            // document.getElementById("dateRec").innerHTML = document.getElementById("date").value;
+            // document.getElementById("houseware").innerHTML = document.getElementById("adjustment_warehouse_name").value;
+            // // document.getElementById("moor").innerHTML = document.getElementById("Room_name").value;
 
-            modalContent.innerHTML = htmlfinal;
+            // modalContent.innerHTML = htmlfinal;
             
         }
 
@@ -347,7 +347,7 @@
 
 </head>
 
-<body onload="showTextbox(); ComputeConversion();">
+<body onload="showTextbox();">
     <!--*******************
         Preloader start
     ********************-->
@@ -476,148 +476,10 @@
                                                         </div>
 
 
-                                                        <div class="col-xl-3 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label class="form-label">Requested By</label>
-                                                                <input type="text" class="form-control" name="ReqBy" id="ReqBy">
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="col-xl-3 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label class="form-label">Date of Request</label>
-                                                                <input type="date" class="form-control" name="dateofreq" id="dateofreq">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-xl-3 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label class="form-label">PO number</label>
-                                                                <input type="text" class="form-control" name="PO_number" id="PO_number">
-                                                            </div>
-                                                        </div>
                                                          
                                                     </div>
 
 
-                                                    <div class="row mb-3">
-
-                                                        <div class="col-xl-3 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label for="invoice_no">Type of Services </label>
-                                                            
-
-                                                                <br><input type="checkbox" class="form-check-input" id="typeservices" name="typeservices" onclick="datahceck()" value="Freight">
-                                                                <label for="Freight"> Freight</label><br>
-                                                                <input type="checkbox" class="form-check-input" id="typeservices" name="typeservices" onclick="datahceck()" value="Handling In">
-                                                                <label for="HandlingIn"> Handling In</label><br>
-                                                                <input type="checkbox" class="form-check-input" id="typeservices" name="typeservices" onclick="datahceck()" value="Handling Out">
-                                                                <label for="HandlingOut"> Handling Out</label><br>
-                                                                <input type="checkbox" class="form-check-input" id="typeservices" name="typeservices" onclick="datahceck()" value="Stripping">
-                                                                <label for="Stripping"> Stripping</label><br>
-                                                                <input type="checkbox" class="form-check-input" id="typeservices" name="typeservices" onclick="datahceck()" value="Stuffing">
-                                                                <label for="Stuffing"> Stuffing</label><br>
-                                                                <input type="checkbox" class="form-check-input" id="typeservices" name="typeservices" onclick="datahceck()" value="Barcoding">
-                                                                <label for="Barcoding"> Barcoding</label><br>
-                                                                <input type="checkbox" class="form-check-input" id="typeservices" name="typeservices" onclick="datahceck()" value="Repacking">
-                                                                <label for="Repacking"> Repacking</label><br>
-                                                                <input type="checkbox" class="form-check-input" id="typeservices" name="typeservices" onclick="datahceck()" value="Reprocessing">
-                                                                <label for="Reprocessing"> Reprocessing</label><br>
-                                                                <input type="checkbox" class="form-check-input" id="typeservices" name="typeservices" onclick="datahceck()" value="Stickering">
-                                                                <label for="Stickering"> Stickering</label><br>
-                                                                <input type="checkbox" class="form-check-input" id="typeservices" name="typeservices" onclick="datahceck()" value="Sorting">
-                                                                <label for="Sorting"> Sorting</label><br>
-
-                                                                <input type="hidden" class="form-check-input" id="typeservicesData" name="typeservicesData">
-
-
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-xl-3 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label for="invoice_no">Type of Vehicle  <span
-                                                                        class="text-red">*</span></label>
-                                                                <select class="form-control" name="typevehicle"
-                                                                    id="typevehicle" required>
-                                                                    <option value="4WH">4 WHEELER</option>
-                                                                    <option value="6WH">6 WHEELER</option>
-                                                                    <option value="FWD">FORWARD</option>
-                                                                    <option value="10WH">10 WHEELER</option>
-                                                                    <option value="10FT">10 FOOTER</option>
-                                                                    <option value="20FT">20 FOOTER</option>
-                                                                    <option value="40FT">40 FOOTER</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="col-xl-3 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label class="form-label">Destination</label>
-                                                                <input type="text" class="form-control" name="destination" id="destination">
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="col-xl-3 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label class="form-label">Pick Up/Delivery Date</label>
-                                                                <input type="date" class="form-control" name="deliverydate" id="deliverydate">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-xl-3 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label class="form-label">Name of trucker/Driver</label>
-                                                                <input type="text" class="form-control" name="driver" id="driver">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-xl-3 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label class="form-label">Plate Number</label>
-                                                                <input type="text" class="form-control" name="plate" id="plate">
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="col-xl-3 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label class="form-label">Van/Seal Number</label>
-                                                                <input type="text" class="form-control" name="van" id="can">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-xl-3 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label class="form-label">D.R. / S.I Number</label>
-                                                                <input type="text" class="form-control" name="DRSI" id="DRSI">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-xl-3 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label class="form-label">TIME START UNLOADING</label>
-                                                                <input type="time" class="form-control" name="TSU" id="TSU">
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="col-xl-3 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label class="form-label">TIME FINISH UNLOADING</label>
-                                                                <input type="time" class="form-control" name="TFU" id="TFU">
-                                                            </div>
-                                                        </div>
-
-
-
-
-
-                                                    </div>
-                                                    
                                                     
                                                     <div class="row mb-3">
                                                         <div class="col-xl-4 col-sm-6">
@@ -653,18 +515,16 @@
                                                             <table class="table primary-table-bordered" id="adjust_tbl_new">
                                                                 <thead class="thead-primary">
                                                                     <tr>
-                                                                        <th scope="col">Item Code </th>
+                                                                        <th scope="col">Item Code / Serial No. </th>
                                                                         <th scope="col">Item Description</th>
                                                                         <th scope="col"><%= language.adjust_qty %>  <span class="text-red">*</span></th>
-                                                                        <th scope="col">Batch Code</th>
-                                                                        <th scope="col">Production Code</th>
-                                                                        <th scope="col">Expiry date </th>
+                                                                       
                                                                         <th><%= language.current_stock %> </th>
                                                                         <th><%= language.type %> </th>
                                                                         <th scope="col">Unit of Measure</th>
-                                                                        <th>Room</th>
+                                                                        <th>Area</th>
                                                                         <th>Level</th>
-                                                                        <th>Location</th>
+                                                                        <th>Rack</th>
                                                                         <th scope="col"><%= language.stock_after_adjust %> <span class="text-red">*</span> </th>
                                                                         <th>Action</th>
 
@@ -691,8 +551,8 @@
                                                     </div> -->
                                                 </form>
                                                 <div class="row">
-                                                    <button class="btn btn-primary" onclick="showConfirmation()" type="submit"
-                                                        id="purchase_submit"  >Pre-Finalize</button>
+                                                    <button class="btn btn-primary" onclick="saveAndContinue()" type="submit"
+                                                        id="purchase_submit"  >Submit</button>
                                                         <!-- <input class="btn btn-primary"  type="submit"
                                                         id="purchase_submit" onclick="showConfirmation()" ><%= language.submit %> </input> -->
                                                 </div>
@@ -1102,31 +962,6 @@
             removeSelfRow(event);
         });
 
-        function ComputeConversion(x, c){
-            var stock = document.getElementById("stock"+x);
-            var types = document.getElementById("types"+x);
-            var unit = document.getElementById("unit"+x);
-            var new_adjust_qty = document.getElementById("new_adjust_qty"+x);
-            var prod_cat = document.getElementById("prod_cat"+x);
-            var adjust_qty = document.getElementById("adjust_qty"+x);
-            var Primary_Units = document.getElementById("Primary_Units"+x).value;
-            var Secondary_units = document.getElementById("Secondary_units"+x).value;
-   
-            var TotalQtyStock =0;
-            var UOM;
-            TotalQtyStock = stock.value;
-            UOM = Primary_Units;
-            if(prod_cat.value == "S"){
-                TotalQtyStock = stock.value * c;
-                UOM = Secondary_units;
-            }
-            stock.value = TotalQtyStock;
-            unit.value = UOM;
-            
-
-        }
-
-
         function ComputeConversionI(x, c){
             var stock = document.getElementById("stock"+x);
             var types = document.getElementById("types"+x);
@@ -1171,12 +1006,8 @@
             var productCode = $(this).val(); // Get the entered product code
             var Warehouses = $("#adjustment_warehouse_name").val(); // Get the entered product code
             var Rooms = $("#Room_name").val(); // Get the entered product code
-            var valCatwars;
-            if(Warehouses == "DRY GOODS"){
-                valCatwars = "DG";
-            }else{
-                valCatwars = "FG";
-            }
+  
+            
             
             // Check if the product code already exists in the table
             var isProductExists = false;
@@ -1219,36 +1050,29 @@
                         const palletData =  data.pallet === null ? 0 : data.pallet; 
 
                         
-                        row.append($('<td>').html('<input type="text" class="form-control" style="width: 130px;" name="prod_code" value="' + data.product_code + '" readonly>'));
+                        row.append($('<td>').html('<input type="text" class="form-control" style="width: 200px;" name="prod_code" value="' + data.product_code + '" readonly>'));
                         row.append($('<td>').html('<input type="text" class="form-control" style="width: 400px;" name="prod_name" value="' + data.name + '" readonly>'));
-                        row.append($('<td>').html('<input type="number" class="form-control adjust_qty" style="width: 150px;" name="adjust_qty" id="adjust_qty' + x + '" oninput="myFunctionCompute('+ x +')" onkeyup="ValidationForMaxQTY('+ data.product_code +', ' + x + '); ComputeConversionI('+x+', '+data.maxPerUnit+');" value="">'));
-                        row.append($('<td>').html('<input type="text" class="form-control batch_code" style="width: 150px;" name="batch_code" id="batch_code' + x + '" value="'+data.batch_code+'" readonly>'));
-                        row.append($('<td>').html('<input type="date" class="form-control" style="width: 150px;" name="product_date" value="'+ data.production_date +'" readonly>'));
-                        row.append($('<td>').html('<input type="date" class="form-control" style="width: 150px;" name="expiry_date" value="'+ data.expiry_date +'" readonly>'));
+                        row.append($('<td>').html('<input type="number" class="form-control adjust_qty" style="width: 150px;" name="adjust_qty" id="adjust_qty' + x + '" oninput="myFunctionCompute('+ x +')" onkeyup="ValidationForMaxQTY('+ data.product_code +', ' + x + ');" value="">'));
+
                         row.append($('<td>').html('<input type="text" class="form-control stock" style="width: 150px;" name="stock" id="stock' + x + '" value="' + data.product_stock + '" readonly>'));
                         
                         row.append($('<td>').html('<select class="form-control" style="width: 150px;" name="types" id="types' + x + '"> <option value="minus"> Subtract </option> <option value="add"> Add </option></select>'));
-                        row.append($('<td>').html('<input type="text" class="form-control unit" style="width: 100px;" name="unit" id="unit' + x + '" value="" readonly>'));
+                        row.append($('<td>').html('<input type="text" class="form-control unit" style="width: 100px;" name="unit" id="unit' + x + '" value="'+ data.unit +'" readonly>'));
                         row.append($('<td>').html('<input type="text" class="form-control" style="width: 100px;" name="Rooms" value="' + data.roomNamed + '" readonly>'));
                         row.append($('<td>').html('<input type="text" class="form-control" style="width: 150px;" name="type" level="type' + x + '" id="type' + x + '" style="width: 150px;" value="' + data.level + '"></select>'));
-                        row.append($('<td>').html('<input type="text" class="form-control level" style="width: 80px;" name="level2" id="level2'+data.product_code+ x +'" value="' + data.isle+data.pallet + '" readonly>'));
+                        row.append($('<td>').html('<input type="text" class="form-control level" style="width: 80px;" name="level2" id="level2'+data.product_code+ x +'" value="' + data.rack + '" readonly>'));
                         row.append($('<td>').html('<input type="number" class="form-control new_adjust_qty" style="width: 95px;" name="new_adjust_qty" id="new_adjust_qty' + x + '" value="" readonly>'));
                         row.append($('<td>').html('<button type="button" class="btn btn-square btn-outline-danger" id="remove">Remove</button>'));
                     
 
                         $('<input>').attr({
                             type: 'hidden',
-                            id: 'primary_code',
-                            name: 'primary_code',
-                            value: data.primary_code
+                            id: 'idfromtransaction',
+                            name: 'idfromtransaction',
+                            value: data.idfromtransaction
                         }).appendTo(row);
                         
-                        $('<input>').attr({
-                            type: 'hidden',
-                            id: 'secondary_code',
-                            name: 'secondary_code',
-                            value: data.secondary_code
-                        }).appendTo(row);
+                  
 
                         $('<input>').attr({
                         type: 'hidden',
@@ -1257,55 +1081,8 @@
                         value: data.isle+data.pallet
                         }).appendTo(row);
 
-                        $('<input>').attr({
-                        type: 'hidden',
-                        id: 'Primary_Units'+x,
-                        name: 'Primary_Units',
-                        value: data.unit
-                        }).appendTo(row);
                         
-                        $('<input>').attr({
-                        type: 'hidden',
-                        id: 'Secondary_units'+x,
-                        name: 'Secondary_units',
-                        value: data.secondary_unit
-                        }).appendTo(row);
-
-                        $('<input>').attr({
-                        type: 'hidden',
-                        id: 'MaxStocks_data'+data.product_code+x,
-                        name: 'MaxStocks_data',
-                        value: data.maxProducts
-                        }).appendTo(row);
-
-                        $('<input>').attr({
-                        type: 'hidden',
-                        id: 'MaxStocks_data2'+data.product_code+x,
-                        name: 'MaxStocks_data2',
-                        value: data.maxProducts
-                        }).appendTo(row);
-
-
-                        $('<input>').attr({
-                            type: 'hidden',
-                            id: 'storage',
-                            name: 'storage',
-                            value: data.storage
-                        }).appendTo(row);
-
-                        $('<input>').attr({
-                            type: 'hidden',
-                            id: 'rak',
-                            name: 'rak',
-                            value: data.rack
-                        }).appendTo(row);
-
-                        $('<input>').attr({
-                            type: 'hidden',
-                            id: 'prod_cat'+x,
-                            name: 'prod_cat',
-                            value: data.product_cat
-                        }).appendTo(row);
+                    
 
 
                         $('<input>').attr({
@@ -1323,20 +1100,6 @@
                             value: ""
                         }).appendTo(row);
 
-                        $('<input>').attr({
-                            type: 'hidden',
-                            id: 'maxPerUnit'+x,
-                            name: 'maxPerUnit',
-                            value: data.maxPerUnit
-                        }).addClass('associated-hidden').appendTo(row);
-
-
-                        $('<input>').attr({
-                            type: 'hidden',
-                            id: 'CBM',
-                            name: 'CBM',
-                            value: data.CBM
-                        }).appendTo(row);
 
 
                         $('<input>').attr({
@@ -1350,7 +1113,7 @@
                         $('#tblPage_new').append(row);
 
                         checkers(data.product_code, x)
-                        ComputeConversion(x, data.maxPerUnit)
+           
                         x++
                         
                     }

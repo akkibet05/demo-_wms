@@ -7,7 +7,7 @@
     "start": "nodemon",
     "prod:start": "pm2-runtime app.js",
     "build": "npm run obfuscate",
-    "obfuscate": "powershell -Command \"Get-ChildItem -Path .\\routers\\ -Filter *.js -Recurse | ForEach-Object { javascript-obfuscator $_.FullName --output .\\dist\\routers\\ }\" && \"Get-ChildItem -Path .\\middleware\\ -Filter *.js -Recurse | ForEach-Object { javascript-obfuscator $_.FullName --output .\\dist\\middleware\\ }\" && \"Get-ChildItem -Path .\\models\\ -Filter *.js -Recurse | ForEach-Object { javascript-obfuscator $_.FullName --output .\\dist\\models\\ }\""
+    "obfuscate": "powershell -Command  javascript-obfuscator .\\app.js --output .\\dist\\ && powershell -Command \"Get-ChildItem -Path .\\routers\\ -Filter *.js -Recurse | ForEach-Object { javascript-obfuscator $_.FullName --output .\\dist\\routers\\ }\" && powershell -Command \"Get-ChildItem -Path .\\middleware\\ -Filter *.js -Recurse | ForEach-Object { javascript-obfuscator $_.FullName --output .\\dist\\middleware\\ }\" && powershell -Command \"Get-ChildItem -Path .\\models\\ -Filter *.js -Recurse | ForEach-Object { javascript-obfuscator $_.FullName --output .\\dist\\models\\ }\" && xcopy .\\package.json .\\dist\\ /I /Y && xcopy .\\package-lock.json .\\dist\\ /I /Y && xcopy .\\views\\ .\\dist\\views\\ /E /I /H /Y && xcopy .\\public\\ .\\dist\\public\\ /E /I /H /Y && xcopy .\\.env .\\dist\\ /I /Y"
   },
   "keywords": [],
   "author": "",
@@ -40,6 +40,7 @@
     "pdfkit-table": "^0.1.99",
     "pkg": "^5.8.1",
     "timezones-list": "^3.0.2",
+    "uuid": "^9.0.1",
     "xlsx": "^0.18.5"
   },
   "pkg": {

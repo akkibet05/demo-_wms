@@ -7,7 +7,7 @@ const nodemailer = require('nodemailer');
 var ejs = require('ejs');
 const path = require("path");
 const users = require("../public/language/languages.json");
-
+const { v1: uuidv1, v4: uuidv4 } = require('uuid');
 
 router.get("/view", auth, async (req, res) => {
     try {
@@ -384,155 +384,72 @@ router.get("/view/add_purchases/:id", auth, async (req, res) => {
     
 router.post("/view/add_purchases", auth, async (req, res) => {
     try {
-
-        const { invoice, date, warehouse_name, prod_name, prod_code, prod_qty, prod_unit, prod_secondunit, prod_level, prod_isle, prod_pallet, note, expiry_date, batch_code,payable, due_amount, Room_name, primary_code, secondary_code, MaxStocks_data, PO_number, SCRN, JO_number, ReqBy, dateofreq,typeservicesData,  driver, plate, van, DRSI, typevehicle, TSU, TFU } = req.body
-        
-       
+    
+        const { invoice, date, warehouse_name, suppliers, note, prod_name} = req.body
         
         if(typeof prod_name == "string"){
             var product_name_array = [req.body.prod_name]
             var proudct_code_array = [req.body.prod_code]
-            var quantity_array = [req.body.prod_Qty]
-            var prod_unit_array =  [req.body.prod_primunit]
-            var prod_secondunit_array = [req.body.prod_secondunit]
-            var prod_level_array = [req.body.prod_level]
-            var prod_primaryCode_array = [req.body.primary_code]
-            var prod_SecondaryyCode_array = [req.body.secondary_code]
-            var MaxStocks_data_aray = [req.body.MaxStocks_data]
-            var batch_code_array = [req.body.batch_code]
-            var expiry_date_array = [req.body.expiry_date]
-            var product_date_array = [req.body.product_date]
-            var max_product_unit_array = [req.body.max_product_unit]
-            var prod_cat_array = [req.body.prod_cat]
+            var quantity_array = [req.body.prod_qty]
+            var prod_unit_array =  [req.body.prod_unit]
+            var prod_level_array = [req.body.type]
             var RoomAssign_array = [req.body.RoomAssign]
-            var level_array = [req.body.type]
-            var CBM_array = [req.body.CBM]
+            var area_array = [req.body.prod_level]
             var prod_invoice_array = [req.body.prod_invoice]
-            // console.log("if");
         }else{
             var product_name_array = [...req.body.prod_name]
             var proudct_code_array = [...req.body.prod_code]
-            var quantity_array = [...req.body.prod_Qty]
-            var prod_unit_array =  [...req.body.prod_primunit]
-            var prod_secondunit_array = [...req.body.prod_secondunit]
-            var prod_level_array = [...req.body.prod_level]
-            var prod_primaryCode_array = [...req.body.primary_code]
-            var prod_SecondaryyCode_array = [...req.body.secondary_code]
-            var MaxStocks_data_aray = [...req.body.MaxStocks_data]
-            var batch_code_array = [...req.body.batch_code]
-            var expiry_date_array = [...req.body.expiry_date]
-            var product_date_array = [...req.body.product_date]
-            var max_product_unit_array = [...req.body.max_product_unit]
-            var prod_cat_array = [...req.body.prod_cat]
+            var quantity_array = [...req.body.prod_qty]
+            var prod_unit_array =  [...req.body.prod_unit]
+            var prod_level_array = [...req.body.type]
             var RoomAssign_array = [...req.body.RoomAssign]
-            var level_array = [...req.body.type]
-            var CBM_array = [...req.body.CBM]
+            var area_array = [...req.body.prod_level]
             var prod_invoice_array = [...req.body.prod_invoice]
         } 
-        
+
         const newproduct = product_name_array.map((value)=>{
             
             return  value  = {
                         product_name : value,
                     }   
-            })
-        
-        
+        })
         proudct_code_array.forEach((value,i) => {
             newproduct[i].product_code = value
         });
-        
-        
         quantity_array.forEach((value,i) => {
             newproduct[i].quantity = value
         });
-        
         prod_unit_array.forEach((value, i) => {
             newproduct[i].standard_unit = value
         })
-        
-        prod_secondunit_array.forEach((value, i) => {
-            newproduct[i].secondary_unit = value
-        })
-        
          prod_level_array.forEach((value, i) => {
-            var resultValueFloorLevel = value.slice(1);
-            newproduct[i].isle = value[0]
-            newproduct[i].pallet = resultValueFloorLevel
-        })
-
-
-        level_array.forEach((value, i) => {
+            
             newproduct[i].level = value
+            
+        })
+        area_array.forEach((value, i) => {
+            newproduct[i].rack = value
         })
         
-         prod_primaryCode_array.forEach((value, i) => {
-            newproduct[i].primary_code = value
-        })
-        
-         prod_SecondaryyCode_array.forEach((value, i) => {
-            newproduct[i].secondary_code = value
-        })
-
-
-        MaxStocks_data_aray.forEach((value, i) => {
-            newproduct[i].maxStocks = value
-        })
-
-        batch_code_array.forEach((value, i) => {
-            newproduct[i].batch_code = value
-        })
-
-
-        expiry_date_array.forEach((value, i) => {
-            newproduct[i].expiry_date = value
-        })
-
-        product_date_array.forEach((value, i) => {
-            newproduct[i].production_date = value
-        })
-
-        max_product_unit_array.forEach((value, i) => {
-            newproduct[i].maxperunit = value
-        })
-
-        prod_cat_array.forEach((value, i) => {
-            newproduct[i].product_cat = value
-        })
-
-
         RoomAssign_array.forEach((value, i) => {
             newproduct[i].room_name = value
         })
-
-        CBM_array.forEach((value, i) => {
-            newproduct[i].CBM = value
-        })
-
         prod_invoice_array.forEach((value, i) => {
-            newproduct[i].invoice = value
+            newproduct[i].invoice = value,
+            newproduct[i].idfromtransaction = uuidv4()
         })
-
-
-        // res.json(newproduct)
-        // return
 
         const Newnewproduct = newproduct.filter(obj => obj.quantity !== "0" && obj.quantity !== "");
-
-       
-
-            const data = new purchases_finished({ invoice: invoice, suppliers:req.body.suppliers, date, warehouse_name, product:Newnewproduct, note, due_amount, room: Room_name, POnumber: PO_number, SCRN, JO_number, RequestedBy: ReqBy, DateofRequest: dateofreq, typeservices: typeservicesData, driver, plate, van, DRSI, typevehicle:typevehicle, TSU, TFU })
+            const data = new purchases_finished({ invoice: invoice, suppliers:suppliers, date, warehouse_name, product:Newnewproduct, note })
             const purchases_data = await data.save()
   
 
             const new_purchase = await purchases_finished.findOne({ invoice: invoice });
-
-       
             const promises = new_purchase.product.map( async (product_details) => {
                 var warehouse_data = await warehouse.findOne({ name: warehouse_name, room: product_details.room_name });
                 var x = 0;
                 const match_data = warehouse_data.product_details.map((data) => {
-                    if (data.product_name == product_details.product_name  && data.level == product_details.level && data.isle == product_details.isle && data.pallet == product_details.pallet && data.expiry_date == product_details.expiry_date && data.production_date == product_details.production_date && data.batch_code == product_details.batch_code && data.product_cat == product_details.product_cat && data.invoice == new_purchase.invoice) {
+                    if (data.product_name == product_details.product_name  && data.level == product_details.level && data.rack == product_details.rack  &&   data.invoice == new_purchase.invoice && data.idfromtransaction == product_details.idfromtransaction ) {
                         data.product_stock = data.product_stock + product_details.quantity
                         x++
                     }
@@ -543,23 +460,12 @@ router.post("/view/add_purchases", auth, async (req, res) => {
                     warehouse_data.product_details = warehouse_data.product_details.concat({ 
                         product_name: product_details.product_name, 
                         product_stock: product_details.quantity, 
-                        primary_code: product_details.primary_code, 
-                        secondary_code: product_details.secondary_code, 
                         product_code: product_details.product_code,
                         level: product_details.level, 
-                        isle: product_details.isle, 
-                        pallet: product_details.pallet,  
-                        maxProducts: product_details.maxStocks, 
+                        rack: product_details.rack, 
                         unit: product_details.standard_unit, 
-                        secondary_unit: product_details.secondary_unit, 
-                        expiry_date: product_details.expiry_date,
-                        production_date: product_details.production_date ,
-                        maxProducts: product_details.maxStocks,
-                        maxPerUnit: product_details.maxperunit,
-                        batch_code: product_details.batch_code,
-                        product_cat: product_details.product_cat,
-                        CBM: product_details.CBM,
-                        invoice: product_details.invoice
+                        invoice: product_details.invoice,
+                        idfromtransaction: product_details.idfromtransaction
                     })
                 }
                 return warehouse_data;
@@ -591,7 +497,7 @@ router.post("/view/add_purchases", auth, async (req, res) => {
 
             const master = await master_shop.find()
             const email_data = await email_settings.findOne()
-            const suppliers_data = await suppliers.findOne({name : req.body.suppliers})
+            //const suppliers_data = await suppliers.findOne({name : suppliers})
             const supervisor_data = await supervisor_settings.find();
 
             if (master[0].currency_placement == 1) {
@@ -606,9 +512,9 @@ router.post("/view/add_purchases", auth, async (req, res) => {
             var quantity_list = quantity_array
             var proudct_code_list = proudct_code_array
             var prod_unit_list = prod_unit_array
-            var prod_secondunit_list = prod_secondunit_array
-            var prod_level_list = prod_level_array
-            var level_array_list = level_array
+          //  var prod_secondunit_list = prod_secondunit_array
+           // var prod_level_list = prod_level_array
+            //var level_array_list = level_array
             
             
 
@@ -621,9 +527,9 @@ router.post("/view/add_purchases", auth, async (req, res) => {
                                     '<td style="border: 1px solid black;">' + proudct_code_list[n] + '</td>' +
                                     '<td style="border: 1px solid black;">' + quantity_list[n] + '</td>' +
                                     '<td style="border: 1px solid black;">' + prod_unit_list[n] + '</td>' +
-                                    '<td style="border: 1px solid black;">' + prod_secondunit_list[n] + '</td>' +
-                                    '<td style="border: 1px solid black;">' + level_array_list[n] + '</td>' +
-                                    '<td style="border: 1px solid black;">' + prod_level_list[n] + '</td>' +
+                                    //'<td style="border: 1px solid black;">' + prod_secondunit_list[n] + '</td>' +
+                                    //'<td style="border: 1px solid black;">' + level_array_list[n] + '</td>' +
+                                    //'<td style="border: 1px solid black;">' + prod_level_list[n] + '</td>' +
                                 '</tr>'
             }
             
@@ -1658,7 +1564,7 @@ router.post("/barcode_scanner", async (req, res) => {
     const product_data1 = await product.aggregate([
         {
             $match:{
-                "primary_code": product_code
+                "product_code": product_code
             }
         },
         {
@@ -1701,60 +1607,14 @@ router.post("/barcode_scanner", async (req, res) => {
     ])
 
 
-    const product_data2 = await product.aggregate([
-        {
-            $match:{
-                "secondary_code": product_code
-            }
-        },
-        {
-            $group:{
-                _id: "$_id",
-                name: { $first: "$name" },
-                category:  { $first:  "$category" },
-                brand:  { $first: "$brand" },
-                unit:  { $first: "$unit" },
-                alertquantity:  { $first: "$alertquantity" },
-                product_code:  { $first: "$product_code" },
-                primary_code:  { $first: "$primary_code" },
-                secondary_code:  { $first: "$secondary_code" },
-                maxStocks:  { $first: "$maxStocks" },
-                maxProdPerUnit:  { $first: "$maxProdPerUnit" },
-                product_cat: { $first : "S" },
-                secondary_unit: { $first: "$secondary_unit" },
-                CBM : { $first: { $toDouble: "$CBM" } }
-            }
-        },
-        {
-            $project: {
-                _id: 1,
-                name: 1,
-                category: 1,
-                brand: 1,
-                unit: 1,
-                alertquantity: 1,
-                product_code: 1,
-                primary_code: 1,
-                secondary_code: 1,
-                maxStocks: 1,
-                maxProdPerUnit: 1,
-                product_cat: 1,
-                secondary_unit: 1,
-                CBM: 1
-            }
-        }
-    ])
-
+    
 
     
 
 
-    if(product_data1.length > 0){
-        checkData = product_data1;
-    }else if(product_data2.length > 0){
-        checkData = product_data2;
-     
-    }
+  
+    checkData = product_data1;
+    
     
     res.json( checkData )
     
